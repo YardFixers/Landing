@@ -1,48 +1,100 @@
-async function loadDashboard(){
+function login(){
 
-  const response = await fetch("/dashboard-data");
+const user=
+document.getElementById("user").value;
 
-  const data = await response.json();
+const pass=
+document.getElementById("pass").value;
 
-  const stats = document.getElementById("stats");
+if(
+user==="YardFixers" &&
+pass==="+zr4bf+=ef#4"
+){
 
-  stats.innerHTML = `
-  
-    <h2>Total Visitors: ${data.visitors.length}</h2>
+document.getElementById(
+"dashboard"
+).style.display="block";
 
-    <h2>Total Orders: ${data.orders.length}</h2>
+loadDashboard();
 
-    <hr>
+}else{
 
-    ${data.orders.map(order=>`
-    
-      <div style="
-        background:white;
-        padding:20px;
-        border-radius:20px;
-        margin:20px 0;
-      ">
-
-      <h3>${order.name}</h3>
-
-      <p>Email: ${order.email}</p>
-
-      <p>Phone: ${order.phone}</p>
-
-      <p>Area: ${order.area}</p>
-
-      <p>Service: ${order.service}</p>
-
-      <p>Price: ${order.price}</p>
-
-      <p>IP: ${order.ip}</p>
-
-      </div>
-
-    `).join("")}
-
-  `;
+alert("Wrong Login");
 
 }
 
-loadDashboard();
+}
+
+async function loadDashboard(){
+
+const response=
+await fetch("/dashboard");
+
+const data=
+await response.json();
+
+const stats=
+document.getElementById("stats");
+
+stats.innerHTML=`
+
+<h3>
+Visitors:
+${data.visitors.length}
+</h3>
+
+<h3>
+Orders:
+${data.orders.length}
+</h3>
+
+${data.orders.map(order=>`
+
+<div class="card">
+
+<h2>
+${order.name}
+</h2>
+
+<p>
+Email:
+${order.email}
+</p>
+
+<p>
+Phone:
+${order.phone}
+</p>
+
+<p>
+Area:
+${order.area}
+</p>
+
+<p>
+Service:
+${order.service}
+</p>
+
+<p>
+Yard:
+${order.yardSize}
+</p>
+
+<p>
+Status:
+${order.status}
+</p>
+
+<p>
+IP:
+${order.ip}
+</p>
+
+</div>
+
+`).join("")}
+
+`;
+
+}
