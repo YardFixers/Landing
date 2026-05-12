@@ -3,9 +3,12 @@
 
 <head>
 
-<title>Owner Dashboard</title>
+<title>
+Dashboard
+</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="style.css">
 
 </head>
 
@@ -14,15 +17,37 @@
 <section>
 
 <h1>
-YardFixers Dashboard
+Owner Login
 </h1>
 
+<input
+type="text"
+id="user"
+placeholder="Username">
+
+<input
+type="password"
+id="pass"
+placeholder="Password">
+
+<button onclick="login()">
+Login
+</button>
+
+<div id="dashboard"
+style="display:none;">
+
+<h2>
+Analytics
+</h2>
+
 <div id="stats"></div>
+
+</div>
 
 </section>
 
 <script src="dashboard.js"></script>
 
 </body>
-
 </html>
