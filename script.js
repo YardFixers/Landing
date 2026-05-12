@@ -1,4 +1,6 @@
-/* PHONE FORMAT */
+/* =========================
+PHONE FORMAT
+========================= */
 
 const phone =
 document.getElementById("phone");
@@ -9,7 +11,9 @@ let input =
 e.target.value.replace(/\D/g,'');
 
 if(input.startsWith("1")){
+
 input=input.substring(1);
+
 }
 
 input=input.substring(0,10);
@@ -17,30 +21,40 @@ input=input.substring(0,10);
 let formatted="1+ ";
 
 if(input.length>0){
+
 formatted += "(" +
 input.substring(0,3);
+
 }
 
 if(input.length>=4){
+
 formatted += ") " +
 input.substring(3,6);
+
 }
 
 if(input.length>=7){
+
 formatted += "-" +
 input.substring(6,10);
+
 }
 
 e.target.value=formatted;
 
 });
 
-/* TRACK USER */
+/* =========================
+TRACK VISITOR
+========================= */
 
 const startTime=Date.now();
 
 window.addEventListener(
+
 "beforeunload",
+
 async()=>{
 
 const timeSpent=
@@ -70,7 +84,123 @@ height:window.innerHeight
 
 });
 
-/* SUBMIT FORM */
+/* =========================
+ACCOUNT SYSTEM
+========================= */
+
+let currentUser = null;
+
+/* SIGNUP */
+
+async function signup(){
+
+const email =
+document.getElementById(
+"accountEmail"
+).value;
+
+const password =
+document.getElementById(
+"accountPassword"
+).value;
+
+const response =
+await fetch("/signup",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+email,
+password
+
+})
+
+});
+
+const result =
+await response.json();
+
+document.getElementById(
+"accountStatus"
+).innerText =
+
+result.success
+? "Account Created"
+: result.message;
+
+}
+
+/* LOGIN */
+
+async function login(){
+
+const email =
+document.getElementById(
+"accountEmail"
+).value;
+
+const password =
+document.getElementById(
+"accountPassword"
+).value;
+
+const response =
+await fetch("/login",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+email,
+password
+
+})
+
+});
+
+const result =
+await response.json();
+
+if(result.success){
+
+currentUser=result.user;
+
+localStorage.setItem(
+
+"yardfixersUser",
+
+JSON.stringify(result.user)
+
+);
+
+document.getElementById(
+"accountStatus"
+).innerText =
+"Logged In";
+
+}else{
+
+document.getElementById(
+"accountStatus"
+).innerText =
+"Wrong Login";
+
+}
+
+}
+
+/* =========================
+ORDER FORM
+========================= */
 
 const form =
 document.getElementById(
@@ -78,10 +208,24 @@ document.getElementById(
 );
 
 form.addEventListener(
+
 "submit",
+
 async(e)=>{
 
 e.preventDefault();
+
+/* MULTI SERVICES */
+
+const checked =
+document.querySelectorAll(
+".multi-services input:checked"
+);
+
+const services =
+Array.from(checked)
+.map(box=>box.value)
+.join(", ");
 
 const data={
 
@@ -93,7 +237,7 @@ phone:form.phone.value,
 
 area:form.area.value,
 
-service:form.service.value,
+services,
 
 yardSize:form.yardSize.value,
 
