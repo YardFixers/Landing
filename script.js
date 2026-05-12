@@ -1,114 +1,66 @@
-// script.js
+const startTime = Date.now();
 
-const menuBtn = document.getElementById("menuBtn");
-const navLinks = document.querySelector(".nav-links");
+/* TRACK USER */
 
-/* MOBILE MENU */
+window.addEventListener("beforeunload", async()=>{
 
-menuBtn.addEventListener("click", () => {
+  const timeSpent = Math.floor((Date.now() - startTime)/1000);
 
-  navLinks.classList.toggle("active");
-
-});
-
-/* NAVBAR EFFECT */
-
-window.addEventListener("scroll", () => {
-
-  const navbar = document.querySelector(".navbar");
-
-  if(window.scrollY > 50){
-
-    navbar.style.background = "rgba(10,15,10,0.95)";
-
-  } else {
-
-    navbar.style.background = "rgba(10,15,10,0.75)";
-
-  }
+  await fetch("/track-visit",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+      screenWidth:window.innerWidth,
+      screenHeight:window.innerHeight,
+      timeSpent
+    })
+  });
 
 });
 
-/* CONTACT FORM */
+/* ORDER FORM */
 
-const form = document.querySelector(".contact-form");
+const form = document.getElementById("yardForm");
 
-form.addEventListener("submit", async (e) => {
+form.addEventListener("submit", async(e)=>{
 
   e.preventDefault();
 
   const button = form.querySelector("button");
 
-  const formData = new FormData(form);
-
   button.innerText = "Sending...";
-  button.style.background = "#5b9b35";
 
-  try{
+  const data = {
+    name: form.Name.value,
+    email: form.Email.value,
+    phone: form.Phone.value,
+    area: form.Area.value,
+    service: form.Service.value,
+    yardSize: form.YardSize.value,
+    price: form.Price.value,
+    message: form.Message.value
+  };
 
-    await fetch(form.action, {
-      method:"POST",
-      body:formData
-    });
+  const response = await fetch("/submit-order",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify(data)
+  });
 
-    button.innerText = "Message Sent!";
+  const result = await response.json();
 
-    form.reset();
+  if(result.success){
 
-    setTimeout(() => {
+    window.location.href = "thankyou.html";
 
-      button.innerText = "Send Message";
-
-      button.style.background = "#101612";
-
-    }, 3000);
-
-  }
-  catch{
+  }else{
 
     button.innerText = "Error Sending";
 
-    setTimeout(() => {
-
-      button.innerText = "Send Message";
-
-      button.style.background = "#101612";
-
-    }, 3000);
-
   }
-
-});
-
-/* SCROLL REVEAL */
-
-const cards = document.querySelectorAll(
-  ".service-card, .trust-card, .person-card"
-);
-
-const observer = new IntersectionObserver((entries) => {
-
-  entries.forEach((entry) => {
-
-    if(entry.isIntersecting){
-
-      entry.target.style.opacity = "1";
-      entry.target.style.transform = "translateY(0)";
-
-    }
-
-  });
-
-},{
-  threshold:0.2
-});
-
-cards.forEach((card) => {
-
-  card.style.opacity = "0";
-  card.style.transform = "translateY(40px)";
-  card.style.transition = "0.8s ease";
-
-  observer.observe(card);
 
 });
