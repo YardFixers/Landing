@@ -1,399 +1,258 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
 
-  <title>YardFixers | Rivershore SC</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="style.css"/>
+<title>YardFixers</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet"
+href="style.css">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap"
+rel="stylesheet">
 
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
+<nav class="navbar">
 
-  <nav class="navbar">
+<div class="logo">
+YardFixers
+</div>
 
-    <div class="logo">
-      YardFixers
-    </div>
+<ul class="nav-links">
 
-    <ul class="nav-links">
+<li><a href="#services">Services</a></li>
 
-      <li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
 
-      <li><a href="#services">Services</a></li>
+<li><a href="#contact">Contact</a></li>
 
-      <li><a href="#about">About</a></li>
+<li>
+<a href="dashboard.html">
+Login
+</a>
+</li>
 
-      <li><a href="#contact">Contact</a></li>
+</ul>
 
-    </ul>
+</nav>
 
-    <div class="menu-btn" id="menuBtn">
-      ☰
-    </div>
+<section class="hero">
 
-  </nav>
+<div class="overlay"></div>
 
-  <!-- HERO -->
+<div class="hero-content">
 
-  <section class="hero" id="home">
+<span class="badge">
+Weekend Yard Services • Rivershore SC
+</span>
 
-    <div class="hero-content">
+<h1>
+Clean Yards.<br>
+Honest Work.<br>
+Fair Prices.
+</h1>
 
-      <span class="small-badge">
-        Weekend Lawn Services • Rivershore, SC
-      </span>
+<p>
+We mow lawns, power wash driveways,
+and pull weeds around Rivershore, SC.
+</p>
 
-      <h1>
-        Clean Yards.<br>
-        Honest Work.<br>
-        Fair Prices.
-      </h1>
+<a href="#contact"
+class="main-btn">
+Get A Quote
+</a>
 
-      <p>
-        YardFixers is a local yard service run by Ellison Evans and Sawyer Kyte.
-        We mow lawns, power wash driveways, and pull weeds around Rivershore,
-        South Carolina. We work weekends and care about making every yard look
-        clean and fresh.
-      </p>
+</div>
 
-      <div class="hero-buttons">
+</section>
 
-        <a href="#contact" class="btn primary">
-          Get A Quote
-        </a>
+<section class="services"
+id="services">
 
-        <a href="#services" class="btn secondary">
-          Our Services
-        </a>
+<h2>
+Our Services
+</h2>
 
-      </div>
+<div class="service-grid">
 
-    </div>
+<div class="card">
 
-    <div class="scroll-down">
-      ↓ Scroll
-    </div>
+<h3>
+🌿 Lawn Mowing
+</h3>
 
-  </section>
+<p>
+Fresh cuts and clean edges.
+</p>
 
-  <!-- TRUST -->
+</div>
 
-  <section class="trust-section">
+<div class="card">
 
-    <div class="trust-box">
+<h3>
+💦 Power Washing
+</h3>
 
-      <h3>Why People Choose YardFixers</h3>
+<p>
+Driveways, patios, sidewalks.
+</p>
 
-      <div class="trust-grid">
+</div>
 
-        <div class="trust-card">
+<div class="card">
 
-          <span>✔</span>
+<h3>
+🪴 Weed Pulling
+</h3>
 
-          <h4>Reliable</h4>
+<p>
+Flower beds and cleanup.
+</p>
 
-          <p>
-            We show up, work hard, and care about doing a good job.
-          </p>
+</div>
 
-        </div>
+</div>
 
-        <div class="trust-card">
+</section>
 
-          <span>✔</span>
+<section class="about"
+id="about">
 
-          <h4>Affordable</h4>
+<h2>
+Meet The Team
+</h2>
 
-          <p>
-            Fair prices without overcharging.
-          </p>
+<div class="team-grid">
 
-        </div>
+<div class="team-card">
 
-        <div class="trust-card">
+<img src="IMG_8240.jpeg">
 
-          <span>✔</span>
+<h3>
+Ellison Evans
+</h3>
 
-          <h4>Weekend Service</h4>
+</div>
 
-          <p>
-            Perfect for homeowners busy during weekdays.
-          </p>
+<div class="team-card">
 
-        </div>
+<img src="IMG_8232.jpeg">
 
-      </div>
+<h3>
+Sawyer Kyte
+</h3>
 
-    </div>
+</div>
 
-  </section>
+</div>
 
-  <!-- SERVICES -->
+</section>
 
-  <section class="services" id="services">
+<section class="contact"
+id="contact">
 
-    <div class="section-title">
+<h2>
+Request Service
+</h2>
 
-      <span>WHAT WE DO</span>
+<form id="orderForm">
 
-      <h2>Our Services</h2>
+<input
+type="text"
+name="name"
+placeholder="Your Name"
+required>
 
-    </div>
+<input
+type="email"
+name="email"
+placeholder="Your Email"
+required>
 
-    <div class="service-grid">
+<input
+type="tel"
+id="phone"
+name="phone"
+placeholder="1+ (999) 999-9999"
+required>
 
-      <div class="service-card">
+<input
+type="text"
+name="area"
+placeholder="Your Area"
+required>
 
-        <div class="service-icon">
-          🌿
-        </div>
+<select name="service">
 
-        <h3>Lawn Mowing</h3>
+<option>
+Lawn Mowing
+</option>
 
-        <p>
-          Clean cuts, edged yards, and fresh looking grass.
-        </p>
+<option>
+Power Washing
+</option>
 
-      </div>
+<option>
+Weed Pulling
+</option>
 
-      <div class="service-card">
+<option>
+Multiple Services
+</option>
 
-        <div class="service-icon">
-          💦
-        </div>
+</select>
 
-        <h3>Power Washing</h3>
+<select name="yardSize">
 
-        <p>
-          We clean driveways, sidewalks, patios, fences, and outdoor surfaces.
-        </p>
+<option>
+Small Yard • $40-$60
+</option>
 
-      </div>
+<option>
+Medium Yard • $70-$120
+</option>
 
-      <div class="service-card">
+<option>
+Large Yard • $130-$220
+</option>
 
-        <div class="service-icon">
-          🪴
-        </div>
+</select>
 
-        <h3>Weed Pulling</h3>
+<textarea
+name="message"
+placeholder="Tell us about the work..."
+required></textarea>
 
-        <p>
-          Remove weeds and clean up flower beds and yard areas.
-        </p>
+<button type="submit">
+Submit Request
+</button>
 
-      </div>
+</form>
 
-    </div>
+</section>
 
-  </section>
+<footer>
 
-  <!-- ABOUT -->
+<p>
+© YardFixers 2026
+</p>
 
-  <section class="about" id="about">
+<span>
+Made by, Eli Vaughan
+</span>
 
-    <div class="section-title">
+</footer>
 
-      <span>ABOUT US</span>
-
-      <h2>Meet The Team</h2>
-
-    </div>
-
-    <div class="about-grid">
-
-      <!-- ELLISON -->
-
-      <div class="person-card">
-
-        <img src="IMG_8240.jpeg" alt="Ellison Evans">
-
-        <div class="person-info">
-
-          <h3>Ellison Evans</h3>
-
-          <p>
-            “I like helping people out and making homes look cleaner.
-            We try to leave every yard better than before.”
-          </p>
-
-        </div>
-
-      </div>
-
-      <!-- SAWYER -->
-
-      <div class="person-card">
-
-        <img src="IMG_8232.jpeg" alt="Sawyer Kyte">
-
-        <div class="person-info">
-
-          <h3>Sawyer Kyte</h3>
-
-          <p>
-            “We want people to feel proud of their yard when they pull
-            into their driveway.”
-          </p>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-  <!-- TESTIMONIAL -->
-
-  <section class="testimonial">
-
-    <div class="quote-box">
-
-      <p>
-        “A clean yard changes the whole feeling of a home.”
-      </p>
-
-    </div>
-
-  </section>
-
-  <!-- CONTACT -->
-
-  <section class="contact" id="contact">
-
-    <div class="section-title">
-
-      <span>CONTACT</span>
-
-      <h2>Message Us</h2>
-
-    </div>
-
-    <div class="contact-container">
-
-      <!-- LEFT -->
-
-      <div class="contact-info">
-
-        <h3>Need Yard Work Done?</h3>
-
-        <p>
-          Send us a message and we’ll get back to you as soon as possible.
-          We currently work weekends around Rivershore, South Carolina.
-        </p>
-
-        <div class="info-box">
-
-          <strong>Email:</strong>
-
-          yardfixers00@gmail.com
-
-        </div>
-
-      </div>
-
-      <!-- FORM -->
-
-      <form
-        class="contact-form"
-        action="https://formsubmit.co/yardfixers00@gmail.com"
-        method="POST"
-      >
-
-        <!-- SETTINGS -->
-
-        <input
-          type="hidden"
-          name="_captcha"
-          value="false"
-        >
-
-        <input
-          type="hidden"
-          name="_subject"
-          value="New YardFixers Customer Message!"
-        >
-
-        <input
-          type="hidden"
-          name="_template"
-          value="table"
-        >
-
-        <!-- NAME -->
-
-        <input
-          type="text"
-          name="Name"
-          placeholder="Your Name"
-          required
-        >
-
-        <!-- EMAIL -->
-
-        <input
-          type="email"
-          name="Gmail"
-          placeholder="Your Email"
-          required
-        >
-
-        <!-- PHONE -->
-
-        <input
-          type="tel"
-          name="Phone Number"
-          placeholder="Your Phone Number"
-          required
-        >
-
-        <!-- MESSAGE -->
-
-        <textarea
-          name="Message"
-          placeholder="Tell us what work you need done..."
-          required
-        ></textarea>
-
-        <!-- BUTTON -->
-
-        <button type="submit">
-          Send Message
-        </button>
-
-      </form>
-
-    </div>
-
-  </section>
-
-  <!-- FOOTER -->
-
-  <footer>
-
-    <p>
-      © 2026 YardFixers • Rivershore, SC
-    </p>
-
-    <span>
-      Made by, Eli Vaughan
-    </span>
-
-  </footer>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
