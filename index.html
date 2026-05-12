@@ -8,7 +8,9 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>YardFixers</title>
+<title>
+YardFixers
+</title>
 
 <link rel="stylesheet"
 href="style.css">
@@ -21,6 +23,8 @@ rel="stylesheet">
 
 <body>
 
+<!-- NAVBAR -->
+
 <nav class="navbar">
 
 <div class="logo">
@@ -29,15 +33,27 @@ YardFixers
 
 <ul class="nav-links">
 
-<li><a href="#services">Services</a></li>
+<li>
+<a href="#services">
+Services
+</a>
+</li>
 
-<li><a href="#about">About</a></li>
+<li>
+<a href="#about">
+About
+</a>
+</li>
 
-<li><a href="#contact">Contact</a></li>
+<li>
+<a href="#contact">
+Contact
+</a>
+</li>
 
 <li>
 <a href="dashboard.html">
-Login
+Owner
 </a>
 </li>
 
@@ -45,9 +61,9 @@ Login
 
 </nav>
 
-<section class="hero">
+<!-- HERO -->
 
-<div class="overlay"></div>
+<section class="hero">
 
 <div class="hero-content">
 
@@ -63,17 +79,22 @@ Fair Prices.
 
 <p>
 We mow lawns, power wash driveways,
-and pull weeds around Rivershore, SC.
+pull weeds, and help make homes
+look cleaner around Rivershore.
 </p>
 
 <a href="#contact"
 class="main-btn">
+
 Get A Quote
+
 </a>
 
 </div>
 
 </section>
+
+<!-- SERVICES -->
 
 <section class="services"
 id="services">
@@ -103,7 +124,8 @@ Fresh cuts and clean edges.
 </h3>
 
 <p>
-Driveways, patios, sidewalks.
+Driveways, sidewalks, patios,
+and outdoor cleaning.
 </p>
 
 </div>
@@ -115,7 +137,7 @@ Driveways, patios, sidewalks.
 </h3>
 
 <p>
-Flower beds and cleanup.
+Flower bed cleanup and weed removal.
 </p>
 
 </div>
@@ -123,6 +145,8 @@ Flower beds and cleanup.
 </div>
 
 </section>
+
+<!-- ABOUT -->
 
 <section class="about"
 id="about">
@@ -157,12 +181,56 @@ Sawyer Kyte
 
 </section>
 
+<!-- CONTACT -->
+
 <section class="contact"
 id="contact">
 
 <h2>
 Request Service
 </h2>
+
+<!-- ACCOUNT BOX -->
+
+<div class="account-box">
+
+<h3>
+Create Account / Login
+</h3>
+
+<input
+type="email"
+id="accountEmail"
+placeholder="Email">
+
+<input
+type="password"
+id="accountPassword"
+placeholder="Password">
+
+<div class="account-buttons">
+
+<button onclick="signup()">
+Sign Up
+</button>
+
+<button onclick="login()">
+Login
+</button>
+
+<button onclick="logout()">
+Logout
+</button>
+
+</div>
+
+<p id="accountStatus">
+Not Logged In
+</p>
+
+</div>
+
+<!-- FORM -->
 
 <form id="orderForm">
 
@@ -191,38 +259,56 @@ name="area"
 placeholder="Your Area"
 required>
 
-<select name="service">
+<label>
+Select Services
+</label>
 
-<option>
+<div class="multi-services">
+
+<label>
+
+<input
+type="checkbox"
+value="Lawn Mowing">
+
 Lawn Mowing
-</option>
 
-<option>
+</label>
+
+<label>
+
+<input
+type="checkbox"
+value="Power Washing">
+
 Power Washing
-</option>
 
-<option>
+</label>
+
+<label>
+
+<input
+type="checkbox"
+value="Weed Pulling">
+
 Weed Pulling
-</option>
 
-<option>
-Multiple Services
-</option>
+</label>
 
-</select>
+</div>
 
 <select name="yardSize">
 
 <option>
-Small Yard • $40-$60
+Small Yard • $30-$50
 </option>
 
 <option>
-Medium Yard • $70-$120
+Medium Yard • $60-$110
 </option>
 
 <option>
-Large Yard • $130-$220
+Large Yard • $120-$210
 </option>
 
 </select>
@@ -239,6 +325,8 @@ Submit Request
 </form>
 
 </section>
+
+<!-- FOOTER -->
 
 <footer>
 
