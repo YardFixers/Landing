@@ -68,6 +68,14 @@ form.addEventListener("submit", async (e) => {
 
     button.innerText = "Error Sending";
 
+    setTimeout(() => {
+
+      button.innerText = "Send Message";
+
+      button.style.background = "#101612";
+
+    }, 3000);
+
   }
 
 });
