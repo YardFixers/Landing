@@ -1,14 +1,23 @@
 function login(){
 
-const user=
-document.getElementById("user").value;
+const user =
+document.getElementById(
+"user"
+).value;
 
-const pass=
-document.getElementById("pass").value;
+const pass =
+document.getElementById(
+"pass"
+).value;
+
+/* DEV ACCOUNT */
 
 if(
+
 user==="YardFixers" &&
+
 pass==="+zr4bf+=ef#4"
+
 ){
 
 document.getElementById(
@@ -25,6 +34,8 @@ alert("Wrong Login");
 
 }
 
+/* LOAD ANALYTICS */
+
 async function loadDashboard(){
 
 const response=
@@ -34,19 +45,21 @@ const data=
 await response.json();
 
 const stats=
-document.getElementById("stats");
+document.getElementById(
+"stats"
+);
 
 stats.innerHTML=`
 
-<h3>
+<h2>
 Visitors:
 ${data.visitors.length}
-</h3>
+</h2>
 
-<h3>
+<h2>
 Orders:
 ${data.orders.length}
-</h3>
+</h2>
 
 ${data.orders.map(order=>`
 
@@ -72,8 +85,8 @@ ${order.area}
 </p>
 
 <p>
-Service:
-${order.service}
+Services:
+${order.services}
 </p>
 
 <p>
