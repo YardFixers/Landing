@@ -11,7 +11,9 @@ app.use(express.static(__dirname));
 
 const DB = "./database.json";
 
-/* DATABASE */
+/* =========================
+DATABASE FUNCTIONS
+========================= */
 
 function readDB(){
 
@@ -30,20 +32,33 @@ function writeDB(data){
 
 }
 
-/* EMAIL */
+/* =========================
+GMAIL SETUP
+========================= */
+
+/*
+PUT YOUR GOOGLE APP PASSWORD
+INSIDE THE pass:"HERE"
+SECTION BELOW
+*/
 
 const transporter = nodemailer.createTransport({
 
   service:"gmail",
 
   auth:{
+
     user:"yardfixers00@gmail.com",
-    pass:"YOUR_GMAIL_APP_PASSWORD"
+
+    pass:"PUT_YOUR_GOOGLE_APP_PASSWORD_HERE"
+
   }
 
 });
 
-/* TRACK VISITS */
+/* =========================
+TRACK VISITS
+========================= */
 
 app.post("/track",(req,res)=>{
 
@@ -73,7 +88,9 @@ app.post("/track",(req,res)=>{
 
 });
 
-/* SIGNUP */
+/* =========================
+SIGNUP
+========================= */
 
 app.post("/signup",(req,res)=>{
 
@@ -86,52 +103,76 @@ app.post("/signup",(req,res)=>{
   if(exists){
 
     return res.json({
+
       success:false,
+
       message:"Account already exists"
+
     });
 
   }
 
-  db.users.push(req.body);
+  db.users.push({
+
+    email:req.body.email,
+
+    password:req.body.password
+
+  });
 
   writeDB(db);
 
   res.json({
+
     success:true
+
   });
 
 });
 
-/* LOGIN */
+/* =========================
+LOGIN
+========================= */
 
 app.post("/login",(req,res)=>{
 
   const db = readDB();
 
   const user = db.users.find(
+
     u=>
+
       u.email===req.body.email &&
+
       u.password===req.body.password
+
   );
 
   if(user){
 
     res.json({
+
       success:true,
+
       user
+
     });
 
   }else{
 
     res.json({
+
       success:false
+
     });
 
   }
 
 });
 
-/* ORDER */
+/* =========================
+SUBMIT ORDER
+========================= */
 
 app.post("/order",async(req,res)=>{
 
@@ -155,25 +196,27 @@ app.post("/order",async(req,res)=>{
 
   writeDB(db);
 
-  /* SEND EMAIL */
+  /* EMAIL TEMPLATE */
 
   const html = `
 
-    <h2>New YardFixers Order</h2>
+  <h2>New YardFixers Order</h2>
 
-    <p><strong>Name:</strong> ${req.body.name}</p>
+  <p><strong>Name:</strong> ${req.body.name}</p>
 
-    <p><strong>Email:</strong> ${req.body.email}</p>
+  <p><strong>Email:</strong> ${req.body.email}</p>
 
-    <p><strong>Phone:</strong> ${req.body.phone}</p>
+  <p><strong>Phone:</strong> ${req.body.phone}</p>
 
-    <p><strong>Area:</strong> ${req.body.area}</p>
+  <p><strong>Area:</strong> ${req.body.area}</p>
 
-    <p><strong>Services:</strong> ${req.body.services}</p>
+  <p><strong>Services:</strong> ${req.body.services}</p>
 
-    <p><strong>Yard Size:</strong> ${req.body.yardSize}</p>
+  <p><strong>Yard Size:</strong> ${req.body.yardSize}</p>
 
-    <p><strong>Message:</strong> ${req.body.message}</p>
+  <p><strong>Message:</strong> ${req.body.message}</p>
+
+  <p><strong>Status:</strong> Pending Confirmation</p>
 
   `;
 
@@ -191,6 +234,8 @@ app.post("/order",async(req,res)=>{
 
     });
 
+    console.log("Email Sent");
+
   }catch(err){
 
     console.log(err);
@@ -198,12 +243,16 @@ app.post("/order",async(req,res)=>{
   }
 
   res.json({
+
     success:true
+
   });
 
 });
 
-/* DASHBOARD */
+/* =========================
+OWNER DASHBOARD
+========================= */
 
 app.get("/dashboard",(req,res)=>{
 
@@ -213,8 +262,12 @@ app.get("/dashboard",(req,res)=>{
 
 });
 
+/* =========================
+START SERVER
+========================= */
+
 app.listen(3000, ()=>{
 
-  console.log("Running");
+  console.log("Server Running");
 
 });
