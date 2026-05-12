@@ -46,10 +46,10 @@ e.target.value=formatted;
 });
 
 /* =========================
-TRACK VISITOR
+VISITOR TRACKING
 ========================= */
 
-const startTime=Date.now();
+const startTime = Date.now();
 
 window.addEventListener(
 
@@ -88,7 +88,38 @@ height:window.innerHeight
 ACCOUNT SYSTEM
 ========================= */
 
-let currentUser = null;
+let currentUser =
+JSON.parse(
+localStorage.getItem(
+"yardfixersUser"
+)
+);
+
+/* SHOW LOGIN STATE */
+
+function updateLoginUI(){
+
+const status =
+document.getElementById(
+"accountStatus"
+);
+
+if(currentUser){
+
+status.innerText =
+"Logged In As: " +
+currentUser.email;
+
+}else{
+
+status.innerText =
+"Not Logged In";
+
+}
+
+}
+
+updateLoginUI();
 
 /* SIGNUP */
 
@@ -103,6 +134,14 @@ const password =
 document.getElementById(
 "accountPassword"
 ).value;
+
+if(!email || !password){
+
+alert("Fill Out All Fields");
+
+return;
+
+}
 
 const response =
 await fetch("/signup",{
@@ -125,13 +164,21 @@ password
 const result =
 await response.json();
 
+if(result.success){
+
 document.getElementById(
 "accountStatus"
 ).innerText =
+"Account Created";
 
-result.success
-? "Account Created"
-: result.message;
+}else{
+
+document.getElementById(
+"accountStatus"
+).innerText =
+result.message;
+
+}
 
 }
 
@@ -182,10 +229,7 @@ JSON.stringify(result.user)
 
 );
 
-document.getElementById(
-"accountStatus"
-).innerText =
-"Logged In";
+updateLoginUI();
 
 }else{
 
@@ -195,6 +239,20 @@ document.getElementById(
 "Wrong Login";
 
 }
+
+}
+
+/* LOGOUT */
+
+function logout(){
+
+localStorage.removeItem(
+"yardfixersUser"
+);
+
+currentUser = null;
+
+updateLoginUI();
 
 }
 
@@ -241,7 +299,12 @@ services,
 
 yardSize:form.yardSize.value,
 
-message:form.message.value
+message:form.message.value,
+
+customer:
+currentUser
+? currentUser.email
+: "Guest"
 
 };
 
