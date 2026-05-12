@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
+const nodemailer = require("nodemailer");
 
 const app = express();
 
@@ -10,7 +11,7 @@ app.use(express.static(__dirname));
 
 const DB = "./database.json";
 
-/* READ DATABASE */
+/* DATABASE */
 
 function readDB(){
 
@@ -19,8 +20,6 @@ function readDB(){
   );
 
 }
-
-/* WRITE DATABASE */
 
 function writeDB(data){
 
@@ -31,9 +30,22 @@ function writeDB(data){
 
 }
 
+/* EMAIL */
+
+const transporter = nodemailer.createTransport({
+
+  service:"gmail",
+
+  auth:{
+    user:"yardfixers00@gmail.com",
+    pass:"YOUR_GMAIL_APP_PASSWORD"
+  }
+
+});
+
 /* TRACK VISITS */
 
-app.post("/track", (req,res)=>{
+app.post("/track",(req,res)=>{
 
   const db = readDB();
 
@@ -43,11 +55,11 @@ app.post("/track", (req,res)=>{
       req.headers["x-forwarded-for"] ||
       req.socket.remoteAddress,
 
-    timeSpent:req.body.timeSpent,
-
     width:req.body.width,
 
     height:req.body.height,
+
+    timeSpent:req.body.timeSpent,
 
     time:new Date()
 
@@ -61,13 +73,71 @@ app.post("/track", (req,res)=>{
 
 });
 
-/* SUBMIT ORDER */
+/* SIGNUP */
 
-app.post("/order",(req,res)=>{
+app.post("/signup",(req,res)=>{
 
   const db = readDB();
 
-  db.orders.push({
+  const exists = db.users.find(
+    user=>user.email===req.body.email
+  );
+
+  if(exists){
+
+    return res.json({
+      success:false,
+      message:"Account already exists"
+    });
+
+  }
+
+  db.users.push(req.body);
+
+  writeDB(db);
+
+  res.json({
+    success:true
+  });
+
+});
+
+/* LOGIN */
+
+app.post("/login",(req,res)=>{
+
+  const db = readDB();
+
+  const user = db.users.find(
+    u=>
+      u.email===req.body.email &&
+      u.password===req.body.password
+  );
+
+  if(user){
+
+    res.json({
+      success:true,
+      user
+    });
+
+  }else{
+
+    res.json({
+      success:false
+    });
+
+  }
+
+});
+
+/* ORDER */
+
+app.post("/order",async(req,res)=>{
+
+  const db = readDB();
+
+  const order = {
 
     ...req.body,
 
@@ -79,9 +149,53 @@ app.post("/order",(req,res)=>{
 
     time:new Date()
 
-  });
+  };
+
+  db.orders.push(order);
 
   writeDB(db);
+
+  /* SEND EMAIL */
+
+  const html = `
+
+    <h2>New YardFixers Order</h2>
+
+    <p><strong>Name:</strong> ${req.body.name}</p>
+
+    <p><strong>Email:</strong> ${req.body.email}</p>
+
+    <p><strong>Phone:</strong> ${req.body.phone}</p>
+
+    <p><strong>Area:</strong> ${req.body.area}</p>
+
+    <p><strong>Services:</strong> ${req.body.services}</p>
+
+    <p><strong>Yard Size:</strong> ${req.body.yardSize}</p>
+
+    <p><strong>Message:</strong> ${req.body.message}</p>
+
+  `;
+
+  try{
+
+    await transporter.sendMail({
+
+      from:"yardfixers00@gmail.com",
+
+      to:"yardfixers00@gmail.com",
+
+      subject:"New YardFixers Order",
+
+      html
+
+    });
+
+  }catch(err){
+
+    console.log(err);
+
+  }
 
   res.json({
     success:true
