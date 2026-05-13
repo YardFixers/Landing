@@ -38,10 +38,9 @@ YardFixers
 <ul class="nav-links">
 
 <li><a href="#services">Services</a></li>
-<li><a href="#about">About</a></li>
 <li><a href="#request">Request</a></li>
-<li><a href="#feedback">Feedback</a></li>
 <li><a href="#reviews">Reviews</a></li>
+<li><a href="#feedback">Feedback</a></li>
 <li><a href="dashboard.html">Owner</a></li>
 
 </ul>
@@ -51,8 +50,6 @@ YardFixers
 <!-- HERO -->
 
 <section class="hero">
-
-<div class="hero-overlay"></div>
 
 <div class="hero-content">
 
@@ -67,11 +64,9 @@ Real Local Work.
 </h1>
 
 <p>
-Lawn mowing,
-power washing,
+Lawn mowing, power washing,
 and weed cleanup around
-Rivershore,
-Daniel Island,
+Rivershore, Daniel Island,
 and nearby areas.
 </p>
 
@@ -137,11 +132,12 @@ Login
 
 </div>
 
-<div id="loggedInView"
+<div
+id="loggedInView"
 style="display:none;">
 
 <h3 id="welcomeText">
-Welcome!
+Welcome
 </h3>
 
 <button
@@ -250,7 +246,7 @@ Fresh lawn cuts and clean edging.
 </p>
 
 <div class="price">
-Starting At $18
+$18 Base
 </div>
 
 </div>
@@ -266,13 +262,12 @@ Power Washing
 </h3>
 
 <p>
-Driveways,
-sidewalks,
+Driveways, sidewalks,
 and patios.
 </p>
 
 <div class="price">
-Starting At $24
+$24 Base
 </div>
 
 </div>
@@ -288,11 +283,12 @@ Weed Pulling
 </h3>
 
 <p>
-Flower bed cleanup and weed removal.
+Flower bed cleanup
+and weed removal.
 </p>
 
 <div class="price">
-Starting At $14
+$14 Base
 </div>
 
 </div>
@@ -336,26 +332,13 @@ value="false">
 
 <input
 type="hidden"
+name="_next"
+value="">
+
+<input
+type="hidden"
 name="_template"
 value="table">
-
-<input
-type="hidden"
-name="Mowing"
-id="mowingInput"
-value="No">
-
-<input
-type="hidden"
-name="Power Washing"
-id="washingInput"
-value="No">
-
-<input
-type="hidden"
-name="Weeding"
-id="weedingInput"
-value="No">
 
 <input
 type="text"
@@ -366,6 +349,7 @@ required>
 <input
 type="email"
 name="Email"
+id="requestEmail"
 placeholder="Your Email"
 required>
 
@@ -394,8 +378,9 @@ Select Services
 
 <input
 type="checkbox"
-id="mowingCheck"
-data-price="18">
+class="service-check"
+value="18"
+data-name="Mowing">
 
 <span>
 Lawn Mowing
@@ -415,8 +400,9 @@ $18
 
 <input
 type="checkbox"
-id="washingCheck"
-data-price="24">
+class="service-check"
+value="24"
+data-name="Power Washing">
 
 <span>
 Power Washing
@@ -436,8 +422,9 @@ $24
 
 <input
 type="checkbox"
-id="weedingCheck"
-data-price="14">
+class="service-check"
+value="14"
+data-name="Weeding">
 
 <span>
 Weed Pulling
@@ -453,6 +440,29 @@ $14
 
 </div>
 
+<select id="yardSize">
+
+<option value="1">
+Small Yard • 1x
+</option>
+
+<option value="2">
+Medium Yard • 2x
+</option>
+
+<option value="3">
+Large Yard • 3x
+</option>
+
+</select>
+
+<div class="promo-box">
+
+🔥 15% OFF when all 3 services
+are selected together
+
+</div>
+
 <div class="price-total">
 
 Estimated Total:
@@ -461,29 +471,6 @@ $0
 </span>
 
 </div>
-
-<div class="promo-box">
-
-🔥 15% OFF when all 3 services
-are selected together.
-
-</div>
-
-<select name="Yard Size">
-
-<option>
-Small Yard • 1x Price
-</option>
-
-<option>
-Medium Yard • 2x Price
-</option>
-
-<option>
-Large Yard • 3x Price
-</option>
-
-</select>
 
 <textarea
 name="Message"
@@ -573,6 +560,100 @@ everything looking clean.”
 </div>
 
 </div>
+
+</section>
+
+<!-- FEEDBACK -->
+
+<section
+class="contact"
+id="feedback">
+
+<div class="section-title">
+
+<span>
+FEEDBACK
+</span>
+
+<h2>
+Leave Feedback
+</h2>
+
+</div>
+
+<form
+id="feedbackForm"
+action="https://formsubmit.co/yardfixers00@gmail.com"
+method="POST">
+
+<input
+type="hidden"
+name="_subject"
+value="FEEDBACK">
+
+<input
+type="hidden"
+name="_captcha"
+value="false">
+
+<input
+type="hidden"
+name="_next"
+value="">
+
+<input
+type="hidden"
+name="_template"
+value="table">
+
+<input
+type="text"
+name="Name"
+placeholder="Your Name"
+required>
+
+<input
+type="email"
+name="Email"
+id="feedbackEmail"
+placeholder="Your Email"
+required>
+
+<select
+name="Stars"
+required>
+
+<option value="">
+Rating
+</option>
+
+<option>0.5 Stars</option>
+<option>1 Star</option>
+<option>1.5 Stars</option>
+<option>2 Stars</option>
+<option>2.5 Stars</option>
+<option>3 Stars</option>
+<option>3.5 Stars</option>
+<option>4 Stars</option>
+<option>4.5 Stars</option>
+<option>5 Stars</option>
+
+</select>
+
+<textarea
+name="Feedback"
+placeholder="Write your feedback..."
+required></textarea>
+
+<button
+class="submit-btn"
+type="submit">
+
+Send Feedback
+
+</button>
+
+</form>
 
 </section>
 
