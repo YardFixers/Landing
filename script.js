@@ -46,7 +46,7 @@ e.target.value=formatted;
 });
 
 /* =========================
-VISITOR TRACKING
+TRACK USER
 ========================= */
 
 const startTime = Date.now();
@@ -57,7 +57,7 @@ window.addEventListener(
 
 async()=>{
 
-const timeSpent=
+const timeSpent =
 Math.floor(
 (Date.now()-startTime)/1000
 );
@@ -95,7 +95,7 @@ localStorage.getItem(
 )
 );
 
-/* SHOW LOGIN STATE */
+/* UPDATE LOGIN UI */
 
 function updateLoginUI(){
 
@@ -104,16 +104,39 @@ document.getElementById(
 "accountStatus"
 );
 
+const logoutBtn =
+document.getElementById(
+"logoutBtn"
+);
+
 if(currentUser){
 
-status.innerText =
-"Logged In As: " +
-currentUser.email;
+status.innerHTML =
+
+`
+Logged In As:
+<strong>
+${currentUser.email}
+</strong>
+
+<br><br>
+
+Reward Points:
+<strong>
+${currentUser.points}
+</strong>
+`;
+
+logoutBtn.style.display =
+"block";
 
 }else{
 
 status.innerText =
 "Not Logged In";
+
+logoutBtn.style.display =
+"none";
 
 }
 
@@ -137,7 +160,7 @@ document.getElementById(
 
 if(!email || !password){
 
-alert("Fill Out All Fields");
+alert("Fill Out Everything");
 
 return;
 
@@ -166,10 +189,18 @@ await response.json();
 
 if(result.success){
 
-document.getElementById(
-"accountStatus"
-).innerText =
-"Account Created";
+currentUser =
+result.user;
+
+localStorage.setItem(
+
+"yardfixersUser",
+
+JSON.stringify(result.user)
+
+);
+
+updateLoginUI();
 
 }else{
 
@@ -219,7 +250,8 @@ await response.json();
 
 if(result.success){
 
-currentUser=result.user;
+currentUser =
+result.user;
 
 localStorage.setItem(
 
@@ -273,8 +305,6 @@ async(e)=>{
 
 e.preventDefault();
 
-/* MULTI SERVICES */
-
 const checked =
 document.querySelectorAll(
 ".multi-services input:checked"
@@ -285,7 +315,7 @@ Array.from(checked)
 .map(box=>box.value)
 .join(", ");
 
-const data={
+const data = {
 
 name:form.name.value,
 
@@ -308,7 +338,7 @@ currentUser
 
 };
 
-const response=
+const response =
 await fetch("/order",{
 
 method:"POST",
@@ -321,12 +351,29 @@ body:JSON.stringify(data)
 
 });
 
-const result=
+const result =
 await response.json();
+
+if(currentUser){
+
+currentUser.points =
+result.points;
+
+localStorage.setItem(
+
+"yardfixersUser",
+
+JSON.stringify(currentUser)
+
+);
+
+}
+
+/* THANK YOU PAGE */
 
 if(result.success){
 
-window.location.href=
+window.location.href =
 "thankyou.html";
 
 }
