@@ -1,127 +1,43 @@
 /* =========================
-   AUTO LOGOUT ON REFRESH
+DEV ACCESS CHECK
 ========================= */
 
-sessionStorage.removeItem(
-"ownerLoggedIn"
+const isDev =
+sessionStorage.getItem(
+"yardfixers_dev"
 );
+
+if(isDev !== "true"){
+
+window.location.href =
+"index.html";
+
+}
 
 /* =========================
-   ELEMENTS
+LOGOUT
 ========================= */
-
-const loginScreen =
-document.getElementById(
-"loginScreen"
-);
-
-const dashboard =
-document.getElementById(
-"dashboard"
-);
-
-const loginBtn =
-document.getElementById(
-"loginBtn"
-);
 
 const logoutBtn =
 document.getElementById(
 "logoutBtn"
 );
 
-const backBtn =
-document.getElementById(
-"backBtn"
-);
-
-const loginError =
-document.getElementById(
-"loginError"
-);
-
-/* =========================
-   LOGIN
-========================= */
-
-loginBtn.addEventListener(
-"click",
-()=>{
-
-const username =
-document.getElementById(
-"ownerUser"
-).value;
-
-const password =
-document.getElementById(
-"ownerPass"
-).value;
-
-if(
-username === "YardFixers" &&
-password === "+zr4bf+=ef#4"
-){
-
-sessionStorage.setItem(
-"ownerLoggedIn",
-"true"
-);
-
-loginScreen.classList.add(
-"hidden"
-);
-
-dashboard.classList.remove(
-"hidden"
-);
-
-loadDashboard();
-
-}else{
-
-loginError.style.display =
-"block";
-
-}
-
-});
-
-/* =========================
-   LOGOUT
-========================= */
+if(logoutBtn){
 
 logoutBtn.addEventListener(
 "click",
 ()=>{
 
-sessionStorage.removeItem(
-"ownerLoggedIn"
-);
-
-location.reload();
-
-});
-
-/* =========================
-   BACK BUTTON
-========================= */
-
-backBtn.addEventListener(
-"click",
-e=>{
-
-e.preventDefault();
-
 const leave =
 confirm(
-"Leaving the dashboard will log you out."
+"Leaving the owner page will log you out."
 );
 
 if(leave){
 
 sessionStorage.removeItem(
-"ownerLoggedIn"
+"yardfixers_dev"
 );
 
 window.location.href =
@@ -131,361 +47,159 @@ window.location.href =
 
 });
 
-/* =========================
-   STORAGE
-========================= */
-
-function getStorage(name){
-
-return JSON.parse(
-localStorage.getItem(name)
-) || [];
-
 }
 
 /* =========================
-   ACCEPT REQUEST
+LOAD SAVED DATA
 ========================= */
-
-async function acceptRequest(
-email,
-name,
-date,
-time,
-button
-){
-
-button.innerText =
-"Sending...";
-
-try{
-
-await fetch(
-"https://YOUR-RENDER-URL.onrender.com/accept",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-
-email,
-name,
-date,
-time
-
-})
-}
-);
-
-button.innerText =
-"Accepted ✓";
-
-button.style.background =
-"#79d64d";
-
-}catch{
-
-button.innerText =
-"Error";
-
-}
-
-}
-
-/* =========================
-   REJECT REQUEST
-========================= */
-
-async function rejectRequest(
-email,
-name,
-button
-){
-
-button.innerText =
-"Sending...";
-
-try{
-
-await fetch(
-"https://YOUR-RENDER-URL.onrender.com/reject",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-
-email,
-name
-
-})
-}
-);
-
-button.innerText =
-"Rejected";
-
-button.style.background =
-"#ff6b6b";
-
-}catch{
-
-button.innerText =
-"Error";
-
-}
-
-}
-
-/* =========================
-   LOAD DASHBOARD
-========================= */
-
-function loadDashboard(){
-
-const visitors =
-getStorage("yardVisitors");
 
 const requests =
-getStorage("yardRequests");
+JSON.parse(
+localStorage.getItem(
+"yardfixers_requests"
+) || "[]"
+);
 
 const feedback =
-getStorage("yardFeedback");
+JSON.parse(
+localStorage.getItem(
+"yardfixers_feedback"
+) || "[]"
+);
 
-const accounts =
-getStorage("yardAccounts");
+const visits =
+Number(
+localStorage.getItem(
+"yardfixers_visits"
+) || 0
+);
 
-/* COUNTS */
+/* =========================
+UPDATE STATS
+========================= */
 
 document.getElementById(
-"visitorCount"
-).innerText =
-visitors.length;
+"visitCount"
+).innerText = visits;
 
 document.getElementById(
 "requestCount"
-).innerText =
-requests.length;
+).innerText = requests.length;
 
 document.getElementById(
 "feedbackCount"
-).innerText =
-feedback.length;
-
-document.getElementById(
-"accountCount"
-).innerText =
-accounts.length;
+).innerText = feedback.length;
 
 /* =========================
-   REQUESTS
+REVENUE TOTAL
 ========================= */
 
-const requestList =
-document.getElementById(
-"requestList"
+let totalRevenue = 0;
+
+requests.forEach(req=>{
+
+const price =
+Number(
+req.price.replace(/\D/g,"")
 );
 
-requestList.innerHTML = "";
+totalRevenue += price;
 
-requests
-.slice()
-.reverse()
-.forEach((req,index)=>{
+});
 
-requestList.innerHTML +=
-`
-<div class="item">
+document.getElementById(
+"revenueCount"
+).innerText =
+"$" + totalRevenue;
 
-<strong>Name:</strong>
-${req.name}<br>
+/* =========================
+REAL REQUESTS
+========================= */
 
-<strong>Email:</strong>
-${req.email}<br>
+const requestContainer =
+document.getElementById(
+"requestContainer"
+);
 
-<strong>Phone:</strong>
-${req.phone}<br>
+if(requestContainer){
 
-<strong>Area:</strong>
-${req.area}<br>
+if(requests.length === 0){
 
-<strong>Mowing:</strong>
-${req.mowing}<br>
+requestContainer.innerHTML = `
 
-<strong>Power Washing:</strong>
-${req.washing}<br>
+<div class="request-box">
 
-<strong>Weeding:</strong>
-${req.weeding}<br>
+<h3>
+No requests yet
+</h3>
 
-<strong>Total:</strong>
-${req.total}<br>
+<p>
+Requests sent from the site
+will appear here.
+</p>
 
-<strong>Time:</strong>
-${req.time}<br><br>
+</div>
 
-<strong>Message:</strong><br>
-${req.message}
+`;
 
-<div class="action-box">
+}else{
 
-<input
-type="date"
-id="date-${index}">
+requests.forEach(req=>{
 
-<input
-type="time"
-id="time-${index}">
+requestContainer.innerHTML += `
 
-<div class="action-buttons">
+<div class="request-box">
 
-<button
-class="accept-btn"
-onclick="
-acceptRequest(
-'${req.email}',
-'${req.name}',
-document.getElementById('date-${index}').value,
-document.getElementById('time-${index}').value,
-this
-)
-">
+<h3>
+${req.price}
+</h3>
 
+<p>
+<b>Name:</b> ${req.name}
+</p>
+
+<p>
+<b>Area:</b> ${req.area}
+</p>
+
+<p>
+<b>Phone:</b> ${req.phone}
+</p>
+
+<p>
+<b>Mowing:</b> ${req.mowing}
+</p>
+
+<p>
+<b>Power Washing:</b> ${req.washing}
+</p>
+
+<p>
+<b>Weeding:</b> ${req.weeding}
+</p>
+
+<p>
+<b>Message:</b> ${req.message}
+</p>
+
+<p>
+<b>Date:</b> ${req.date}
+</p>
+
+<div class="request-buttons">
+
+<button class="accept-btn">
 Accept
-
 </button>
 
-<button
-class="reject-btn"
-onclick="
-rejectRequest(
-'${req.email}',
-'${req.name}',
-this
-)
-">
-
+<button class="reject-btn">
 Reject
-
 </button>
 
 </div>
 
 </div>
 
-</div>
-`;
-
-});
-
-/* =========================
-   FEEDBACK
-========================= */
-
-const feedbackList =
-document.getElementById(
-"feedbackList"
-);
-
-feedbackList.innerHTML = "";
-
-feedback
-.slice()
-.reverse()
-.forEach(feed=>{
-
-feedbackList.innerHTML +=
-`
-<div class="item">
-
-<strong>Name:</strong>
-${feed.name}<br>
-
-<strong>Email:</strong>
-${feed.email}<br>
-
-<strong>Stars:</strong>
-${feed.stars}<br>
-
-<strong>Time:</strong>
-${feed.time}<br><br>
-
-<strong>Message:</strong><br>
-${feed.message}
-
-</div>
-`;
-
-});
-
-/* =========================
-   VISITORS
-========================= */
-
-const visitorList =
-document.getElementById(
-"visitorList"
-);
-
-visitorList.innerHTML = "";
-
-visitors
-.slice()
-.reverse()
-.forEach(visitor=>{
-
-visitorList.innerHTML +=
-`
-<div class="item">
-
-<strong>Visited:</strong>
-${visitor.time}<br><br>
-
-<strong>Page:</strong><br>
-${visitor.page}<br><br>
-
-<strong>Device:</strong><br>
-${visitor.device}
-
-</div>
-`;
-
-});
-
-/* =========================
-   ACCOUNTS
-========================= */
-
-const accountList =
-document.getElementById(
-"accountList"
-);
-
-if(accountList){
-
-accountList.innerHTML = "";
-
-accounts
-.slice()
-.reverse()
-.forEach(acc=>{
-
-accountList.innerHTML +=
-`
-<div class="item">
-
-<strong>Name:</strong>
-${acc.name}<br>
-
-<strong>Email:</strong>
-${acc.email}<br>
-
-<strong>Points:</strong>
-${acc.points || 0}
-
-</div>
 `;
 
 });
@@ -493,3 +207,96 @@ ${acc.points || 0}
 }
 
 }
+
+/* =========================
+REAL FEEDBACK
+========================= */
+
+const feedbackContainer =
+document.getElementById(
+"feedbackContainer"
+);
+
+if(feedbackContainer){
+
+if(feedback.length === 0){
+
+feedbackContainer.innerHTML = `
+
+<div class="feedback-admin-box">
+
+<p>
+No feedback yet.
+</p>
+
+</div>
+
+`;
+
+}else{
+
+feedback.forEach(item=>{
+
+feedbackContainer.innerHTML += `
+
+<div class="feedback-admin-box">
+
+<div class="admin-stars">
+${item.stars}
+</div>
+
+<p>
+${item.message}
+</p>
+
+<span>
+— ${item.name}
+</span>
+
+</div>
+
+`;
+
+});
+
+}
+
+}
+
+/* =========================
+ACCEPT / REJECT BUTTONS
+========================= */
+
+document.addEventListener(
+"click",
+e=>{
+
+if(
+e.target.classList.contains(
+"accept-btn"
+)
+){
+
+e.target.innerText =
+"Accepted";
+
+e.target.style.opacity =
+".7";
+
+}
+
+if(
+e.target.classList.contains(
+"reject-btn"
+)
+){
+
+e.target.innerText =
+"Rejected";
+
+e.target.style.opacity =
+".7";
+
+}
+
+});
