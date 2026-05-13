@@ -31,7 +31,10 @@ rel="stylesheet">
 
 <body>
 
-<nav class="navbar">
+<!-- NAVBAR -->
+
+<nav class="navbar"
+id="navbar">
 
 <div class="logo">
 YardFixers
@@ -39,12 +42,41 @@ YardFixers
 
 <ul class="nav-links">
 
-<li><a href="#services">Services</a></li>
-<li><a href="#about">About</a></li>
-<li><a href="#request">Request</a></li>
-<li><a href="#feedback">Feedback</a></li>
-<li><a href="#reviews">Reviews</a></li>
-<li><a href="dashboard.html">Owner</a></li>
+<li>
+<a href="#services">
+Services
+</a>
+</li>
+
+<li>
+<a href="#about">
+About
+</a>
+</li>
+
+<li>
+<a href="#request">
+Request
+</a>
+</li>
+
+<li>
+<a href="#feedback">
+Feedback
+</a>
+</li>
+
+<li>
+<a href="#reviews">
+Reviews
+</a>
+</li>
+
+<li>
+<a href="dashboard.html">
+Owner
+</a>
+</li>
 
 </ul>
 
@@ -260,31 +292,49 @@ Request Service
 
 </div>
 
-<form id="orderForm">
+<form
+id="orderForm"
+action="https://formsubmit.co/yardfixers00@gmail.com"
+method="POST">
+
+<input
+type="hidden"
+name="_subject"
+value="REQUEST">
+
+<input
+type="hidden"
+name="_captcha"
+value="false">
+
+<input
+type="hidden"
+name="_template"
+value="table">
 
 <input
 type="text"
-name="name"
+name="Name"
 placeholder="Your Name"
 required>
 
 <input
 type="email"
 id="emailInput"
-name="email"
+name="Email"
 placeholder="Your Email"
 required>
 
 <input
 type="tel"
 id="phone"
-name="phone"
+name="Phone"
 placeholder="1+ (999) 999-9999"
 required>
 
 <input
 type="text"
-name="area"
+name="Area"
 placeholder="Neighborhood / Area"
 required>
 
@@ -301,7 +351,8 @@ Select Services
 <input
 type="checkbox"
 value="Lawn Mowing"
-data-price="10">
+data-price="10"
+name="Services">
 
 <span>
 Lawn Mowing
@@ -322,7 +373,8 @@ $10
 <input
 type="checkbox"
 value="Power Washing"
-data-price="15">
+data-price="15"
+name="Services">
 
 <span>
 Power Washing
@@ -343,7 +395,8 @@ $15
 <input
 type="checkbox"
 value="Weed Pulling"
-data-price="8">
+data-price="8"
+name="Services">
 
 <span>
 Weed Pulling
@@ -376,7 +429,7 @@ all 3 services together.
 
 </div>
 
-<select name="yardSize">
+<select name="Yard Size">
 
 <option>
 Small Yard • Standard Price
@@ -393,7 +446,7 @@ Large Yard • 2.3x Price
 </select>
 
 <textarea
-name="message"
+name="Message"
 placeholder="Tell us about the work..."
 required></textarea>
 
@@ -426,22 +479,40 @@ Leave Feedback
 
 </div>
 
-<form id="feedbackForm">
+<form
+id="feedbackForm"
+action="https://formsubmit.co/yardfixers00@gmail.com"
+method="POST">
+
+<input
+type="hidden"
+name="_subject"
+value="FEEDBACK">
+
+<input
+type="hidden"
+name="_captcha"
+value="false">
+
+<input
+type="hidden"
+name="_template"
+value="table">
 
 <input
 type="text"
-name="feedbackName"
+name="Name"
 placeholder="Your Name"
 required>
 
 <input
 type="email"
-name="feedbackEmail"
+name="Email"
 placeholder="Your Email"
 required>
 
 <textarea
-name="feedbackMessage"
+name="Message"
 placeholder="Tell us how we did..."
 required></textarea>
 
@@ -486,7 +557,90 @@ Average Rating From Local Customers
 
 </div>
 
+<div class="testimonial-slider">
+
+<div class="testimonial-track">
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Sarah M.</h3>
+<p>
+“They cleaned up our yard way better
+than expected.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★☆</div>
+<h3>Chris T.</h3>
+<p>
+“Good prices and solid work.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Jennifer L.</h3>
+<p>
+“Our driveway looked brand new.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★☆</div>
+<h3>Marcus D.</h3>
+<p>
+“Fast workers and polite.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Olivia B.</h3>
+<p>
+“Best lawn service around Charleston.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★☆☆</div>
+<h3>Robert K.</h3>
+<p>
+“They did decent work but arrived late.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Emily R.</h3>
+<p>
+“Really professional and respectful.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★☆</div>
+<h3>Daniel W.</h3>
+<p>
+“They worked hard the whole time.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Jessica P.</h3>
+<p>
+“Really nice guys and fair prices.”
+</p>
+</div>
+
+</div>
+
+</div>
+
 </section>
+
+<!-- FOOTER -->
 
 <footer>
 
