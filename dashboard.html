@@ -10,7 +10,7 @@ name="viewport"
 content="width=device-width, initial-scale=1.0">
 
 <title>
-YardFixers
+YardFixers Owner Dashboard
 </title>
 
 <link
@@ -25,724 +25,119 @@ rel="stylesheet">
 
 <body>
 
-<!-- NAVBAR -->
+<section class="dashboard-page">
 
-<nav
-class="navbar"
-id="navbar">
+<div class="dashboard-top">
 
-<a
-href="dashboard.html"
-class="logo">
-
-YardFixers
-
-</a>
-
-<ul class="nav-links">
-
-<li><a href="#services">Services</a></li>
-<li><a href="#team">Team</a></li>
-<li><a href="#request">Request</a></li>
-<li><a href="#reviews">Reviews</a></li>
-<li><a href="#feedback">Feedback</a></li>
-
-</ul>
-
-</nav>
-
-<!-- HERO -->
-
-<section class="hero">
-
-<div class="floating floating1"></div>
-<div class="floating floating2"></div>
-<div class="floating floating3"></div>
-
-<div class="hero-content">
-
-<div class="hero-badge">
-Weekend Lawn Services • Charleston SC
-</div>
+<div>
 
 <h1>
-Clean Yards.<br>
-Fair Prices.<br>
-Real Local Work.
+Owner Dashboard
 </h1>
 
-<p>
-Lawn mowing, power washing,
-and weed cleanup around
-Rivershore, Daniel Island,
-and nearby areas.
+<p class="dashboard-sub">
+
+Private YardFixers analytics panel
+
 </p>
 
-<div class="hero-buttons">
+</div>
 
-<a
-href="#request"
-class="main-btn">
+<button
+id="logoutBtn"
+class="submit-btn dashboard-logout">
 
-Get A Quote
+Back To Site
 
-</a>
-
-<a
-href="#reviews"
-class="secondary-btn">
-
-Reviews
-
-</a>
+</button>
 
 </div>
 
-</div>
+<!-- STATS -->
 
-</section>
+<div class="dashboard-grid">
 
-<!-- TEAM -->
+<div class="dashboard-card">
 
-<section
-class="team-section"
-id="team">
-
-<div class="section-title">
-
-<span>
-THE TEAM
-</span>
-
-<h2>
-Meet YardFixers
+<h2 id="visitCount">
+0
 </h2>
 
-</div>
-
-<div class="team-grid">
-
-<div class="team-card">
-
-<div class="team-image-wrap">
-
-<img
-src="IMG_8240.jpeg"
-class="team-image">
-
-</div>
-
-<h3>
-Ellison Evans
-</h3>
-
-<p class="team-role">
-Lawn Care & Cleanup
-</p>
-
-<p class="team-quote">
-“I like making yards look clean
-and helping people out around
-the neighborhood.”
+<p>
+Site Visitors
 </p>
 
 </div>
 
-<div class="team-card">
+<div class="dashboard-card">
 
-<div class="team-image-wrap">
-
-<img
-src="IMG_8232.jpeg"
-class="team-image">
-
-</div>
-
-<h3>
-Sawyer Kyte
-</h3>
-
-<p class="team-role">
-Power Washing & Yard Work
-</p>
-
-<p class="team-quote">
-“We try to do quality work
-for fair prices and leave
-everything looking better.”
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ACCOUNT -->
-
-<section class="account-section">
-
-<div class="section-title">
-
-<span>
-ACCOUNT
-</span>
-
-<h2>
-Join YardFixers
+<h2 id="requestCount">
+0
 </h2>
 
-</div>
-
-<div class="account-box">
-
-<div id="loggedOutView">
-
-<button
-class="signup-btn"
-onclick="showSignup()">
-
-Create Account
-
-</button>
-
-<button
-class="signin-btn"
-onclick="showLogin()">
-
-Login
-
-</button>
+<p>
+Requests Sent
+</p>
 
 </div>
 
-<div
-id="loggedInView"
-style="display:none;">
+<div class="dashboard-card">
 
-<h3 id="welcomeText">
-Welcome
-</h3>
-
-<button
-class="logout-btn"
-onclick="logoutUser()">
-
-Logout
-
-</button>
-
-</div>
-
-<form
-id="signupForm"
-class="account-form hidden">
-
-<input
-type="text"
-id="signupName"
-placeholder="Full Name">
-
-<input
-type="email"
-id="signupEmail"
-placeholder="Email">
-
-<input
-type="password"
-id="signupPassword"
-placeholder="Password">
-
-<button
-type="button"
-onclick="signupUser()">
-
-Create Account
-
-</button>
-
-</form>
-
-<form
-id="loginForm"
-class="account-form hidden">
-
-<input
-type="email"
-id="loginEmail"
-placeholder="Email">
-
-<input
-type="password"
-id="loginPassword"
-placeholder="Password">
-
-<button
-type="button"
-onclick="loginUser()">
-
-Login
-
-</button>
-
-</form>
-
-</div>
-
-</section>
-
-<!-- SERVICES -->
-
-<section
-class="services"
-id="services">
-
-<div class="section-title">
-
-<span>
-SERVICES
-</span>
-
-<h2>
-What We Do
+<h2 id="feedbackCount">
+0
 </h2>
 
-</div>
-
-<div class="service-grid">
-
-<div class="card">
-
-<div class="icon">
-🌿
-</div>
-
-<h3>
-Lawn Mowing
-</h3>
-
 <p>
-Fresh lawn cuts and edging.
+Feedback Entries
 </p>
 
-<div class="price">
-$18 Base
 </div>
 
-</div>
+<div class="dashboard-card">
 
-<div class="card">
-
-<div class="icon">
-💦
-</div>
-
-<h3>
-Power Washing
-</h3>
-
-<p>
-Driveways, patios,
-and sidewalks.
-</p>
-
-<div class="price">
-$24 Base
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="icon">
-🪴
-</div>
-
-<h3>
-Weed Pulling
-</h3>
-
-<p>
-Flower bed cleanup
-and weed removal.
-</p>
-
-<div class="price">
-$14 Base
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- REQUEST -->
-
-<section
-class="contact"
-id="request">
-
-<div class="section-title">
-
-<span>
-REQUEST
-</span>
-
-<h2>
-Request Service
-</h2>
-
-</div>
-
-<form
-id="orderForm">
-
-<input
-type="text"
-name="name"
-placeholder="Your Name"
-required>
-
-<input
-type="email"
-name="email"
-id="requestEmail"
-placeholder="Your Email"
-required>
-
-<input
-type="tel"
-id="phone"
-name="phone"
-placeholder="1+ (999) 999-9999"
-required>
-
-<input
-type="text"
-name="area"
-placeholder="Neighborhood / Area"
-required>
-
-<label class="label-title">
-Select Services
-</label>
-
-<div class="multi-services">
-
-<label class="service-option">
-
-<div class="service-left">
-
-<input
-type="checkbox"
-class="service-check"
-value="18">
-
-<span>
-Lawn Mowing
-</span>
-
-</div>
-
-<div class="service-price">
-$18
-</div>
-
-</label>
-
-<label class="service-option">
-
-<div class="service-left">
-
-<input
-type="checkbox"
-class="service-check"
-value="24">
-
-<span>
-Power Washing
-</span>
-
-</div>
-
-<div class="service-price">
-$24
-</div>
-
-</label>
-
-<label class="service-option">
-
-<div class="service-left">
-
-<input
-type="checkbox"
-class="service-check"
-value="14">
-
-<span>
-Weed Pulling
-</span>
-
-</div>
-
-<div class="service-price">
-$14
-</div>
-
-</label>
-
-</div>
-
-<select id="yardSize">
-
-<option value="1">
-Small Yard • 1x
-</option>
-
-<option value="2">
-Medium Yard • 2x
-</option>
-
-<option value="3">
-Large Yard • 3x
-</option>
-
-</select>
-
-<div class="promo-box">
-
-🔥 15% OFF when all 3 services
-are selected together
-
-</div>
-
-<div class="price-total">
-
-Estimated Total:
-<span id="totalPrice">
+<h2 id="revenueCount">
 $0
-</span>
-
-</div>
-
-<div
-id="bundleText"
-class="bundle-text">
-
-</div>
-
-<textarea
-name="message"
-placeholder="Tell us about the work..."
-required></textarea>
-
-<button
-class="submit-btn"
-type="submit">
-
-Send Request
-
-</button>
-
-</form>
-
-</section>
-
-<!-- REVIEWS -->
-
-<section
-class="testimonials"
-id="reviews">
-
-<div class="section-title light">
-
-<span>
-REVIEWS
-</span>
-
-<h2>
-What People Say
 </h2>
 
-</div>
-
-<div class="review-stats">
-
-<div class="big-rating">
-4.5★
-</div>
-
 <p>
-Average Rating From Local Customers
+Estimated Revenue
 </p>
 
 </div>
 
-<div class="testimonial-slider">
-
-<div class="testimonial-track">
-
-<div class="testimonial-card">
-<div class="stars">★★★★★</div>
-<h3>Sarah M.</h3>
-<p>
-“They cleaned our whole yard up
-way better than we expected.”
-</p>
 </div>
 
-<div class="testimonial-card">
-<div class="stars">★★★★☆</div>
-<h3>Chris T.</h3>
-<p>
-“Really solid work for the price.”
-</p>
-</div>
+<!-- REQUESTS -->
 
-<div class="testimonial-card">
-<div class="stars">★★★★★</div>
-<h3>Jennifer L.</h3>
-<p>
-“Our driveway looked brand new.”
-</p>
-</div>
+<div class="dashboard-panel">
 
-<div class="testimonial-card">
-<div class="stars">★★★★☆</div>
-<h3>Marcus D.</h3>
-<p>
-“They worked fast and kept
-everything looking clean.”
-</p>
-</div>
+<h2>
+Recent Requests
+</h2>
 
-<div class="testimonial-card">
-<div class="stars">★★★★★</div>
-<h3>Sarah M.</h3>
-<p>
-“They cleaned our whole yard up
-way better than we expected.”
-</p>
-</div>
-
-<div class="testimonial-card">
-<div class="stars">★★★★☆</div>
-<h3>Chris T.</h3>
-<p>
-“Really solid work for the price.”
-</p>
-</div>
+<div id="requestContainer">
 
 </div>
 
 </div>
-
-</section>
 
 <!-- FEEDBACK -->
 
-<section
-class="contact"
-id="feedback">
-
-<div class="section-title">
-
-<span>
-FEEDBACK
-</span>
+<div class="dashboard-panel">
 
 <h2>
-Leave Feedback
+Recent Feedback
 </h2>
 
-</div>
-
-<form
-id="feedbackForm">
-
-<input
-type="text"
-name="name"
-placeholder="Your Name"
-required>
-
-<input
-type="email"
-name="email"
-id="feedbackEmail"
-placeholder="Your Email"
-required>
-
-<div class="star-rating">
-
-<input type="radio" id="star5" name="stars" value="5">
-<label for="star5">★</label>
-
-<input type="radio" id="star4half" name="stars" value="4.5">
-<label for="star4half">★</label>
-
-<input type="radio" id="star4" name="stars" value="4">
-<label for="star4">★</label>
-
-<input type="radio" id="star3half" name="stars" value="3.5">
-<label for="star3half">★</label>
-
-<input type="radio" id="star3" name="stars" value="3">
-<label for="star3">★</label>
-
-<input type="radio" id="star2half" name="stars" value="2.5">
-<label for="star2half">★</label>
-
-<input type="radio" id="star2" name="stars" value="2">
-<label for="star2">★</label>
-
-<input type="radio" id="star1half" name="stars" value="1.5">
-<label for="star1half">★</label>
-
-<input type="radio" id="star1" name="stars" value="1">
-<label for="star1">★</label>
-
-<input type="radio" id="starhalf" name="stars" value="0.5">
-<label for="starhalf">★</label>
+<div id="feedbackContainer">
 
 </div>
 
-<textarea
-name="feedback"
-placeholder="Write your feedback..."
-required></textarea>
-
-<button
-class="submit-btn"
-type="submit">
-
-Send Feedback
-
-</button>
-
-</form>
+</div>
 
 </section>
 
-<footer>
-
-<p>
-© YardFixers • Charleston SC
-</p>
-
-<span class="contact-email">
-yardfixers00@gmail.com
-</span>
-
-<span>
-Site made by, Eli Vaughan
-</span>
-
-</footer>
-
-<script src="script.js"></script>
+<script src="dashboard.js"></script>
 
 </body>
 
