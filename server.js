@@ -1,152 +1,94 @@
 const express = require("express");
 const cors = require("cors");
-const fs = require("fs");
-const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
+const { Resend } = require("resend");
+
+dotenv.config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname));
 
-const DB = "./database.json";
-
-/* DATABASE */
-
-function readDB(){
-
-return JSON.parse(
-fs.readFileSync(DB)
+const resend =
+new Resend(
+process.env.RESEND_API_KEY
 );
 
-}
+/* =========================
+   ACCEPT REQUEST
+========================= */
 
-function writeDB(data){
+app.post(
+"/accept",
+async(req,res)=>{
 
-fs.writeFileSync(
-DB,
-JSON.stringify(data,null,2)
-);
+try{
 
-}
+const {
+email,
+name,
+date,
+time
+} = req.body;
 
-/* EMAIL */
+await resend.emails.send({
 
-const transporter =
-nodemailer.createTransport({
+from:
+"YardFixers <onboarding@resend.dev>",
 
-service:"gmail",
+to:
+email,
 
-auth:{
+subject:
+"Your YardFixers Request Was Accepted",
 
-user:"yardfixers00@gmail.com",
+html:
+`
+<div style="
+font-family:Arial;
+padding:20px;
+line-height:1.8;
+">
 
-pass:"PUT_YOUR_GOOGLE_APP_PASSWORD_HERE"
+<h2>
+Hey ${name},
+</h2>
 
-}
+<p>
+Good news —
+we accepted your request.
+</p>
+
+<p>
+We currently have you scheduled for:
+</p>
+
+<h3>
+${date || "Your requested date"}
+<br>
+${time || ""}
+</h3>
+
+<p>
+Thanks for choosing YardFixers.
+We appreciate the support.
+</p>
+
+<p>
+- Ellison & Sawyer
+</p>
+
+</div>
+`
 
 });
-
-/* TRACK USERS */
-
-app.post("/track",(req,res)=>{
-
-const db = readDB();
-
-db.visitors.push({
-
-ip:
-req.headers["x-forwarded-for"] ||
-req.socket.remoteAddress,
-
-width:req.body.width,
-
-height:req.body.height,
-
-timeSpent:req.body.timeSpent,
-
-time:new Date()
-
-});
-
-writeDB(db);
 
 res.json({
 success:true
 });
 
-});
-
-/* SIGNUP */
-
-app.post("/signup",(req,res)=>{
-
-const db = readDB();
-
-const exists =
-db.users.find(
-u=>u.email===req.body.email
-);
-
-if(exists){
-
-return res.json({
-
-success:false,
-message:"Account Already Exists"
-
-});
-
-}
-
-const newUser = {
-
-email:req.body.email,
-password:req.body.password,
-points:0
-
-};
-
-db.users.push(newUser);
-
-writeDB(db);
-
-res.json({
-
-success:true,
-user:newUser
-
-});
-
-});
-
-/* LOGIN */
-
-app.post("/login",(req,res)=>{
-
-const db = readDB();
-
-const user =
-db.users.find(
-
-u=>
-
-u.email===req.body.email &&
-
-u.password===req.body.password
-
-);
-
-if(user){
-
-res.json({
-
-success:true,
-user
-
-});
-
-}else{
+}catch(err){
 
 res.json({
 success:false
@@ -156,159 +98,87 @@ success:false
 
 });
 
-/* REQUEST */
+/* =========================
+   REJECT REQUEST
+========================= */
 
-app.post("/request",async(req,res)=>{
-
-const db = readDB();
-
-db.orders.push(req.body);
-
-writeDB(db);
-
-const html = `
-
-<h2>REQUEST</h2>
-
-<p>
-<b>Name:</b>
-${req.body.name}
-</p>
-
-<p>
-<b>Gmail:</b>
-${req.body.email}
-</p>
-
-<p>
-<b>Phone:</b>
-${req.body.phone}
-</p>
-
-<p>
-<b>Area:</b>
-${req.body.area}
-</p>
-
-<p>
-<b>Services:</b>
-${req.body.services}
-</p>
-
-<p>
-<b>Yard Size:</b>
-${req.body.yardSize}
-</p>
-
-<p>
-<b>Estimated Price:</b>
-${req.body.price}
-</p>
-
-<p>
-<b>Message:</b>
-${req.body.message}
-</p>
-
-`;
+app.post(
+"/reject",
+async(req,res)=>{
 
 try{
 
-await transporter.sendMail({
+const {
+email,
+name
+} = req.body;
 
-from:"yardfixers00@gmail.com",
+await resend.emails.send({
 
-to:"yardfixers00@gmail.com",
+from:
+"YardFixers <onboarding@resend.dev>",
 
-subject:"REQUEST",
+to:
+email,
 
-html
+subject:
+"Update About Your YardFixers Request",
+
+html:
+`
+<div style="
+font-family:Arial;
+padding:20px;
+line-height:1.8;
+">
+
+<h2>
+Hey ${name},
+</h2>
+
+<p>
+Thanks for reaching out to YardFixers.
+</p>
+
+<p>
+Unfortunately,
+we aren't available for that request right now.
+</p>
+
+<p>
+We really appreciate you contacting us
+and hope we can help in the future.
+</p>
+
+<p>
+- Ellison & Sawyer
+</p>
+
+</div>
+`
 
 });
-
-}catch(err){
-
-console.log(err);
-
-}
 
 res.json({
 success:true
 });
 
-});
-
-/* FEEDBACK */
-
-app.post("/feedback",async(req,res)=>{
-
-const db = readDB();
-
-db.feedback.push(req.body);
-
-writeDB(db);
-
-const html = `
-
-<h2>FEEDBACK</h2>
-
-<p>
-<b>Name:</b>
-${req.body.name}
-</p>
-
-<p>
-<b>Gmail:</b>
-${req.body.email}
-</p>
-
-<p>
-<b>Feedback:</b>
-${req.body.message}
-</p>
-
-`;
-
-try{
-
-await transporter.sendMail({
-
-from:"yardfixers00@gmail.com",
-
-to:"yardfixers00@gmail.com",
-
-subject:"FEEDBACK",
-
-html
-
-});
-
 }catch(err){
 
-console.log(err);
+res.json({
+success:false
+});
 
 }
 
-res.json({
-success:true
 });
 
-});
+app.listen(
+3000,
+()=>{
 
-/* DASHBOARD */
-
-app.get("/dashboard-data",(req,res)=>{
-
-const db = readDB();
-
-res.json(db);
-
-});
-
-/* START */
-
-app.listen(3000,()=>{
-
-console.log("Running On 3000");
+console.log(
+"Server running on port 3000"
+);
 
 });
