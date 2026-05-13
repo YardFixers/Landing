@@ -1,6 +1,4 @@
-/* =========================
-NAVBAR
-========================= */
+/* NAVBAR */
 
 const navbar =
 document.getElementById(
@@ -37,9 +35,7 @@ lastScroll = current;
 
 });
 
-/* =========================
-SERVICE CHECKBOXES
-========================= */
+/* SERVICES */
 
 const mowingCheck =
 document.getElementById(
@@ -71,10 +67,6 @@ document.getElementById(
 "weedingInput"
 );
 
-/* =========================
-PRICE CALCULATOR
-========================= */
-
 const yardSizeSelect =
 document.querySelector(
 'select[name="Yard Size"]'
@@ -91,58 +83,41 @@ let basePrice = 0;
 
 let selected = 0;
 
-/* MOWING */
-
 if(mowingCheck.checked){
 
 basePrice += 18;
 selected++;
-
-mowingInput.value =
-"Yes";
+mowingInput.value = "Yes";
 
 }else{
 
-mowingInput.value =
-"No";
+mowingInput.value = "No";
 
 }
-
-/* POWER WASHING */
 
 if(washingCheck.checked){
 
 basePrice += 24;
 selected++;
-
-washingInput.value =
-"Yes";
+washingInput.value = "Yes";
 
 }else{
 
-washingInput.value =
-"No";
+washingInput.value = "No";
 
 }
-
-/* WEEDING */
 
 if(weedingCheck.checked){
 
 basePrice += 14;
 selected++;
-
-weedingInput.value =
-"Yes";
+weedingInput.value = "Yes";
 
 }else{
 
-weedingInput.value =
-"No";
+weedingInput.value = "No";
 
 }
-
-/* MULTIPLIER */
 
 let multiplier = 1;
 
@@ -157,12 +132,8 @@ if(yard.includes("Large")){
 multiplier = 3;
 }
 
-/* TOTAL */
-
 let finalPrice =
 basePrice * multiplier;
-
-/* DISCOUNT */
 
 let discountText = "";
 
@@ -184,8 +155,6 @@ totalPrice.innerText =
 
 }
 
-/* EVENTS */
-
 [
 mowingCheck,
 washingCheck,
@@ -206,9 +175,7 @@ updatePrice
 
 updatePrice();
 
-/* =========================
-PHONE FORMAT
-========================= */
+/* PHONE FORMAT */
 
 const phone =
 document.getElementById(
@@ -234,30 +201,22 @@ input.slice(0,11);
 let formatted = "";
 
 if(input.length > 0){
-
 formatted += "1+ ";
-
 }
 
 if(input.length > 1){
-
 formatted += "(" +
 input.substring(1,4);
-
 }
 
 if(input.length >= 4){
-
 formatted += ") " +
 input.substring(4,7);
-
 }
 
 if(input.length >= 7){
-
 formatted += "-" +
 input.substring(7,11);
-
 }
 
 e.target.value =
@@ -267,9 +226,7 @@ formatted;
 
 }
 
-/* =========================
-FORM SUBMIT
-========================= */
+/* FORM SUBMIT */
 
 async function sendForm(
 form,
@@ -328,8 +285,6 @@ original;
 
 }
 
-/* REQUEST FORM */
-
 const orderForm =
 document.getElementById(
 "orderForm"
@@ -353,8 +308,6 @@ orderForm.querySelector(
 });
 
 }
-
-/* FEEDBACK FORM */
 
 const feedbackForm =
 document.getElementById(
@@ -380,9 +333,7 @@ feedbackForm.querySelector(
 
 }
 
-/* =========================
-STAR RATING FIX
-========================= */
+/* STAR RATING */
 
 const stars =
 document.querySelectorAll(
@@ -458,9 +409,7 @@ star.classList.remove(
 
 }
 
-/* =========================
-AUTO REVIEWS
-========================= */
+/* AUTO REVIEWS */
 
 const track =
 document.querySelector(
@@ -494,5 +443,114 @@ autoScroll
 }
 
 autoScroll();
+
+}
+
+/* DEV LOGIN */
+
+const secretDevBtn =
+document.getElementById(
+"secretDevBtn"
+);
+
+const devModal =
+document.getElementById(
+"devModal"
+);
+
+const closeDevModal =
+document.getElementById(
+"closeDevModal"
+);
+
+const devLoginBtn =
+document.getElementById(
+"devLoginBtn"
+);
+
+const devError =
+document.getElementById(
+"devError"
+);
+
+if(secretDevBtn){
+
+secretDevBtn.addEventListener(
+"click",
+()=>{
+
+devModal.classList.add(
+"active"
+);
+
+});
+
+}
+
+if(closeDevModal){
+
+closeDevModal.addEventListener(
+"click",
+()=>{
+
+devModal.classList.remove(
+"active"
+);
+
+});
+
+}
+
+if(devLoginBtn){
+
+devLoginBtn.addEventListener(
+"click",
+()=>{
+
+const user =
+document.getElementById(
+"devUser"
+).value;
+
+const pass =
+document.getElementById(
+"devPass"
+).value;
+
+if(
+user === "YardFixers" &&
+pass === "+zr4bf+=ef#4"
+){
+
+window.location.href =
+"dashboard.html";
+
+}else{
+
+devError.classList.add(
+"show"
+);
+
+}
+
+});
+
+}
+
+if(devModal){
+
+devModal.addEventListener(
+"click",
+e=>{
+
+if(e.target === devModal){
+
+devModal.classList.remove(
+"active"
+);
+
+}
+
+});
 
 }
