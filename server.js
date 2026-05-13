@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const path = require("path");
 const { Resend } = require("resend");
 
 dotenv.config();
@@ -8,7 +9,16 @@ dotenv.config();
 const app = express();
 
 app.use(cors());
+
 app.use(express.json());
+
+app.use(express.urlencoded({
+extended:true
+}));
+
+/* =========================
+   RESEND
+========================= */
 
 const resend =
 new Resend(
@@ -16,7 +26,35 @@ process.env.RESEND_API_KEY
 );
 
 /* =========================
-   ACCEPT REQUEST
+   FRONTEND WEBSITE
+========================= */
+
+app.use(
+express.static(
+path.join(__dirname)
+)
+);
+
+/* =========================
+   HOME PAGE
+========================= */
+
+app.get(
+"/",
+(req,res)=>{
+
+res.sendFile(
+path.join(
+__dirname,
+"index.html"
+)
+);
+
+}
+);
+
+/* =========================
+   ACCEPT EMAIL
 ========================= */
 
 app.post(
@@ -61,18 +99,20 @@ we accepted your request.
 </p>
 
 <p>
-We currently have you scheduled for:
+${
+date || time
+?
+`Your scheduled service time is:<br><br>
+<b>${date || ""}</b><br>
+<b>${time || ""}</b>`
+:
+`We accepted your requested time.`
+}
 </p>
 
-<h3>
-${date || "Your requested date"}
-<br>
-${time || ""}
-</h3>
-
 <p>
-Thanks for choosing YardFixers.
-We appreciate the support.
+Thank you for supporting YardFixers.
+We appreciate it a lot.
 </p>
 
 <p>
@@ -88,7 +128,9 @@ res.json({
 success:true
 });
 
-}catch(err){
+}catch(error){
+
+console.log(error);
 
 res.json({
 success:false
@@ -99,7 +141,7 @@ success:false
 });
 
 /* =========================
-   REJECT REQUEST
+   REJECT EMAIL
 ========================= */
 
 app.post(
@@ -137,17 +179,17 @@ Hey ${name},
 </h2>
 
 <p>
-Thanks for reaching out to YardFixers.
+Thank you for reaching out to YardFixers.
 </p>
 
 <p>
 Unfortunately,
-we aren't available for that request right now.
+we are unavailable for that request right now.
 </p>
 
 <p>
-We really appreciate you contacting us
-and hope we can help in the future.
+We still really appreciate you contacting us
+and hope we can work with you another time.
 </p>
 
 <p>
@@ -163,7 +205,9 @@ res.json({
 success:true
 });
 
-}catch(err){
+}catch(error){
+
+console.log(error);
 
 res.json({
 success:false
@@ -173,12 +217,38 @@ success:false
 
 });
 
+/* =========================
+   DASHBOARD PAGE
+========================= */
+
+app.get(
+"/dashboard",
+(req,res)=>{
+
+res.sendFile(
+path.join(
+__dirname,
+"dashboard.html"
+)
+);
+
+}
+);
+
+/* =========================
+   SERVER
+========================= */
+
+const PORT =
+process.env.PORT || 3000;
+
 app.listen(
-3000,
+PORT,
 ()=>{
 
 console.log(
-"Server running on port 3000"
+`Server running on port ${PORT}`
 );
 
-});
+}
+);
