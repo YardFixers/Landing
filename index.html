@@ -15,10 +15,6 @@ content="width=device-width, initial-scale=1.0">
 YardFixers
 </title>
 
-<meta
-name="description"
-content="YardFixers provides lawn mowing, power washing, and weed pulling services in Charleston SC 29492, Rivershore, Daniel Island, Wando, and nearby Berkeley County areas.">
-
 <link
 rel="stylesheet"
 href="style.css">
@@ -44,15 +40,10 @@ YardFixers
 <ul class="nav-links">
 
 <li><a href="#services">Services</a></li>
-
 <li><a href="#about">About</a></li>
-
 <li><a href="#request">Request</a></li>
-
 <li><a href="#feedback">Feedback</a></li>
-
 <li><a href="#reviews">Reviews</a></li>
-
 <li><a href="dashboard.html">Owner</a></li>
 
 </ul>
@@ -68,7 +59,7 @@ YardFixers
 <div class="hero-content">
 
 <div class="hero-badge">
-Weekend Lawn Services • Charleston SC 29492
+Weekend Lawn Services • Charleston SC
 </div>
 
 <h1>
@@ -78,11 +69,12 @@ Real Local Work.
 </h1>
 
 <p>
-YardFixers helps homeowners around
-Rivershore, Daniel Island, Wando,
-and nearby Charleston / Berkeley County
-areas with lawn mowing,
-power washing, and weed cleanup.
+Lawn mowing,
+power washing,
+and weed cleanup around
+Rivershore,
+Daniel Island,
+and nearby areas.
 </p>
 
 <div class="hero-buttons">
@@ -99,7 +91,7 @@ Get A Quote
 href="#reviews"
 class="secondary-btn">
 
-See Reviews
+Reviews
 
 </a>
 
@@ -140,9 +132,7 @@ Lawn Mowing
 </h3>
 
 <p>
-Fresh lawn cuts,
-clean edging,
-and better curb appeal.
+Fresh lawn cuts and clean edging.
 </p>
 
 <div class="price">
@@ -164,8 +154,7 @@ Power Washing
 <p>
 Driveways,
 sidewalks,
-patios,
-and outdoor cleaning.
+and patios.
 </p>
 
 <div class="price">
@@ -185,9 +174,7 @@ Weed Pulling
 </h3>
 
 <p>
-Flower bed cleanup,
-weed removal,
-and yard touch ups.
+Flower bed cleanup and weed removal.
 </p>
 
 <div class="price">
@@ -234,8 +221,7 @@ Ellison Evans
 
 <p>
 “We try to keep every yard looking
-clean and fresh while staying affordable
-for local families.”
+clean and affordable.”
 </p>
 
 </div>
@@ -255,9 +241,8 @@ Sawyer Kyte
 </h3>
 
 <p>
-“We’re local,
-we work weekends,
-and we always try to do quality work.”
+“We work weekends and always
+try to do quality work.”
 </p>
 
 </div>
@@ -306,6 +291,26 @@ type="hidden"
 name="_template"
 value="table">
 
+<!-- YES / NO VALUES -->
+
+<input
+type="hidden"
+name="Mowing"
+id="mowingInput"
+value="No">
+
+<input
+type="hidden"
+name="Power Washing"
+id="washingInput"
+value="No">
+
+<input
+type="hidden"
+name="Weeding"
+id="weedingInput"
+value="No">
+
 <input
 type="text"
 name="Name"
@@ -343,9 +348,8 @@ Select Services
 
 <input
 type="checkbox"
-value="Lawn Mowing"
-data-price="18"
-name="Services">
+id="mowingCheck"
+data-price="18">
 
 <span>
 Lawn Mowing
@@ -365,9 +369,8 @@ $18
 
 <input
 type="checkbox"
-value="Power Washing"
-data-price="24"
-name="Services">
+id="washingCheck"
+data-price="24">
 
 <span>
 Power Washing
@@ -387,9 +390,8 @@ $24
 
 <input
 type="checkbox"
-value="Weed Pulling"
-data-price="14"
-name="Services">
+id="weedingCheck"
+data-price="14">
 
 <span>
 Weed Pulling
@@ -416,8 +418,7 @@ $0
 
 <div class="promo-box">
 
-🔥 Bundle Deal:
-Get 15% OFF when all 3 services
+🔥 15% OFF when all 3 services
 are selected together.
 
 </div>
@@ -496,8 +497,8 @@ value="table">
 <input
 type="hidden"
 id="ratingValue"
-name="Rating"
-value="0">
+name="Stars"
+value="0 Stars">
 
 <input
 type="text"
@@ -513,35 +514,85 @@ required>
 
 <div class="rating-container">
 
-<span class="rating-star"
-data-value="0.5">★</span>
+<div class="star-wrap">
 
-<span class="rating-star"
-data-value="1">★</span>
+<span
+class="half-star"
+data-value="0.5">
+★
+</span>
 
-<span class="rating-star"
-data-value="1.5">★</span>
+<span
+class="full-star"
+data-value="1">
+★
+</span>
 
-<span class="rating-star"
-data-value="2">★</span>
+</div>
 
-<span class="rating-star"
-data-value="2.5">★</span>
+<div class="star-wrap">
 
-<span class="rating-star"
-data-value="3">★</span>
+<span
+class="half-star"
+data-value="1.5">
+★
+</span>
 
-<span class="rating-star"
-data-value="3.5">★</span>
+<span
+class="full-star"
+data-value="2">
+★
+</span>
 
-<span class="rating-star"
-data-value="4">★</span>
+</div>
 
-<span class="rating-star"
-data-value="4.5">★</span>
+<div class="star-wrap">
 
-<span class="rating-star"
-data-value="5">★</span>
+<span
+class="half-star"
+data-value="2.5">
+★
+</span>
+
+<span
+class="full-star"
+data-value="3">
+★
+</span>
+
+</div>
+
+<div class="star-wrap">
+
+<span
+class="half-star"
+data-value="3.5">
+★
+</span>
+
+<span
+class="full-star"
+data-value="4">
+★
+</span>
+
+</div>
+
+<div class="star-wrap">
+
+<span
+class="half-star"
+data-value="4.5">
+★
+</span>
+
+<span
+class="full-star"
+data-value="5">
+★
+</span>
+
+</div>
 
 </div>
 
@@ -561,121 +612,6 @@ Send Feedback
 </form>
 
 </section>
-
-<!-- REVIEWS -->
-
-<section
-class="testimonials"
-id="reviews">
-
-<div class="section-title light">
-
-<span>
-REVIEWS
-</span>
-
-<h2>
-What People Say
-</h2>
-
-</div>
-
-<div class="review-stats">
-
-<div class="big-rating">
-4.5★
-</div>
-
-<p>
-Average Rating From Local Customers
-</p>
-
-</div>
-
-<div class="testimonial-slider">
-
-<div class="testimonial-track">
-
-<div class="testimonial-card">
-<div class="stars">★★★★★</div>
-<h3>Sarah M.</h3>
-<p>
-“They cleaned up our yard better
-than expected.”
-</p>
-</div>
-
-<div class="testimonial-card">
-<div class="stars">★★★★☆</div>
-<h3>Chris T.</h3>
-<p>
-“Good prices and really solid work.”
-</p>
-</div>
-
-<div class="testimonial-card">
-<div class="stars">★★★★★</div>
-<h3>Jennifer L.</h3>
-<p>
-“Our driveway looked brand new.”
-</p>
-</div>
-
-<div class="testimonial-card">
-<div class="stars">★★★★☆</div>
-<h3>Marcus D.</h3>
-<p>
-“Fast workers and respectful.”
-</p>
-</div>
-
-<div class="testimonial-card">
-<div class="stars">★★★★★</div>
-<h3>Olivia B.</h3>
-<p>
-“Best local yard service around.”
-</p>
-</div>
-
-<div class="testimonial-card">
-<div class="stars">★★★☆☆</div>
-<h3>Robert K.</h3>
-<p>
-“They arrived a little late but
-did good work.”
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- FOOTER -->
-
-<footer>
-
-<p>
-© YardFixers • Charleston SC 29492
-</p>
-
-<span>
-Serving Rivershore,
-Daniel Island,
-Wando,
-and nearby areas.
-</span>
-
-<span class="contact-email">
-yardfixers00@gmail.com
-</span>
-
-<span>
-Site made by, Eli Vaughan
-</span>
-
-</footer>
 
 <script src="script.js"></script>
 
