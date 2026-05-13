@@ -31,17 +31,21 @@ rel="stylesheet">
 class="navbar"
 id="navbar">
 
-<div class="logo">
+<a
+href="dashboard.html"
+class="logo">
+
 YardFixers
-</div>
+
+</a>
 
 <ul class="nav-links">
 
 <li><a href="#services">Services</a></li>
+<li><a href="#about">About</a></li>
 <li><a href="#request">Request</a></li>
-<li><a href="#reviews">Reviews</a></li>
 <li><a href="#feedback">Feedback</a></li>
-<li><a href="dashboard.html">Owner</a></li>
+<li><a href="#reviews">Reviews</a></li>
 
 </ul>
 
@@ -50,6 +54,8 @@ YardFixers
 <!-- HERO -->
 
 <section class="hero">
+
+<div class="hero-overlay"></div>
 
 <div class="hero-content">
 
@@ -64,9 +70,11 @@ Real Local Work.
 </h1>
 
 <p>
-Lawn mowing, power washing,
+Lawn mowing,
+power washing,
 and weed cleanup around
-Rivershore, Daniel Island,
+Rivershore,
+Daniel Island,
 and nearby areas.
 </p>
 
@@ -89,123 +97,6 @@ Reviews
 </a>
 
 </div>
-
-</div>
-
-</section>
-
-<!-- ACCOUNT -->
-
-<section class="account-section">
-
-<div class="section-title">
-
-<span>
-ACCOUNT
-</span>
-
-<h2>
-Join YardFixers
-</h2>
-
-</div>
-
-<div class="account-box">
-
-<div id="loggedOutView">
-
-<button
-class="signup-btn"
-onclick="showSignup()">
-
-Create Account
-
-</button>
-
-<button
-class="signin-btn"
-onclick="showLogin()">
-
-Login
-
-</button>
-
-</div>
-
-<div
-id="loggedInView"
-style="display:none;">
-
-<h3 id="welcomeText">
-Welcome
-</h3>
-
-<button
-class="logout-btn"
-onclick="logoutUser()">
-
-Logout
-
-</button>
-
-</div>
-
-<!-- SIGNUP -->
-
-<form
-id="signupForm"
-class="account-form hidden">
-
-<input
-type="text"
-id="signupName"
-placeholder="Full Name">
-
-<input
-type="email"
-id="signupEmail"
-placeholder="Email">
-
-<input
-type="password"
-id="signupPassword"
-placeholder="Password">
-
-<button
-type="button"
-onclick="signupUser()">
-
-Create Account
-
-</button>
-
-</form>
-
-<!-- LOGIN -->
-
-<form
-id="loginForm"
-class="account-form hidden">
-
-<input
-type="email"
-id="loginEmail"
-placeholder="Email">
-
-<input
-type="password"
-id="loginPassword"
-placeholder="Password">
-
-<button
-type="button"
-onclick="loginUser()">
-
-Login
-
-</button>
-
-</form>
 
 </div>
 
@@ -246,7 +137,7 @@ Fresh lawn cuts and clean edging.
 </p>
 
 <div class="price">
-$18 Base
+Starting At $18
 </div>
 
 </div>
@@ -262,12 +153,13 @@ Power Washing
 </h3>
 
 <p>
-Driveways, sidewalks,
+Driveways,
+sidewalks,
 and patios.
 </p>
 
 <div class="price">
-$24 Base
+Starting At $24
 </div>
 
 </div>
@@ -283,12 +175,77 @@ Weed Pulling
 </h3>
 
 <p>
-Flower bed cleanup
-and weed removal.
+Flower bed cleanup and weed removal.
 </p>
 
 <div class="price">
-$14 Base
+Starting At $14
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section
+class="about"
+id="about">
+
+<div class="section-title light">
+
+<span>
+OUR TEAM
+</span>
+
+<h2>
+Meet YardFixers
+</h2>
+
+</div>
+
+<div class="team-grid">
+
+<div class="team-card">
+
+<img
+src="IMG_8240.jpeg"
+alt="Ellison Evans">
+
+<div class="team-info">
+
+<h3>
+Ellison Evans
+</h3>
+
+<p>
+“We try to keep every yard looking
+clean and affordable.”
+</p>
+
+</div>
+
+</div>
+
+<div class="team-card">
+
+<img
+src="IMG_8232.jpeg"
+alt="Sawyer Kyte">
+
+<div class="team-info">
+
+<h3>
+Sawyer Kyte
+</h3>
+
+<p>
+“We work weekends and always
+try to do quality work.”
+</p>
+
 </div>
 
 </div>
@@ -317,7 +274,7 @@ Request Service
 
 <form
 id="orderForm"
-action="https://formsubmit.co/yardfixers00@gmail.com"
+action="https://formsubmit.co/ajax/yardfixers00@gmail.com"
 method="POST">
 
 <input
@@ -332,13 +289,26 @@ value="false">
 
 <input
 type="hidden"
-name="_next"
-value="">
+name="_template"
+value="table">
 
 <input
 type="hidden"
-name="_template"
-value="table">
+name="Mowing"
+id="mowingInput"
+value="No">
+
+<input
+type="hidden"
+name="Power Washing"
+id="washingInput"
+value="No">
+
+<input
+type="hidden"
+name="Weeding"
+id="weedingInput"
+value="No">
 
 <input
 type="text"
@@ -349,7 +319,6 @@ required>
 <input
 type="email"
 name="Email"
-id="requestEmail"
 placeholder="Your Email"
 required>
 
@@ -378,9 +347,7 @@ Select Services
 
 <input
 type="checkbox"
-class="service-check"
-value="18"
-data-name="Mowing">
+id="mowingCheck">
 
 <span>
 Lawn Mowing
@@ -400,9 +367,7 @@ $18
 
 <input
 type="checkbox"
-class="service-check"
-value="24"
-data-name="Power Washing">
+id="washingCheck">
 
 <span>
 Power Washing
@@ -422,9 +387,7 @@ $24
 
 <input
 type="checkbox"
-class="service-check"
-value="14"
-data-name="Weeding">
+id="weedingCheck">
 
 <span>
 Weed Pulling
@@ -440,29 +403,6 @@ $14
 
 </div>
 
-<select id="yardSize">
-
-<option value="1">
-Small Yard • 1x
-</option>
-
-<option value="2">
-Medium Yard • 2x
-</option>
-
-<option value="3">
-Large Yard • 3x
-</option>
-
-</select>
-
-<div class="promo-box">
-
-🔥 15% OFF when all 3 services
-are selected together
-
-</div>
-
 <div class="price-total">
 
 Estimated Total:
@@ -471,6 +411,29 @@ $0
 </span>
 
 </div>
+
+<div class="promo-box">
+
+🔥 15% OFF when all 3 services
+are selected together.
+
+</div>
+
+<select name="Yard Size">
+
+<option>
+Small Yard • 1x Price
+</option>
+
+<option>
+Medium Yard • 2x Price
+</option>
+
+<option>
+Large Yard • 3x Price
+</option>
+
+</select>
 
 <textarea
 name="Message"
@@ -482,6 +445,108 @@ class="submit-btn"
 type="submit">
 
 Send Request
+
+</button>
+
+</form>
+
+</section>
+
+<!-- FEEDBACK -->
+
+<section
+class="feedback-section"
+id="feedback">
+
+<div class="section-title">
+
+<span>
+FEEDBACK
+</span>
+
+<h2>
+Leave Feedback
+</h2>
+
+</div>
+
+<form
+id="feedbackForm"
+action="https://formsubmit.co/ajax/yardfixers00@gmail.com"
+method="POST">
+
+<input
+type="hidden"
+name="_subject"
+value="FEEDBACK">
+
+<input
+type="hidden"
+name="_captcha"
+value="false">
+
+<input
+type="hidden"
+name="_template"
+value="table">
+
+<input
+type="hidden"
+id="ratingValue"
+name="Stars"
+value="0 Stars">
+
+<input
+type="text"
+name="Name"
+placeholder="Your Name"
+required>
+
+<input
+type="email"
+name="Email"
+placeholder="Your Email"
+required>
+
+<div class="rating-container">
+
+<div class="star-wrap">
+<span class="half-star" data-value="0.5">★</span>
+<span class="full-star" data-value="1">★</span>
+</div>
+
+<div class="star-wrap">
+<span class="half-star" data-value="1.5">★</span>
+<span class="full-star" data-value="2">★</span>
+</div>
+
+<div class="star-wrap">
+<span class="half-star" data-value="2.5">★</span>
+<span class="full-star" data-value="3">★</span>
+</div>
+
+<div class="star-wrap">
+<span class="half-star" data-value="3.5">★</span>
+<span class="full-star" data-value="4">★</span>
+</div>
+
+<div class="star-wrap">
+<span class="half-star" data-value="4.5">★</span>
+<span class="full-star" data-value="5">★</span>
+</div>
+
+</div>
+
+<textarea
+name="Message"
+placeholder="Tell us how we did..."
+required></textarea>
+
+<button
+class="submit-btn"
+type="submit">
+
+Send Feedback
 
 </button>
 
@@ -502,20 +567,8 @@ REVIEWS
 </span>
 
 <h2>
-What People Say
+Customer Feedback
 </h2>
-
-</div>
-
-<div class="review-stats">
-
-<div class="big-rating">
-4.5★
-</div>
-
-<p>
-Average Rating From Local Customers
-</p>
 
 </div>
 
@@ -527,33 +580,65 @@ Average Rating From Local Customers
 <div class="stars">★★★★★</div>
 <h3>Sarah M.</h3>
 <p>
-“They cleaned our whole yard up
-way better than we expected.”
+“They cleaned up our yard super fast and everything looked amazing.”
 </p>
 </div>
 
 <div class="testimonial-card">
 <div class="stars">★★★★☆</div>
-<h3>Chris T.</h3>
+<h3>Tyler J.</h3>
 <p>
-“Really solid work for the price.”
+“Affordable prices and really respectful workers.”
 </p>
 </div>
 
 <div class="testimonial-card">
 <div class="stars">★★★★★</div>
-<h3>Jennifer L.</h3>
+<h3>Melissa R.</h3>
 <p>
-“Our driveway looked brand new.”
+“Our driveway looked completely new after the power washing.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Chris D.</h3>
+<p>
+“Would definitely recommend them to anyone nearby.”
 </p>
 </div>
 
 <div class="testimonial-card">
 <div class="stars">★★★★☆</div>
-<h3>Marcus D.</h3>
+<h3>Amanda K.</h3>
 <p>
-“They worked fast and kept
-everything looking clean.”
+“Took a little longer than expected but still great work.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Jacob W.</h3>
+<p>
+“Super easy to contact and fair prices.”
+</p>
+</div>
+
+<!-- DUPLICATES FOR LOOP -->
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Sarah M.</h3>
+<p>
+“They cleaned up our yard super fast and everything looked amazing.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★☆</div>
+<h3>Tyler J.</h3>
+<p>
+“Affordable prices and really respectful workers.”
 </p>
 </div>
 
@@ -563,113 +648,17 @@ everything looking clean.”
 
 </section>
 
-<!-- FEEDBACK -->
-
-<section
-class="contact"
-id="feedback">
-
-<div class="section-title">
-
-<span>
-FEEDBACK
-</span>
-
-<h2>
-Leave Feedback
-</h2>
-
-</div>
-
-<form
-id="feedbackForm"
-action="https://formsubmit.co/yardfixers00@gmail.com"
-method="POST">
-
-<input
-type="hidden"
-name="_subject"
-value="FEEDBACK">
-
-<input
-type="hidden"
-name="_captcha"
-value="false">
-
-<input
-type="hidden"
-name="_next"
-value="">
-
-<input
-type="hidden"
-name="_template"
-value="table">
-
-<input
-type="text"
-name="Name"
-placeholder="Your Name"
-required>
-
-<input
-type="email"
-name="Email"
-id="feedbackEmail"
-placeholder="Your Email"
-required>
-
-<select
-name="Stars"
-required>
-
-<option value="">
-Rating
-</option>
-
-<option>0.5 Stars</option>
-<option>1 Star</option>
-<option>1.5 Stars</option>
-<option>2 Stars</option>
-<option>2.5 Stars</option>
-<option>3 Stars</option>
-<option>3.5 Stars</option>
-<option>4 Stars</option>
-<option>4.5 Stars</option>
-<option>5 Stars</option>
-
-</select>
-
-<textarea
-name="Feedback"
-placeholder="Write your feedback..."
-required></textarea>
-
-<button
-class="submit-btn"
-type="submit">
-
-Send Feedback
-
-</button>
-
-</form>
-
-</section>
+<!-- FOOTER -->
 
 <footer>
 
-<p>
-© YardFixers • Charleston SC
-</p>
+<div>
+Site made by Eli Vaughan
+</div>
 
-<span class="contact-email">
+<div class="footer-email">
 yardfixers00@gmail.com
-</span>
-
-<span>
-Site made by, Eli Vaughan
-</span>
+</div>
 
 </footer>
 
