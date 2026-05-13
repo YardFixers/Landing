@@ -1,143 +1,8 @@
 // FILE NAME: script.js
 
-/* PRICE CALCULATOR */
-
-const serviceCheckboxes =
-document.querySelectorAll(
-'.multi-services input[type="checkbox"]'
-);
-
-const yardSizeSelect =
-document.querySelector(
-'select[name="Yard Size"]'
-);
-
-const totalPrice =
-document.getElementById(
-'totalPrice'
-);
-
-function updatePrice(){
-
-let basePrice = 0;
-
-let selectedServices = [];
-
-serviceCheckboxes.forEach(box=>{
-
-if(box.checked){
-
-basePrice += Number(
-box.dataset.price
-);
-
-selectedServices.push(
-box.value
-);
-
-}
-
-});
-
-let multiplier = 1;
-
-const yardSize =
-yardSizeSelect.value;
-
-if(yardSize.includes("Medium")){
-multiplier = 2;
-}
-
-if(yardSize.includes("Large")){
-multiplier = 3;
-}
-
-let finalPrice =
-basePrice * multiplier;
-
-let discountText = "";
-
-if(selectedServices.length === 3){
-
-finalPrice =
-finalPrice * 0.85;
-
-discountText =
-" • 15% OFF Applied";
-
-}
-
-finalPrice =
-Math.round(finalPrice);
-
-totalPrice.innerText =
-`$${finalPrice}${discountText}`;
-
-}
-
-serviceCheckboxes.forEach(box=>{
-box.addEventListener(
-"change",
-updatePrice
-);
-});
-
-yardSizeSelect.addEventListener(
-"change",
-updatePrice
-);
-
-updatePrice();
-
-/* PHONE FORMAT */
-
-const phone =
-document.getElementById(
-"phone"
-);
-
-if(phone){
-
-phone.addEventListener(
-"input",
-e=>{
-
-let input =
-e.target.value.replace(/\D/g,'');
-
-if(input.length > 11){
-input = input.slice(0,11);
-}
-
-let formatted = "";
-
-if(input.length > 0){
-formatted += "1+ ";
-}
-
-if(input.length > 1){
-formatted += "(" +
-input.substring(1,4);
-}
-
-if(input.length >= 4){
-formatted += ") " +
-input.substring(4,7);
-}
-
-if(input.length >= 7){
-formatted += "-" +
-input.substring(7,11);
-}
-
-e.target.value =
-formatted;
-
-});
-
-}
-
-/* NAVBAR HIDE */
+/* =========================
+   NAVBAR HIDE ON SCROLL
+========================= */
 
 const navbar =
 document.getElementById(
@@ -175,14 +40,246 @@ currentScroll;
 
 });
 
-/* FORM SUBMIT */
+/* =========================
+   SERVICE CHECKBOXES
+========================= */
+
+const mowingCheck =
+document.getElementById(
+"mowingCheck"
+);
+
+const washingCheck =
+document.getElementById(
+"washingCheck"
+);
+
+const weedingCheck =
+document.getElementById(
+"weedingCheck"
+);
+
+const mowingInput =
+document.getElementById(
+"mowingInput"
+);
+
+const washingInput =
+document.getElementById(
+"washingInput"
+);
+
+const weedingInput =
+document.getElementById(
+"weedingInput"
+);
+
+/* =========================
+   PRICE CALCULATOR
+========================= */
+
+const yardSizeSelect =
+document.querySelector(
+'select[name="Yard Size"]'
+);
+
+const totalPrice =
+document.getElementById(
+"totalPrice"
+);
+
+function updatePrice(){
+
+let basePrice = 0;
+
+let selected = 0;
+
+/* MOWING */
+
+if(mowingCheck.checked){
+
+basePrice += 18;
+selected++;
+
+mowingInput.value =
+"Yes";
+
+}else{
+
+mowingInput.value =
+"No";
+
+}
+
+/* POWER WASHING */
+
+if(washingCheck.checked){
+
+basePrice += 24;
+selected++;
+
+washingInput.value =
+"Yes";
+
+}else{
+
+washingInput.value =
+"No";
+
+}
+
+/* WEEDING */
+
+if(weedingCheck.checked){
+
+basePrice += 14;
+selected++;
+
+weedingInput.value =
+"Yes";
+
+}else{
+
+weedingInput.value =
+"No";
+
+}
+
+/* MULTIPLIER */
+
+let multiplier = 1;
+
+const yard =
+yardSizeSelect.value;
+
+if(yard.includes("Medium")){
+multiplier = 2;
+}
+
+if(yard.includes("Large")){
+multiplier = 3;
+}
+
+/* TOTAL */
+
+let finalPrice =
+basePrice * multiplier;
+
+/* DISCOUNT */
+
+let discountText = "";
+
+if(selected === 3){
+
+finalPrice =
+finalPrice * 0.85;
+
+discountText =
+" • 15% OFF";
+
+}
+
+finalPrice =
+Math.round(finalPrice);
+
+totalPrice.innerText =
+`$${finalPrice}${discountText}`;
+
+}
+
+/* EVENTS */
+
+[
+mowingCheck,
+washingCheck,
+weedingCheck
+].forEach(box=>{
+
+box.addEventListener(
+"change",
+updatePrice
+);
+
+});
+
+yardSizeSelect.addEventListener(
+"change",
+updatePrice
+);
+
+updatePrice();
+
+/* =========================
+   PHONE FORMAT
+========================= */
+
+const phone =
+document.getElementById(
+"phone"
+);
+
+if(phone){
+
+phone.addEventListener(
+"input",
+e=>{
+
+let input =
+e.target.value.replace(/\D/g,'');
+
+if(input.length > 11){
+
+input =
+input.slice(0,11);
+
+}
+
+let formatted = "";
+
+if(input.length > 0){
+
+formatted += "1+ ";
+
+}
+
+if(input.length > 1){
+
+formatted += "(" +
+input.substring(1,4);
+
+}
+
+if(input.length >= 4){
+
+formatted += ") " +
+input.substring(4,7);
+
+}
+
+if(input.length >= 7){
+
+formatted += "-" +
+input.substring(7,11);
+
+}
+
+e.target.value =
+formatted;
+
+});
+
+}
+
+/* =========================
+   FORM SUBMIT
+========================= */
 
 async function sendForm(
 form,
 button
 ){
 
-const originalText =
+const original =
 button.innerText;
 
 const formData =
@@ -206,7 +303,7 @@ button.disabled = true;
 setTimeout(()=>{
 
 button.innerText =
-originalText;
+original;
 
 button.disabled = false;
 
@@ -216,7 +313,9 @@ form.reset();
 
 updatePrice();
 
-}catch(err){
+resetStars();
+
+}catch{
 
 button.innerText =
 "Error";
@@ -224,13 +323,15 @@ button.innerText =
 setTimeout(()=>{
 
 button.innerText =
-originalText;
+original;
 
 },1500);
 
 }
 
 }
+
+/* REQUEST FORM */
 
 const orderForm =
 document.getElementById(
@@ -245,19 +346,18 @@ async e=>{
 
 e.preventDefault();
 
-const button =
-orderForm.querySelector(
-"button"
-);
-
 await sendForm(
 orderForm,
-button
+orderForm.querySelector(
+"button"
+)
 );
 
 });
 
 }
+
+/* FEEDBACK FORM */
 
 const feedbackForm =
 document.getElementById(
@@ -272,25 +372,24 @@ async e=>{
 
 e.preventDefault();
 
-const button =
-feedbackForm.querySelector(
-"button"
-);
-
 await sendForm(
 feedbackForm,
-button
+feedbackForm.querySelector(
+"button"
+)
 );
 
 });
 
 }
 
-/* STARS */
+/* =========================
+   STAR RATING
+========================= */
 
 const stars =
 document.querySelectorAll(
-".rating-star"
+".half-star, .full-star"
 );
 
 const ratingValue =
@@ -307,10 +406,12 @@ star.addEventListener(
 ()=>{
 
 currentRating =
-star.dataset.value;
+Number(
+star.dataset.value
+);
 
 ratingValue.value =
-currentRating;
+`${currentRating} Stars`;
 
 updateStars();
 
@@ -323,7 +424,9 @@ function updateStars(){
 stars.forEach(star=>{
 
 const value =
-Number(star.dataset.value);
+Number(
+star.dataset.value
+);
 
 if(value <= currentRating){
 
@@ -343,7 +446,26 @@ star.classList.remove(
 
 }
 
-/* AUTO REVIEWS */
+function resetStars(){
+
+currentRating = 0;
+
+ratingValue.value =
+"0 Stars";
+
+stars.forEach(star=>{
+
+star.classList.remove(
+"active-star"
+);
+
+});
+
+}
+
+/* =========================
+   AUTO REVIEWS
+========================= */
 
 const track =
 document.querySelector(
@@ -362,7 +484,9 @@ if(
 scrollAmount >=
 track.scrollWidth / 2
 ){
+
 scrollAmount = 0;
+
 }
 
 track.style.transform =
