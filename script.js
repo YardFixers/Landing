@@ -1,4 +1,6 @@
-/* NAVBAR */
+/* =========================
+NAVBAR
+========================= */
 
 const navbar =
 document.getElementById(
@@ -35,7 +37,9 @@ lastScroll = current;
 
 });
 
-/* SERVICES */
+/* =========================
+SERVICE CHECKBOXES
+========================= */
 
 const mowingCheck =
 document.getElementById(
@@ -67,7 +71,9 @@ document.getElementById(
 "weedingInput"
 );
 
-/* PRICE */
+/* =========================
+PRICE CALCULATOR
+========================= */
 
 const yardSizeSelect =
 document.querySelector(
@@ -85,41 +91,58 @@ let basePrice = 0;
 
 let selected = 0;
 
+/* MOWING */
+
 if(mowingCheck.checked){
 
 basePrice += 18;
 selected++;
-mowingInput.value = "Yes";
+
+mowingInput.value =
+"Yes";
 
 }else{
 
-mowingInput.value = "No";
+mowingInput.value =
+"No";
 
 }
+
+/* POWER WASHING */
 
 if(washingCheck.checked){
 
 basePrice += 24;
 selected++;
-washingInput.value = "Yes";
+
+washingInput.value =
+"Yes";
 
 }else{
 
-washingInput.value = "No";
+washingInput.value =
+"No";
 
 }
+
+/* WEEDING */
 
 if(weedingCheck.checked){
 
 basePrice += 14;
 selected++;
-weedingInput.value = "Yes";
+
+weedingInput.value =
+"Yes";
 
 }else{
 
-weedingInput.value = "No";
+weedingInput.value =
+"No";
 
 }
+
+/* MULTIPLIER */
 
 let multiplier = 1;
 
@@ -134,8 +157,12 @@ if(yard.includes("Large")){
 multiplier = 3;
 }
 
+/* TOTAL */
+
 let finalPrice =
 basePrice * multiplier;
+
+/* DISCOUNT */
 
 let discountText = "";
 
@@ -157,6 +184,8 @@ totalPrice.innerText =
 
 }
 
+/* EVENTS */
+
 [
 mowingCheck,
 washingCheck,
@@ -177,7 +206,9 @@ updatePrice
 
 updatePrice();
 
-/* PHONE */
+/* =========================
+PHONE FORMAT
+========================= */
 
 const phone =
 document.getElementById(
@@ -236,7 +267,9 @@ formatted;
 
 }
 
-/* FORM SUBMIT */
+/* =========================
+FORM SUBMIT
+========================= */
 
 async function sendForm(
 form,
@@ -295,7 +328,7 @@ original;
 
 }
 
-/* REQUEST */
+/* REQUEST FORM */
 
 const orderForm =
 document.getElementById(
@@ -321,7 +354,7 @@ orderForm.querySelector(
 
 }
 
-/* FEEDBACK */
+/* FEEDBACK FORM */
 
 const feedbackForm =
 document.getElementById(
@@ -347,7 +380,9 @@ feedbackForm.querySelector(
 
 }
 
-/* STARS */
+/* =========================
+STAR RATING FIX
+========================= */
 
 const stars =
 document.querySelectorAll(
@@ -390,15 +425,13 @@ Number(
 star.dataset.value
 );
 
-if(value <= currentRating){
-
-star.classList.add(
+star.classList.remove(
 "active-star"
 );
 
-}else{
+if(value <= currentRating){
 
-star.classList.remove(
+star.classList.add(
 "active-star"
 );
 
@@ -425,7 +458,9 @@ star.classList.remove(
 
 }
 
-/* REVIEWS */
+/* =========================
+AUTO REVIEWS
+========================= */
 
 const track =
 document.querySelector(
