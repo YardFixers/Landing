@@ -1,8 +1,4 @@
-// FILE NAME: script.js
-
-/* =========================
-   NAVBAR HIDE
-========================= */
+/* NAVBAR */
 
 const navbar =
 document.getElementById(
@@ -40,570 +36,196 @@ currentScroll;
 
 });
 
-/* =========================
-   SAVE VISITOR
-========================= */
+/* ACCOUNTS */
 
-function saveVisitor(){
+function getAccounts(){
 
-let visitors =
-JSON.parse(
+return JSON.parse(
 localStorage.getItem(
-"yardVisitors"
+"yardAccounts"
 )
 ) || [];
 
-visitors.push({
+}
 
-time:
-new Date().toLocaleString(),
-
-device:
-navigator.userAgent,
-
-page:
-window.location.pathname
-
-});
+function saveAccounts(accounts){
 
 localStorage.setItem(
-"yardVisitors",
-JSON.stringify(visitors)
+"yardAccounts",
+JSON.stringify(accounts)
 );
 
 }
 
-saveVisitor();
+function showSignup(){
 
-/* =========================
-   SERVICE CHECKBOXES
-========================= */
-
-const mowingCheck =
 document.getElementById(
-"mowingCheck"
+"signupForm"
+).classList.remove(
+"hidden"
 );
 
-const washingCheck =
 document.getElementById(
-"washingCheck"
+"loginForm"
+).classList.add(
+"hidden"
 );
 
-const weedingCheck =
+}
+
+function showLogin(){
+
 document.getElementById(
-"weedingCheck"
+"loginForm"
+).classList.remove(
+"hidden"
 );
 
-const mowingInput =
 document.getElementById(
-"mowingInput"
+"signupForm"
+).classList.add(
+"hidden"
 );
 
-const washingInput =
+}
+
+function signupUser(){
+
+const name =
 document.getElementById(
-"washingInput"
-);
+"signupName"
+).value;
 
-const weedingInput =
+const email =
 document.getElementById(
-"weedingInput"
-);
+"signupEmail"
+).value;
 
-/* =========================
-   PRICE CALCULATOR
-========================= */
-
-const yardSizeSelect =
-document.querySelector(
-'select[name="Yard Size"]'
-);
-
-const totalPrice =
+const password =
 document.getElementById(
-"totalPrice"
-);
+"signupPassword"
+).value;
 
-function updatePrice(){
+let accounts =
+getAccounts();
 
-let basePrice = 0;
-
-let selected = 0;
-
-if(mowingCheck.checked){
-
-basePrice += 18;
-selected++;
-
-mowingInput.value =
-"Yes";
-
-}else{
-
-mowingInput.value =
-"No";
-
-}
-
-if(washingCheck.checked){
-
-basePrice += 24;
-selected++;
-
-washingInput.value =
-"Yes";
-
-}else{
-
-washingInput.value =
-"No";
-
-}
-
-if(weedingCheck.checked){
-
-basePrice += 14;
-selected++;
-
-weedingInput.value =
-"Yes";
-
-}else{
-
-weedingInput.value =
-"No";
-
-}
-
-let multiplier = 1;
-
-const yard =
-yardSizeSelect.value;
-
-if(yard.includes("Medium")){
-multiplier = 2;
-}
-
-if(yard.includes("Large")){
-multiplier = 3;
-}
-
-let finalPrice =
-basePrice * multiplier;
-
-let discountText = "";
-
-if(selected === 3){
-
-finalPrice =
-finalPrice * 0.85;
-
-discountText =
-" • 15% OFF";
-
-}
-
-finalPrice =
-Math.round(finalPrice);
-
-totalPrice.innerText =
-`$${finalPrice}${discountText}`;
-
-}
-
-[
-mowingCheck,
-washingCheck,
-weedingCheck
-].forEach(box=>{
-
-box.addEventListener(
-"change",
-updatePrice
-);
-
+accounts.push({
+name,
+email,
+password,
+points:0
 });
 
-yardSizeSelect.addEventListener(
-"change",
-updatePrice
+saveAccounts(accounts);
+
+localStorage.setItem(
+"yardCurrentUser",
+JSON.stringify({
+name,
+email
+})
 );
 
-updatePrice();
+updateAccountUI();
 
-/* =========================
-   PHONE FORMAT
-========================= */
+}
 
-const phone =
+function loginUser(){
+
+const email =
 document.getElementById(
-"phone"
+"loginEmail"
+).value;
+
+const password =
+document.getElementById(
+"loginPassword"
+).value;
+
+let accounts =
+getAccounts();
+
+const found =
+accounts.find(
+a=>
+a.email===email &&
+a.password===password
 );
 
-if(phone){
+if(found){
 
-phone.addEventListener(
-"input",
-e=>{
+localStorage.setItem(
+"yardCurrentUser",
+JSON.stringify(found)
+);
 
-let input =
-e.target.value.replace(/\D/g,'');
+updateAccountUI();
 
-if(input.length > 11){
+}else{
 
-input =
-input.slice(0,11);
-
-}
-
-let formatted = "";
-
-if(input.length > 0){
-
-formatted += "1+ ";
+alert(
+"Wrong login info."
+);
 
 }
 
-if(input.length > 1){
+}
 
-formatted += "(" +
-input.substring(1,4);
+function logoutUser(){
+
+localStorage.removeItem(
+"yardCurrentUser"
+);
+
+updateAccountUI();
 
 }
 
-if(input.length >= 4){
+function updateAccountUI(){
 
-formatted += ") " +
-input.substring(4,7);
-
-}
-
-if(input.length >= 7){
-
-formatted += "-" +
-input.substring(7,11);
-
-}
-
-e.target.value =
-formatted;
-
-});
-
-}
-
-/* =========================
-   SAVE REQUEST
-========================= */
-
-function saveRequest(){
-
-let requests =
+const user =
 JSON.parse(
 localStorage.getItem(
-"yardRequests"
+"yardCurrentUser"
 )
-) || [];
-
-requests.push({
-
-name:
-document.querySelector(
-'#orderForm input[name="Name"]'
-).value,
-
-email:
-document.querySelector(
-'#orderForm input[name="Email"]'
-).value,
-
-phone:
-document.querySelector(
-'#orderForm input[name="Phone"]'
-).value,
-
-area:
-document.querySelector(
-'#orderForm input[name="Area"]'
-).value,
-
-mowing:
-mowingInput.value,
-
-washing:
-washingInput.value,
-
-weeding:
-weedingInput.value,
-
-total:
-totalPrice.innerText,
-
-message:
-document.querySelector(
-'#orderForm textarea'
-).value,
-
-time:
-new Date().toLocaleString()
-
-});
-
-localStorage.setItem(
-"yardRequests",
-JSON.stringify(requests)
 );
 
-}
+if(user){
 
-/* =========================
-   SAVE FEEDBACK
-========================= */
-
-function saveFeedback(){
-
-let feedback =
-JSON.parse(
-localStorage.getItem(
-"yardFeedback"
-)
-) || [];
-
-feedback.push({
-
-name:
-document.querySelector(
-'#feedbackForm input[name="Name"]'
-).value,
-
-email:
-document.querySelector(
-'#feedbackForm input[name="Email"]'
-).value,
-
-stars:
-ratingValue.value,
-
-message:
-document.querySelector(
-'#feedbackForm textarea'
-).value,
-
-time:
-new Date().toLocaleString()
-
-});
-
-localStorage.setItem(
-"yardFeedback",
-JSON.stringify(feedback)
-);
-
-}
-
-/* =========================
-   FORM SUBMIT
-========================= */
-
-async function sendForm(
-form,
-button
-){
-
-const original =
-button.innerText;
-
-const formData =
-new FormData(form);
-
-try{
-
-await fetch(
-form.action,
-{
-method:"POST",
-body:formData
-}
-);
-
-button.innerText =
-"Sent!";
-
-button.disabled = true;
-
-setTimeout(()=>{
-
-button.innerText =
-original;
-
-button.disabled = false;
-
-},1500);
-
-form.reset();
-
-updatePrice();
-
-resetStars();
-
-}catch{
-
-button.innerText =
-"Error";
-
-setTimeout(()=>{
-
-button.innerText =
-original;
-
-},1500);
-
-}
-
-}
-
-/* =========================
-   REQUEST FORM
-========================= */
-
-const orderForm =
 document.getElementById(
-"orderForm"
-);
+"loggedOutView"
+).style.display =
+"none";
 
-if(orderForm){
-
-orderForm.addEventListener(
-"submit",
-async e=>{
-
-e.preventDefault();
-
-saveRequest();
-
-await sendForm(
-orderForm,
-orderForm.querySelector(
-"button"
-)
-);
-
-});
-
-}
-
-/* =========================
-   FEEDBACK FORM
-========================= */
-
-const feedbackForm =
 document.getElementById(
-"feedbackForm"
-);
+"loggedInView"
+).style.display =
+"block";
 
-if(feedbackForm){
-
-feedbackForm.addEventListener(
-"submit",
-async e=>{
-
-e.preventDefault();
-
-saveFeedback();
-
-await sendForm(
-feedbackForm,
-feedbackForm.querySelector(
-"button"
-)
-);
-
-});
-
-}
-
-/* =========================
-   STAR RATING
-========================= */
-
-const stars =
-document.querySelectorAll(
-".half-star, .full-star"
-);
-
-const ratingValue =
 document.getElementById(
-"ratingValue"
-);
-
-let currentRating = 0;
-
-stars.forEach(star=>{
-
-star.addEventListener(
-"click",
-()=>{
-
-currentRating =
-Number(
-star.dataset.value
-);
-
-ratingValue.value =
-`${currentRating} Stars`;
-
-updateStars();
-
-});
-
-});
-
-function updateStars(){
-
-stars.forEach(star=>{
-
-const value =
-Number(
-star.dataset.value
-);
-
-if(value <= currentRating){
-
-star.classList.add(
-"active-star"
-);
+"welcomeText"
+).innerText =
+`Welcome ${user.name}`;
 
 }else{
 
-star.classList.remove(
-"active-star"
-);
+document.getElementById(
+"loggedOutView"
+).style.display =
+"block";
+
+document.getElementById(
+"loggedInView"
+).style.display =
+"none";
 
 }
 
-});
-
 }
 
-function resetStars(){
+updateAccountUI();
 
-currentRating = 0;
-
-ratingValue.value =
-"0 Stars";
-
-stars.forEach(star=>{
-
-star.classList.remove(
-"active-star"
-);
-
-});
-
-}
-
-/* =========================
-   TESTIMONIAL AUTO SCROLL
-========================= */
+/* REVIEW SCROLL */
 
 const track =
 document.querySelector(
