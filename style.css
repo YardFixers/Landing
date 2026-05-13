@@ -45,6 +45,8 @@ color:white;
 display:flex;
 gap:24px;
 list-style:none;
+flex-wrap:wrap;
+justify-content:center;
 }
 
 .nav-links a{
@@ -142,7 +144,7 @@ color:white;
 transform:translateY(-5px);
 }
 
-/* SECTIONS */
+/* GENERAL SECTIONS */
 
 section{
 padding:110px 6vw;
@@ -156,6 +158,7 @@ margin-bottom:60px;
 .section-title span{
 color:#5d9d35;
 font-weight:800;
+letter-spacing:1px;
 }
 
 .section-title h2{
@@ -195,16 +198,19 @@ margin-bottom:18px;
 
 .card h3{
 margin-bottom:14px;
+font-size:1.4rem;
 }
 
 .card p{
 line-height:1.8;
+opacity:.85;
 }
 
 .price{
 margin-top:18px;
 font-weight:900;
 color:#5d9d35;
+font-size:1.2rem;
 }
 
 /* ABOUT */
@@ -224,6 +230,11 @@ background:#1a221d;
 border-radius:28px;
 overflow:hidden;
 color:white;
+transition:.3s;
+}
+
+.team-card:hover{
+transform:translateY(-6px);
 }
 
 .team-card img{
@@ -238,10 +249,12 @@ padding:24px;
 
 .team-info h3{
 margin-bottom:12px;
+font-size:1.5rem;
 }
 
 .team-info p{
 line-height:1.8;
+opacity:.9;
 }
 
 /* FORMS */
@@ -265,6 +278,14 @@ border:none;
 background:#eef2ea;
 border-radius:16px;
 font-size:1rem;
+outline:none;
+transition:.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+background:#e5ebdf;
 }
 
 textarea{
@@ -276,7 +297,10 @@ resize:none;
 display:block;
 margin-bottom:12px;
 font-weight:800;
+font-size:1rem;
 }
+
+/* SERVICES SELECT */
 
 .multi-services{
 display:flex;
@@ -292,9 +316,14 @@ margin-bottom:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:14px;
+padding:16px;
 background:white;
-border-radius:14px;
+border-radius:16px;
+transition:.2s;
+}
+
+.service-option:hover{
+transform:scale(1.01);
 }
 
 .service-left{
@@ -306,19 +335,29 @@ gap:14px;
 .service-left input{
 width:auto;
 margin:0;
+transform:scale(1.2);
 }
 
 .service-price{
 font-weight:900;
 color:#5d9d35;
+font-size:1.1rem;
 }
 
+/* PRICE */
+
 .price-total{
-font-size:1.3rem;
+font-size:1.4rem;
 font-weight:900;
 margin-bottom:20px;
 text-align:center;
 }
+
+#totalPrice{
+color:#5d9d35;
+}
+
+/* PROMO */
 
 .promo-box{
 background:linear-gradient(135deg,#8dd85c,#5d9d35);
@@ -355,32 +394,46 @@ width:100%;
 
 button:hover{
 transform:translateY(-4px);
+background:#4f8a2c;
 }
 
-/* STARS */
+/* STAR RATING */
 
 .rating-container{
 display:flex;
 justify-content:center;
-align-items:center;
-gap:8px;
-margin-bottom:20px;
+gap:16px;
+margin-bottom:24px;
 flex-wrap:wrap;
 }
 
-.rating-star{
-font-size:2rem;
+.star-wrap{
+position:relative;
+width:42px;
+height:42px;
 cursor:pointer;
-transition:.2s;
-color:#bbb;
 }
 
-.rating-star:hover{
-transform:scale(1.15);
+.half-star,
+.full-star{
+position:absolute;
+top:0;
+left:0;
+font-size:2.6rem;
+color:#bbb;
+transition:.2s;
+user-select:none;
+}
+
+.half-star{
+width:50%;
+overflow:hidden;
+z-index:2;
 }
 
 .active-star{
 color:#ffd34d;
+transform:scale(1.08);
 }
 
 /* REVIEWS */
@@ -428,8 +481,13 @@ margin-bottom:14px;
 color:#ffd34d;
 }
 
+.testimonial-card h3{
+margin-bottom:10px;
+}
+
 .testimonial-card p{
 line-height:1.8;
+opacity:.9;
 }
 
 /* FOOTER */
@@ -459,19 +517,19 @@ font-weight:700;
 .navbar{
 flex-direction:column;
 gap:14px;
-}
-
-.nav-links{
-flex-wrap:wrap;
-justify-content:center;
+padding:16px 4vw;
 }
 
 .hero{
-padding-top:120px;
+padding-top:140px;
 }
 
 .hero h1{
-font-size:3.2rem;
+font-size:3.1rem;
+}
+
+.section-title h2{
+font-size:2.4rem;
 }
 
 .service-option{
@@ -486,6 +544,10 @@ height:340px;
 
 .testimonial-card{
 min-width:260px;
+}
+
+form{
+padding:28px;
 }
 
 }
