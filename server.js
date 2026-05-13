@@ -12,7 +12,7 @@ app.use(express.static(__dirname));
 const DB = "./database.json";
 
 /* =========================
-DATABASE FUNCTIONS
+DATABASE
 ========================= */
 
 function readDB(){
@@ -33,26 +33,21 @@ function writeDB(data){
 }
 
 /* =========================
-GMAIL SETUP
+EMAIL
 ========================= */
 
-/*
-PUT YOUR GOOGLE APP PASSWORD
-INSIDE THE pass:"HERE"
-SECTION BELOW
-*/
+const transporter =
+nodemailer.createTransport({
 
-const transporter = nodemailer.createTransport({
+service:"gmail",
 
-  service:"gmail",
+auth:{
 
-  auth:{
+user:"yardfixers00@gmail.com",
 
-    user:"yardfixers00@gmail.com",
+pass:"PUT_YOUR_GOOGLE_APP_PASSWORD_HERE"
 
-    pass:"PUT_YOUR_GOOGLE_APP_PASSWORD_HERE"
-
-  }
+}
 
 });
 
@@ -62,29 +57,29 @@ TRACK VISITS
 
 app.post("/track",(req,res)=>{
 
-  const db = readDB();
+const db = readDB();
 
-  db.visitors.push({
+db.visitors.push({
 
-    ip:
-      req.headers["x-forwarded-for"] ||
-      req.socket.remoteAddress,
+ip:
+req.headers["x-forwarded-for"] ||
+req.socket.remoteAddress,
 
-    width:req.body.width,
+width:req.body.width,
 
-    height:req.body.height,
+height:req.body.height,
 
-    timeSpent:req.body.timeSpent,
+timeSpent:req.body.timeSpent,
 
-    time:new Date()
+time:new Date()
 
-  });
+});
 
-  writeDB(db);
+writeDB(db);
 
-  res.json({
-    success:true
-  });
+res.json({
+success:true
+});
 
 });
 
@@ -94,39 +89,46 @@ SIGNUP
 
 app.post("/signup",(req,res)=>{
 
-  const db = readDB();
+const db = readDB();
 
-  const exists = db.users.find(
-    user=>user.email===req.body.email
-  );
+const exists =
+db.users.find(
+u=>u.email===req.body.email
+);
 
-  if(exists){
+if(exists){
 
-    return res.json({
+return res.json({
 
-      success:false,
+success:false,
 
-      message:"Account already exists"
+message:"Account Already Exists"
 
-    });
+});
 
-  }
+}
 
-  db.users.push({
+const newUser = {
 
-    email:req.body.email,
+email:req.body.email,
 
-    password:req.body.password
+password:req.body.password,
 
-  });
+points:0
 
-  writeDB(db);
+};
 
-  res.json({
+db.users.push(newUser);
 
-    success:true
+writeDB(db);
 
-  });
+res.json({
+
+success:true,
+
+user:newUser
+
+});
 
 });
 
@@ -136,129 +138,169 @@ LOGIN
 
 app.post("/login",(req,res)=>{
 
-  const db = readDB();
+const db = readDB();
 
-  const user = db.users.find(
+const user =
+db.users.find(
 
-    u=>
+u=>
 
-      u.email===req.body.email &&
+u.email===req.body.email &&
 
-      u.password===req.body.password
+u.password===req.body.password
 
-  );
+);
 
-  if(user){
+if(user){
 
-    res.json({
+res.json({
 
-      success:true,
+success:true,
 
-      user
+user
 
-    });
+});
 
-  }else{
+}else{
 
-    res.json({
+res.json({
 
-      success:false
+success:false
 
-    });
+});
 
-  }
+}
 
 });
 
 /* =========================
-SUBMIT ORDER
+ORDER
 ========================= */
 
 app.post("/order",async(req,res)=>{
 
-  const db = readDB();
+const db = readDB();
 
-  const order = {
+let user =
+db.users.find(
+u=>u.email===req.body.customer
+);
 
-    ...req.body,
+/* POINTS SYSTEM */
 
-    status:"Pending Confirmation",
+if(user){
 
-    ip:
-      req.headers["x-forwarded-for"] ||
-      req.socket.remoteAddress,
+user.points += 10;
 
-    time:new Date()
+}
 
-  };
+/* ORDER */
 
-  db.orders.push(order);
+const order = {
 
-  writeDB(db);
+...req.body,
 
-  /* EMAIL TEMPLATE */
+status:"Pending Confirmation",
 
-  const html = `
+ip:
+req.headers["x-forwarded-for"] ||
+req.socket.remoteAddress,
 
-  <h2>New YardFixers Order</h2>
+time:new Date()
 
-  <p><strong>Name:</strong> ${req.body.name}</p>
+};
 
-  <p><strong>Email:</strong> ${req.body.email}</p>
+db.orders.push(order);
 
-  <p><strong>Phone:</strong> ${req.body.phone}</p>
+writeDB(db);
 
-  <p><strong>Area:</strong> ${req.body.area}</p>
+/* EMAIL */
 
-  <p><strong>Services:</strong> ${req.body.services}</p>
+const html = `
 
-  <p><strong>Yard Size:</strong> ${req.body.yardSize}</p>
+<h2>
+New YardFixers Order
+</h2>
 
-  <p><strong>Message:</strong> ${req.body.message}</p>
+<p>
+<strong>Name:</strong>
+${req.body.name}
+</p>
 
-  <p><strong>Status:</strong> Pending Confirmation</p>
+<p>
+<strong>Email:</strong>
+${req.body.email}
+</p>
 
-  `;
+<p>
+<strong>Phone:</strong>
+${req.body.phone}
+</p>
 
-  try{
+<p>
+<strong>Area:</strong>
+${req.body.area}
+</p>
 
-    await transporter.sendMail({
+<p>
+<strong>Services:</strong>
+${req.body.services}
+</p>
 
-      from:"yardfixers00@gmail.com",
+<p>
+<strong>Yard Size:</strong>
+${req.body.yardSize}
+</p>
 
-      to:"yardfixers00@gmail.com",
+<p>
+<strong>Message:</strong>
+${req.body.message}
+</p>
 
-      subject:"New YardFixers Order",
+`;
 
-      html
+try{
 
-    });
+await transporter.sendMail({
 
-    console.log("Email Sent");
+from:"yardfixers00@gmail.com",
 
-  }catch(err){
+to:"yardfixers00@gmail.com",
 
-    console.log(err);
+subject:"New YardFixers Order",
 
-  }
+html
 
-  res.json({
+});
 
-    success:true
+}catch(err){
 
-  });
+console.log(err);
+
+}
+
+res.json({
+
+success:true,
+
+points:
+user
+? user.points
+:0
+
+});
 
 });
 
 /* =========================
-OWNER DASHBOARD
+DASHBOARD
 ========================= */
 
 app.get("/dashboard",(req,res)=>{
 
-  const db = readDB();
+const db = readDB();
 
-  res.json(db);
+res.json(db);
 
 });
 
@@ -268,6 +310,6 @@ START SERVER
 
 app.listen(3000, ()=>{
 
-  console.log("Server Running");
+console.log("Running");
 
 });
