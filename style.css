@@ -12,7 +12,9 @@ color:#111;
 overflow-x:hidden;
 }
 
-/* NAVBAR */
+/* =========================
+NAVBAR
+========================= */
 
 .navbar{
 position:fixed;
@@ -57,7 +59,9 @@ transition:.25s;
 opacity:.7;
 }
 
-/* HERO */
+/* =========================
+HERO
+========================= */
 
 .hero{
 position:relative;
@@ -138,7 +142,9 @@ color:white;
 transform:translateY(-4px);
 }
 
-/* SECTIONS */
+/* =========================
+SECTIONS
+========================= */
 
 section{
 padding:110px 6vw;
@@ -166,7 +172,9 @@ font-weight:900;
 color:white;
 }
 
-/* SERVICES */
+/* =========================
+SERVICES
+========================= */
 
 .services{
 background:#f9fbf7;
@@ -202,7 +210,9 @@ font-weight:900;
 color:#5d9d35;
 }
 
-/* TEAM */
+/* =========================
+TEAM
+========================= */
 
 .about{
 background:#101612;
@@ -250,7 +260,9 @@ line-height:1.8;
 opacity:.9;
 }
 
-/* FORMS */
+/* =========================
+FORMS
+========================= */
 
 .contact,
 .feedback-section{
@@ -290,55 +302,108 @@ margin-bottom:12px;
 font-weight:800;
 }
 
+/* =========================
+SERVICE OPTIONS FIX
+========================= */
+
 .multi-services{
 display:flex;
 flex-direction:column;
-gap:14px;
-padding:20px;
+gap:18px;
+padding:22px;
 background:#eef2ea;
-border-radius:20px;
-margin-bottom:20px;
+border-radius:24px;
+margin-bottom:24px;
 }
 
 .service-option{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:16px;
+padding:22px;
 background:white;
-border-radius:16px;
+border-radius:22px;
+min-height:105px;
+transition:.25s;
+gap:20px;
+}
+
+.service-option:hover{
+transform:translateY(-3px);
 }
 
 .service-left{
 display:flex;
 align-items:center;
-gap:14px;
-font-weight:700;
+gap:18px;
+flex:1;
+min-width:0;
+}
+
+.service-left input{
+width:28px;
+height:28px;
+flex-shrink:0;
+cursor:pointer;
+}
+
+.service-left span{
+font-size:1.25rem;
+font-weight:800;
+line-height:1.2;
+word-break:break-word;
 }
 
 .service-price{
+font-size:1.5rem;
 font-weight:900;
 color:#5d9d35;
+white-space:nowrap;
+flex-shrink:0;
+text-align:right;
 }
+
+/* =========================
+PRICE BOX
+========================= */
 
 .price-total{
 background:#f4f9ef;
-padding:22px;
-border-radius:22px;
-margin-bottom:18px;
+padding:26px;
+border-radius:24px;
+margin-bottom:20px;
 text-align:center;
-font-size:1.6rem;
+font-size:2rem;
 font-weight:900;
+line-height:1.3;
+border:2px solid #dce9d1;
 }
 
+.price-total span{
+display:block;
+margin-top:8px;
+font-size:3rem;
+color:#111;
+}
+
+/* =========================
+PROMO
+========================= */
+
 .promo-box{
-padding:18px;
-border-radius:20px;
+padding:24px;
+border-radius:24px;
 background:#7ed957;
 text-align:center;
-font-weight:800;
-margin-bottom:18px;
+font-weight:900;
+font-size:1.3rem;
+line-height:1.6;
+margin-bottom:22px;
 }
+
+/* =========================
+BUTTON
+========================= */
 
 .submit-btn{
 width:100%;
@@ -350,22 +415,39 @@ color:white;
 font-size:1rem;
 font-weight:900;
 cursor:pointer;
+transition:.25s;
 }
 
-/* STARS */
+.submit-btn:hover{
+transform:translateY(-4px);
+}
+
+/* =========================
+STAR RATING FIX
+========================= */
 
 .rating-container{
 display:flex;
 justify-content:center;
-gap:14px;
-margin-bottom:24px;
+align-items:center;
+gap:22px;
+margin:34px 0;
+flex-wrap:nowrap;
+overflow:visible;
+position:relative;
 }
 
 .star-wrap{
 position:relative;
-font-size:2.7rem;
-color:#bbb;
+width:42px;
+height:42px;
+flex-shrink:0;
 cursor:pointer;
+transition:.2s;
+}
+
+.star-wrap:hover{
+transform:scale(1.12);
 }
 
 .half-star,
@@ -373,19 +455,30 @@ cursor:pointer;
 position:absolute;
 top:0;
 left:0;
+font-size:3rem;
+line-height:1;
+transition:.2s;
+user-select:none;
 }
 
 .half-star{
 width:50%;
 overflow:hidden;
 z-index:2;
+color:#bbb;
+}
+
+.full-star{
+color:#bbb;
 }
 
 .active-star{
-color:#ffd34d;
+color:#ffd34d !important;
 }
 
-/* REVIEWS */
+/* =========================
+REVIEWS
+========================= */
 
 .testimonials{
 background:#101612;
@@ -416,7 +509,9 @@ color:#ffd34d;
 margin-bottom:12px;
 }
 
-/* FOOTER */
+/* =========================
+FOOTER
+========================= */
 
 footer{
 background:#101612;
@@ -430,7 +525,9 @@ margin-top:10px;
 color:#7ed957;
 }
 
-/* ANIMATIONS */
+/* =========================
+ANIMATIONS
+========================= */
 
 @keyframes fadeUp{
 
@@ -446,7 +543,9 @@ transform:translateY(0);
 
 }
 
-/* MOBILE */
+/* =========================
+MOBILE
+========================= */
 
 @media(max-width:900px){
 
@@ -460,6 +559,54 @@ display:none;
 
 .team-card img{
 height:340px;
+}
+
+}
+
+@media(max-width:700px){
+
+.service-option{
+padding:18px;
+min-height:95px;
+}
+
+.service-left{
+gap:14px;
+}
+
+.service-left span{
+font-size:1.05rem;
+}
+
+.service-price{
+font-size:1.2rem;
+}
+
+.price-total{
+font-size:1.5rem;
+}
+
+.price-total span{
+font-size:2.4rem;
+}
+
+.promo-box{
+font-size:1.05rem;
+padding:20px;
+}
+
+.rating-container{
+gap:14px;
+}
+
+.star-wrap{
+width:34px;
+height:34px;
+}
+
+.half-star,
+.full-star{
+font-size:2.4rem;
 }
 
 }
