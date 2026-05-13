@@ -1,9 +1,9 @@
-/* =========================
-PHONE FORMAT
-========================= */
+/* PHONE FORMAT */
 
 const phone =
 document.getElementById("phone");
+
+if(phone){
 
 phone.addEventListener("input",(e)=>{
 
@@ -45,48 +45,9 @@ e.target.value=formatted;
 
 });
 
-/* =========================
-TRACK USER
-========================= */
+}
 
-const startTime = Date.now();
-
-window.addEventListener(
-
-"beforeunload",
-
-async()=>{
-
-const timeSpent =
-Math.floor(
-(Date.now()-startTime)/1000
-);
-
-await fetch("/track",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-timeSpent,
-
-width:window.innerWidth,
-
-height:window.innerHeight
-
-})
-
-});
-
-});
-
-/* =========================
-ACCOUNT SYSTEM
-========================= */
+/* ACCOUNT SYSTEM */
 
 let currentUser =
 JSON.parse(
@@ -94,8 +55,6 @@ localStorage.getItem(
 "yardfixersUser"
 )
 );
-
-/* UPDATE LOGIN UI */
 
 function updateLoginUI(){
 
@@ -107,6 +66,11 @@ document.getElementById(
 const logoutBtn =
 document.getElementById(
 "logoutBtn"
+);
+
+const emailInput =
+document.getElementById(
+"emailInput"
 );
 
 if(currentUser){
@@ -130,13 +94,22 @@ ${currentUser.points}
 logoutBtn.style.display =
 "block";
 
+if(emailInput){
+
+emailInput.value =
+currentUser.email;
+}
+
 }else{
 
 status.innerText =
 "Not Logged In";
 
+if(logoutBtn){
+
 logoutBtn.style.display =
 "none";
+}
 
 }
 
@@ -157,14 +130,6 @@ const password =
 document.getElementById(
 "accountPassword"
 ).value;
-
-if(!email || !password){
-
-alert("Fill Out Everything");
-
-return;
-
-}
 
 const response =
 await fetch("/signup",{
@@ -202,12 +167,11 @@ JSON.stringify(result.user)
 
 updateLoginUI();
 
+alert("Account Created");
+
 }else{
 
-document.getElementById(
-"accountStatus"
-).innerText =
-result.message;
+alert(result.message);
 
 }
 
@@ -226,6 +190,39 @@ const password =
 document.getElementById(
 "accountPassword"
 ).value;
+
+/* DEV LOGIN */
+
+if(
+
+email==="yardfixers00@gmail.com" &&
+
+password==="+zr4bf+=ef#4"
+
+){
+
+currentUser = {
+
+email:"yardfixers00@gmail.com",
+points:9999
+
+};
+
+localStorage.setItem(
+
+"yardfixersUser",
+
+JSON.stringify(currentUser)
+
+);
+
+updateLoginUI();
+
+alert("Developer Login");
+
+return;
+
+}
 
 const response =
 await fetch("/login",{
@@ -263,12 +260,11 @@ JSON.stringify(result.user)
 
 updateLoginUI();
 
+alert("Logged In");
+
 }else{
 
-document.getElementById(
-"accountStatus"
-).innerText =
-"Wrong Login";
+alert("Wrong Login");
 
 }
 
@@ -288,16 +284,120 @@ updateLoginUI();
 
 }
 
-/* =========================
-ORDER FORM
-========================= */
+/* PRICE COUNTER */
 
-const form =
+const checkboxes =
+document.querySelectorAll(
+".multi-services input"
+);
+
+const yardSelect =
+document.querySelector(
+"select[name='yardSize']"
+);
+
+const totalPrice =
+document.getElementById(
+"totalPrice"
+);
+
+function calculatePrice(){
+
+let total = 0;
+
+checkboxes.forEach(box=>{
+
+if(box.checked){
+
+total +=
+Number(
+box.dataset.price
+);
+
+}
+
+});
+
+if(yardSelect){
+
+const yard =
+yardSelect.value;
+
+if(yard.includes("Small")){
+
+total += 10;
+
+}
+
+if(yard.includes("Medium")){
+
+total += 20;
+
+}
+
+if(yard.includes("Large")){
+
+total += 35;
+
+}
+
+}
+
+if(currentUser){
+
+const discount =
+Math.floor(
+currentUser.points / 50
+);
+
+total -= discount;
+
+}
+
+if(total < 0){
+
+total = 0;
+
+}
+
+if(totalPrice){
+
+totalPrice.innerText =
+"$" + total;
+}
+
+}
+
+checkboxes.forEach(box=>{
+
+box.addEventListener(
+"change",
+calculatePrice
+);
+
+});
+
+if(yardSelect){
+
+yardSelect.addEventListener(
+"change",
+calculatePrice
+);
+
+}
+
+calculatePrice();
+
+/* REQUEST */
+
+const orderForm =
 document.getElementById(
 "orderForm"
 );
 
-form.addEventListener(
+if(orderForm){
+
+orderForm.addEventListener(
 
 "submit",
 
@@ -317,29 +417,27 @@ Array.from(checked)
 
 const data = {
 
-name:form.name.value,
+name:orderForm.name.value,
 
-email:form.email.value,
+email:orderForm.email.value,
 
-phone:form.phone.value,
+phone:orderForm.phone.value,
 
-area:form.area.value,
+area:orderForm.area.value,
 
 services,
 
-yardSize:form.yardSize.value,
+yardSize:orderForm.yardSize.value,
 
-message:form.message.value,
+message:orderForm.message.value,
 
-customer:
-currentUser
-? currentUser.email
-: "Guest"
+price:
+totalPrice.innerText
 
 };
 
 const response =
-await fetch("/order",{
+await fetch("/request",{
 
 method:"POST",
 
@@ -351,31 +449,108 @@ body:JSON.stringify(data)
 
 });
 
-const result =
-await response.json();
+if(response.ok){
 
-if(currentUser){
+alert("Sent!");
 
-currentUser.points =
-result.points;
+orderForm.reset();
 
-localStorage.setItem(
+calculatePrice();
 
-"yardfixersUser",
+}
 
-JSON.stringify(currentUser)
+});
 
+}
+
+/* FEEDBACK */
+
+const feedbackForm =
+document.getElementById(
+"feedbackForm"
 );
 
+if(feedbackForm){
+
+feedbackForm.addEventListener(
+
+"submit",
+
+async(e)=>{
+
+e.preventDefault();
+
+const data = {
+
+name:
+feedbackForm.feedbackName.value,
+
+email:
+feedbackForm.feedbackEmail.value,
+
+message:
+feedbackForm.feedbackMessage.value
+
+};
+
+const response =
+await fetch("/feedback",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify(data)
+
+});
+
+if(response.ok){
+
+alert("Sent!");
+
+feedbackForm.reset();
+
 }
 
-/* THANK YOU PAGE */
-
-if(result.success){
-
-window.location.href =
-"thankyou.html";
+});
 
 }
+
+/* TRACK */
+
+const startTime = Date.now();
+
+window.addEventListener(
+
+"beforeunload",
+
+async()=>{
+
+const timeSpent =
+Math.floor(
+(Date.now()-startTime)/1000
+);
+
+await fetch("/track",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+timeSpent,
+
+width:window.innerWidth,
+
+height:window.innerHeight
+
+})
+
+});
 
 });
