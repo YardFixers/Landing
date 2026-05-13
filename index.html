@@ -1,3 +1,5 @@
+<!-- FILE NAME: index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,6 +60,12 @@ Feedback
 </li>
 
 <li>
+<a href="#reviews">
+Reviews
+</a>
+</li>
+
+<li>
 <a href="dashboard.html">
 Owner
 </a>
@@ -70,6 +78,8 @@ Owner
 <!-- HERO -->
 
 <section class="hero">
+
+<div class="hero-overlay"></div>
 
 <div class="hero-content">
 
@@ -131,11 +141,11 @@ Lawn Mowing
 
 <p>
 Fresh cuts, clean edges,
-and better looking yards.
+and cleaner looking yards.
 </p>
 
 <div class="price">
-Starting at $30
+Starting At $10
 </div>
 
 </div>
@@ -151,13 +161,13 @@ Power Washing
 </h3>
 
 <p>
-Driveways, patios,
-sidewalks, fences,
+Driveways, sidewalks,
+patios, fences,
 and outdoor cleaning.
 </p>
 
 <div class="price">
-Starting at $40
+Starting At $15
 </div>
 
 </div>
@@ -174,11 +184,11 @@ Weed Pulling
 
 <p>
 Flower bed cleanup
-and removing messy weeds.
+and weed removal.
 </p>
 
 <div class="price">
-Starting at $20
+Starting At $8
 </div>
 
 </div>
@@ -208,7 +218,8 @@ Meet YardFixers
 
 <div class="team-card">
 
-<img src="IMG_8240.jpeg">
+<img src="IMG_8240.jpeg"
+alt="Ellison Evans">
 
 <div class="team-info">
 
@@ -227,7 +238,8 @@ looking cleaner than before.”
 
 <div class="team-card">
 
-<img src="IMG_8232.jpeg">
+<img src="IMG_8232.jpeg"
+alt="Sawyer Kyte">
 
 <div class="team-info">
 
@@ -307,7 +319,7 @@ Not Logged In
 
 </div>
 
-<!-- FORM -->
+<!-- ORDER FORM -->
 
 <form id="orderForm">
 
@@ -350,7 +362,7 @@ Select Services
 <input
 type="checkbox"
 value="Lawn Mowing"
-data-price="30">
+data-price="10">
 
 <span>
 Lawn Mowing
@@ -359,7 +371,7 @@ Lawn Mowing
 </div>
 
 <div class="service-price">
-$30
+$10
 </div>
 
 </label>
@@ -371,7 +383,7 @@ $30
 <input
 type="checkbox"
 value="Power Washing"
-data-price="40">
+data-price="15">
 
 <span>
 Power Washing
@@ -380,7 +392,7 @@ Power Washing
 </div>
 
 <div class="service-price">
-$40
+$15
 </div>
 
 </label>
@@ -392,7 +404,7 @@ $40
 <input
 type="checkbox"
 value="Weed Pulling"
-data-price="20">
+data-price="8">
 
 <span>
 Weed Pulling
@@ -401,7 +413,7 @@ Weed Pulling
 </div>
 
 <div class="service-price">
-$20
+$8
 </div>
 
 </label>
@@ -420,15 +432,15 @@ $0
 <select name="yardSize">
 
 <option>
-Small Yard • +$20
+Small Yard • +$10
 </option>
 
 <option>
-Medium Yard • +$50
+Medium Yard • +$20
 </option>
 
 <option>
-Large Yard • +$90
+Large Yard • +$35
 </option>
 
 </select>
@@ -498,6 +510,118 @@ Send Feedback
 
 </section>
 
+<!-- REVIEWS -->
+
+<section class="testimonials"
+id="reviews">
+
+<div class="section-title light">
+
+<span>
+REVIEWS
+</span>
+
+<h2>
+What People Say
+</h2>
+
+</div>
+
+<div class="review-stats">
+
+<div class="big-rating">
+4.5★
+</div>
+
+<p>
+Average Rating From Local Customers
+</p>
+
+</div>
+
+<div class="testimonial-slider">
+
+<div class="testimonial-track">
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Sarah M.</h3>
+<p>
+“They cleaned up our yard way better
+than expected.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★☆</div>
+<h3>Chris T.</h3>
+<p>
+“Good prices and solid work.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Jennifer L.</h3>
+<p>
+“Our driveway looked brand new.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★☆</div>
+<h3>Marcus D.</h3>
+<p>
+“Fast workers and polite.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Emily R.</h3>
+<p>
+“Really professional and respectful.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★☆☆</div>
+<h3>Robert K.</h3>
+<p>
+“They did decent work but arrived late.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Olivia B.</h3>
+<p>
+“Best lawn service around Rivershore.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★☆</div>
+<h3>Daniel W.</h3>
+<p>
+“They worked hard the whole time.”
+</p>
+</div>
+
+<div class="testimonial-card">
+<div class="stars">★★★★★</div>
+<h3>Jessica P.</h3>
+<p>
+“Really nice guys and fair prices.”
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
 <!-- FOOTER -->
 
 <footer>
@@ -515,4 +639,5 @@ Made by, Eli Vaughan
 <script src="script.js"></script>
 
 </body>
+
 </html>
