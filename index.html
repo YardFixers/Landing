@@ -1,3 +1,5 @@
+<!-- FILE NAME: index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,6 +67,8 @@ Owner
 
 <section class="hero">
 
+<div class="hero-overlay"></div>
+
 <div class="hero-content">
 
 <span class="badge">
@@ -79,8 +83,8 @@ Fair Prices.
 
 <p>
 We mow lawns, power wash driveways,
-pull weeds, and help make homes
-look cleaner around Rivershore.
+pull weeds, and help homes look cleaner
+around Rivershore, South Carolina.
 </p>
 
 <a href="#contact"
@@ -99,32 +103,50 @@ Get A Quote
 <section class="services"
 id="services">
 
+<div class="section-title">
+
+<span>
+SERVICES
+</span>
+
 <h2>
-Our Services
+What We Do
 </h2>
+
+</div>
 
 <div class="service-grid">
 
 <div class="card">
 
+<div class="icon">
+🌿
+</div>
+
 <h3>
-🌿 Lawn Mowing
+Lawn Mowing
 </h3>
 
 <p>
-Fresh cuts and clean edges.
+Fresh cuts, clean edges,
+and better looking yards.
 </p>
 
 </div>
 
 <div class="card">
 
+<div class="icon">
+💦
+</div>
+
 <h3>
-💦 Power Washing
+Power Washing
 </h3>
 
 <p>
-Driveways, sidewalks, patios,
+Driveways, patios,
+sidewalks, fences,
 and outdoor cleaning.
 </p>
 
@@ -132,12 +154,17 @@ and outdoor cleaning.
 
 <div class="card">
 
+<div class="icon">
+🪴
+</div>
+
 <h3>
-🪴 Weed Pulling
+Weed Pulling
 </h3>
 
 <p>
-Flower bed cleanup and weed removal.
+Flower bed cleanup
+and removing messy weeds.
 </p>
 
 </div>
@@ -151,9 +178,17 @@ Flower bed cleanup and weed removal.
 <section class="about"
 id="about">
 
+<div class="section-title light">
+
+<span>
+OUR TEAM
+</span>
+
 <h2>
-Meet The Team
+Meet YardFixers
 </h2>
+
+</div>
 
 <div class="team-grid">
 
@@ -161,9 +196,18 @@ Meet The Team
 
 <img src="IMG_8240.jpeg">
 
+<div class="team-info">
+
 <h3>
 Ellison Evans
 </h3>
+
+<p>
+“We always try to leave every yard
+looking cleaner than before.”
+</p>
+
+</div>
 
 </div>
 
@@ -171,9 +215,18 @@ Ellison Evans
 
 <img src="IMG_8232.jpeg">
 
+<div class="team-info">
+
 <h3>
 Sawyer Kyte
 </h3>
+
+<p>
+“We work hard and try to make
+everything look nice and fresh.”
+</p>
+
+</div>
 
 </div>
 
@@ -186,9 +239,17 @@ Sawyer Kyte
 <section class="contact"
 id="contact">
 
+<div class="section-title">
+
+<span>
+CONTACT
+</span>
+
 <h2>
 Request Service
 </h2>
+
+</div>
 
 <!-- ACCOUNT BOX -->
 
@@ -218,7 +279,9 @@ Sign Up
 Login
 </button>
 
-<button onclick="logout()">
+<button
+id="logoutBtn"
+onclick="logout()">
 Logout
 </button>
 
@@ -259,7 +322,7 @@ name="area"
 placeholder="Your Area"
 required>
 
-<label>
+<label class="label-title">
 Select Services
 </label>
 
@@ -318,8 +381,12 @@ name="message"
 placeholder="Tell us about the work..."
 required></textarea>
 
-<button type="submit">
+<button
+class="submit-btn"
+type="submit">
+
 Submit Request
+
 </button>
 
 </form>
