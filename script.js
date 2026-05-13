@@ -1,6 +1,4 @@
-/* =========================
-NAVBAR SCROLL
-========================= */
+/* NAVBAR */
 
 const navbar =
 document.getElementById(
@@ -37,247 +35,43 @@ lastScroll = current;
 
 });
 
-/* =========================
-ACCOUNT SYSTEM
-========================= */
+/* SERVICES */
 
-function getAccounts(){
-
-return JSON.parse(
-localStorage.getItem(
-"yardAccounts"
-)
-) || [];
-
-}
-
-function saveAccounts(accounts){
-
-localStorage.setItem(
-"yardAccounts",
-JSON.stringify(accounts)
+const mowingCheck =
+document.getElementById(
+"mowingCheck"
 );
 
-}
-
-function showSignup(){
-
+const washingCheck =
 document.getElementById(
-"signupForm"
-).classList.remove(
-"hidden"
+"washingCheck"
 );
 
+const weedingCheck =
 document.getElementById(
-"loginForm"
-).classList.add(
-"hidden"
+"weedingCheck"
 );
 
-}
-
-function showLogin(){
-
+const mowingInput =
 document.getElementById(
-"loginForm"
-).classList.remove(
-"hidden"
+"mowingInput"
 );
 
+const washingInput =
 document.getElementById(
-"signupForm"
-).classList.add(
-"hidden"
+"washingInput"
 );
 
-}
-
-function signupUser(){
-
-const name =
+const weedingInput =
 document.getElementById(
-"signupName"
-).value.trim();
-
-const email =
-document.getElementById(
-"signupEmail"
-).value.trim();
-
-const password =
-document.getElementById(
-"signupPassword"
-).value.trim();
-
-if(
-!name ||
-!email ||
-!password
-){
-
-alert(
-"Fill out all fields."
+"weedingInput"
 );
 
-return;
+/* PRICE */
 
-}
-
-let accounts =
-getAccounts();
-
-const exists =
-accounts.find(
-a=>a.email===email
-);
-
-if(exists){
-
-alert(
-"Account already exists."
-);
-
-return;
-
-}
-
-const newUser = {
-name,
-email,
-password,
-points:0
-};
-
-accounts.push(newUser);
-
-saveAccounts(accounts);
-
-localStorage.setItem(
-"yardCurrentUser",
-JSON.stringify(newUser)
-);
-
-updateAccountUI();
-
-}
-
-function loginUser(){
-
-const email =
-document.getElementById(
-"loginEmail"
-).value.trim();
-
-const password =
-document.getElementById(
-"loginPassword"
-).value.trim();
-
-let accounts =
-getAccounts();
-
-const found =
-accounts.find(
-a=>
-a.email===email &&
-a.password===password
-);
-
-if(found){
-
-localStorage.setItem(
-"yardCurrentUser",
-JSON.stringify(found)
-);
-
-updateAccountUI();
-
-}else{
-
-alert(
-"Wrong email or password."
-);
-
-}
-
-}
-
-function logoutUser(){
-
-localStorage.removeItem(
-"yardCurrentUser"
-);
-
-updateAccountUI();
-
-}
-
-function updateAccountUI(){
-
-const user =
-JSON.parse(
-localStorage.getItem(
-"yardCurrentUser"
-)
-);
-
-if(user){
-
-document.getElementById(
-"loggedOutView"
-).style.display =
-"none";
-
-document.getElementById(
-"loggedInView"
-).style.display =
-"block";
-
-document.getElementById(
-"welcomeText"
-).innerText =
-`Welcome ${user.name}`;
-
-document.getElementById(
-"requestEmail"
-).value =
-user.email;
-
-document.getElementById(
-"feedbackEmail"
-).value =
-user.email;
-
-}else{
-
-document.getElementById(
-"loggedOutView"
-).style.display =
-"block";
-
-document.getElementById(
-"loggedInView"
-).style.display =
-"none";
-
-}
-
-}
-
-updateAccountUI();
-
-/* =========================
-PRICE SYSTEM
-========================= */
-
-const checks =
-document.querySelectorAll(
-".service-check"
-);
-
-const yardSize =
-document.getElementById(
-"yardSize"
+const yardSizeSelect =
+document.querySelector(
+'select[name="Yard Size"]'
 );
 
 const totalPrice =
@@ -285,123 +79,153 @@ document.getElementById(
 "totalPrice"
 );
 
-const bundleText =
-document.getElementById(
-"bundleText"
-);
+function updatePrice(){
 
-function calculatePrice(){
-
-let total = 0;
+let basePrice = 0;
 
 let selected = 0;
 
-checks.forEach(check=>{
+if(mowingCheck.checked){
 
-if(check.checked){
-
+basePrice += 18;
 selected++;
-
-total += Number(
-check.value
-);
-
-}
-
-});
-
-const multiplier =
-Number(
-yardSize.value
-);
-
-total =
-total * multiplier;
-
-if(selected === 3){
-
-total =
-Math.round(
-total * 0.85
-);
-
-bundleText.innerText =
-"15% Bundle Discount Applied";
+mowingInput.value = "Yes";
 
 }else{
 
-bundleText.innerText =
-"";
+mowingInput.value = "No";
 
 }
+
+if(washingCheck.checked){
+
+basePrice += 24;
+selected++;
+washingInput.value = "Yes";
+
+}else{
+
+washingInput.value = "No";
+
+}
+
+if(weedingCheck.checked){
+
+basePrice += 14;
+selected++;
+weedingInput.value = "Yes";
+
+}else{
+
+weedingInput.value = "No";
+
+}
+
+let multiplier = 1;
+
+const yard =
+yardSizeSelect.value;
+
+if(yard.includes("Medium")){
+multiplier = 2;
+}
+
+if(yard.includes("Large")){
+multiplier = 3;
+}
+
+let finalPrice =
+basePrice * multiplier;
+
+let discountText = "";
+
+if(selected === 3){
+
+finalPrice =
+finalPrice * 0.85;
+
+discountText =
+" • 15% OFF";
+
+}
+
+finalPrice =
+Math.round(finalPrice);
 
 totalPrice.innerText =
-`$${total}`;
+`$${finalPrice}${discountText}`;
 
 }
 
-checks.forEach(check=>{
+[
+mowingCheck,
+washingCheck,
+weedingCheck
+].forEach(box=>{
 
-check.addEventListener(
+box.addEventListener(
 "change",
-calculatePrice
+updatePrice
 );
 
 });
 
-yardSize.addEventListener(
+yardSizeSelect.addEventListener(
 "change",
-calculatePrice
+updatePrice
 );
 
-calculatePrice();
+updatePrice();
 
-/* =========================
-PHONE FORMAT
-========================= */
+/* PHONE */
 
 const phone =
 document.getElementById(
 "phone"
 );
 
+if(phone){
+
 phone.addEventListener(
 "input",
 e=>{
 
-let x =
-e.target.value
-.replace(/\D/g,'');
+let input =
+e.target.value.replace(/\D/g,'');
 
-x =
-x.substring(0,11);
+if(input.length > 11){
+
+input =
+input.slice(0,11);
+
+}
 
 let formatted = "";
 
-if(x.length > 0){
+if(input.length > 0){
 
-formatted = "1+ ";
+formatted += "1+ ";
 
 }
 
-if(x.length > 1){
+if(input.length > 1){
 
 formatted += "(" +
-x.substring(1,4);
+input.substring(1,4);
 
 }
 
-if(x.length >= 4){
+if(input.length >= 4){
 
 formatted += ") " +
-x.substring(4,7);
+input.substring(4,7);
 
 }
 
-if(x.length >= 7){
+if(input.length >= 7){
 
 formatted += "-" +
-x.substring(7,11);
+input.substring(7,11);
 
 }
 
@@ -410,119 +234,198 @@ formatted;
 
 });
 
-/* =========================
-FORMSUBMIT AJAX
-========================= */
+}
+
+/* FORM SUBMIT */
 
 async function sendForm(
 form,
-subject
+button
 ){
+
+const original =
+button.innerText;
 
 const formData =
 new FormData(form);
 
-formData.append(
-"_subject",
-subject
-);
-
-formData.append(
-"_captcha",
-"false"
-);
+try{
 
 await fetch(
-"https://formsubmit.co/ajax/yardfixers00@gmail.com",
+form.action,
 {
 method:"POST",
 body:formData
 }
 );
 
+button.innerText =
+"Sent!";
+
+button.disabled = true;
+
+setTimeout(()=>{
+
+button.innerText =
+original;
+
+button.disabled = false;
+
+},1500);
+
+form.reset();
+
+updatePrice();
+
+resetStars();
+
+}catch{
+
+button.innerText =
+"Error";
+
+setTimeout(()=>{
+
+button.innerText =
+original;
+
+},1500);
+
 }
+
+}
+
+/* REQUEST */
 
 const orderForm =
 document.getElementById(
 "orderForm"
 );
 
+if(orderForm){
+
 orderForm.addEventListener(
 "submit",
-async(e)=>{
+async e=>{
 
 e.preventDefault();
 
-const btn =
-orderForm.querySelector(
-"button"
-);
-
-btn.innerText =
-"Sending...";
-
 await sendForm(
 orderForm,
-"REQUEST"
+orderForm.querySelector(
+"button"
+)
 );
 
-btn.innerText =
-"Sent!";
-
-setTimeout(()=>{
-
-btn.innerText =
-"Send Request";
-
-},2000);
-
-orderForm.reset();
-
-calculatePrice();
-
 });
+
+}
+
+/* FEEDBACK */
 
 const feedbackForm =
 document.getElementById(
 "feedbackForm"
 );
 
+if(feedbackForm){
+
 feedbackForm.addEventListener(
 "submit",
-async(e)=>{
+async e=>{
 
 e.preventDefault();
 
-const btn =
-feedbackForm.querySelector(
-"button"
-);
-
-btn.innerText =
-"Sending...";
-
 await sendForm(
 feedbackForm,
-"FEEDBACK"
+feedbackForm.querySelector(
+"button"
+)
 );
-
-btn.innerText =
-"Sent!";
-
-setTimeout(()=>{
-
-btn.innerText =
-"Send Feedback";
-
-},2000);
-
-feedbackForm.reset();
 
 });
 
-/* =========================
-TESTIMONIAL AUTO SCROLL
-========================= */
+}
+
+/* STARS */
+
+const stars =
+document.querySelectorAll(
+".half-star, .full-star"
+);
+
+const ratingValue =
+document.getElementById(
+"ratingValue"
+);
+
+let currentRating = 0;
+
+stars.forEach(star=>{
+
+star.addEventListener(
+"click",
+()=>{
+
+currentRating =
+Number(
+star.dataset.value
+);
+
+ratingValue.value =
+`${currentRating} Stars`;
+
+updateStars();
+
+});
+
+});
+
+function updateStars(){
+
+stars.forEach(star=>{
+
+const value =
+Number(
+star.dataset.value
+);
+
+if(value <= currentRating){
+
+star.classList.add(
+"active-star"
+);
+
+}else{
+
+star.classList.remove(
+"active-star"
+);
+
+}
+
+});
+
+}
+
+function resetStars(){
+
+currentRating = 0;
+
+ratingValue.value =
+"0 Stars";
+
+stars.forEach(star=>{
+
+star.classList.remove(
+"active-star"
+);
+
+});
+
+}
+
+/* REVIEWS */
 
 const track =
 document.querySelector(
@@ -535,7 +438,7 @@ let scrollAmount = 0;
 
 function autoScroll(){
 
-scrollAmount += 0.35;
+scrollAmount += .4;
 
 if(
 scrollAmount >=
@@ -558,32 +461,3 @@ autoScroll
 autoScroll();
 
 }
-
-/* =========================
-VISITOR TRACKING
-========================= */
-
-let visitors =
-JSON.parse(
-localStorage.getItem(
-"yardVisitors"
-)
-) || [];
-
-visitors.push({
-
-time:
-new Date().toLocaleString(),
-
-page:
-window.location.pathname,
-
-device:
-navigator.userAgent
-
-});
-
-localStorage.setItem(
-"yardVisitors",
-JSON.stringify(visitors)
-);
