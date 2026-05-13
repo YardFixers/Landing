@@ -1,47 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>
-Dashboard
+YardFixers Owner Dashboard
 </title>
 
 <link rel="stylesheet"
 href="style.css">
 
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap"
+rel="stylesheet">
+
 </head>
 
 <body>
 
-<section>
+<section class="dashboard">
+
+<div class="dashboard-top">
 
 <h1>
-Owner Login
+YardFixers Dashboard
 </h1>
 
-<input
-type="text"
-id="user"
-placeholder="Username">
+<a href="index.html"
+class="back-btn">
 
-<input
-type="password"
-id="pass"
-placeholder="Password">
+← Back To Site
 
-<button onclick="login()">
-Login
-</button>
+</a>
 
-<div id="dashboard"
-style="display:none;">
+</div>
 
-<h2>
-Analytics
+<!-- STATS -->
+
+<div class="stats-grid">
+
+<div class="stat-card">
+
+<h2 id="visitorCount">
+0
 </h2>
 
-<div id="stats"></div>
+<p>
+Visitors
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h2 id="requestCount">
+0
+</h2>
+
+<p>
+Requests
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h2 id="feedbackCount">
+0
+</h2>
+
+<p>
+Feedback
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<h2 id="userCount">
+0
+</h2>
+
+<p>
+Accounts
+</p>
+
+</div>
+
+</div>
+
+<!-- REQUESTS -->
+
+<div class="dashboard-box">
+
+<h2>
+Recent Requests
+</h2>
+
+<div id="requestsContainer">
+
+</div>
+
+</div>
+
+<!-- FEEDBACK -->
+
+<div class="dashboard-box">
+
+<h2>
+Recent Feedback
+</h2>
+
+<div id="feedbackContainer">
+
+</div>
+
+</div>
+
+<!-- VISITORS -->
+
+<div class="dashboard-box">
+
+<h2>
+Recent Visitors
+</h2>
+
+<div id="visitorContainer">
+
+</div>
 
 </div>
 
