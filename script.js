@@ -1,5 +1,5 @@
 /* =========================
-NAVBAR HIDE
+NAVBAR SCROLL
 ========================= */
 
 const navbar =
@@ -13,12 +13,12 @@ window.addEventListener(
 "scroll",
 ()=>{
 
-const currentScroll =
+const current =
 window.pageYOffset;
 
 if(
-currentScroll > lastScroll &&
-currentScroll > 100
+current > lastScroll &&
+current > 100
 ){
 
 navbar.classList.add(
@@ -33,8 +33,7 @@ navbar.classList.remove(
 
 }
 
-lastScroll =
-currentScroll;
+lastScroll = current;
 
 });
 
@@ -143,12 +142,10 @@ return;
 }
 
 const newUser = {
-
 name,
 email,
 password,
 points:0
-
 };
 
 accounts.push(newUser);
@@ -288,6 +285,11 @@ document.getElementById(
 "totalPrice"
 );
 
+const bundleText =
+document.getElementById(
+"bundleText"
+);
+
 function calculatePrice(){
 
 let total = 0;
@@ -322,6 +324,14 @@ total =
 Math.round(
 total * 0.85
 );
+
+bundleText.innerText =
+"15% Bundle Discount Applied";
+
+}else{
+
+bundleText.innerText =
+"";
 
 }
 
@@ -401,23 +411,59 @@ formatted;
 });
 
 /* =========================
-FORM SUCCESS
+FORMSUBMIT AJAX
 ========================= */
 
-const forms =
-document.querySelectorAll(
-"form"
+async function sendForm(
+form,
+subject
+){
+
+const formData =
+new FormData(form);
+
+formData.append(
+"_subject",
+subject
 );
 
-forms.forEach(form=>{
+formData.append(
+"_captcha",
+"false"
+);
 
-form.addEventListener(
+await fetch(
+"https://formsubmit.co/ajax/yardfixers00@gmail.com",
+{
+method:"POST",
+body:formData
+}
+);
+
+}
+
+const orderForm =
+document.getElementById(
+"orderForm"
+);
+
+orderForm.addEventListener(
 "submit",
-()=>{
+async(e)=>{
+
+e.preventDefault();
 
 const btn =
-form.querySelector(
+orderForm.querySelector(
 "button"
+);
+
+btn.innerText =
+"Sending...";
+
+await sendForm(
+orderForm,
+"REQUEST"
 );
 
 btn.innerText =
@@ -426,23 +472,51 @@ btn.innerText =
 setTimeout(()=>{
 
 btn.innerText =
-form.id === "feedbackForm"
-?
-"Send Feedback"
-:
 "Send Request";
 
 },2000);
 
-setTimeout(()=>{
-
-form.reset();
+orderForm.reset();
 
 calculatePrice();
 
-},2100);
-
 });
+
+const feedbackForm =
+document.getElementById(
+"feedbackForm"
+);
+
+feedbackForm.addEventListener(
+"submit",
+async(e)=>{
+
+e.preventDefault();
+
+const btn =
+feedbackForm.querySelector(
+"button"
+);
+
+btn.innerText =
+"Sending...";
+
+await sendForm(
+feedbackForm,
+"FEEDBACK"
+);
+
+btn.innerText =
+"Sent!";
+
+setTimeout(()=>{
+
+btn.innerText =
+"Send Feedback";
+
+},2000);
+
+feedbackForm.reset();
 
 });
 
@@ -461,7 +535,7 @@ let scrollAmount = 0;
 
 function autoScroll(){
 
-scrollAmount += 0.4;
+scrollAmount += 0.35;
 
 if(
 scrollAmount >=
