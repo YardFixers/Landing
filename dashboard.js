@@ -15,7 +15,7 @@ window.location.href =
 }
 
 /* =========================
-LOGOUT
+LOGOUT BUTTON
 ========================= */
 
 const logoutBtn =
@@ -50,7 +50,7 @@ window.location.href =
 }
 
 /* =========================
-LOAD SAVED DATA
+LOAD STORAGE DATA
 ========================= */
 
 const requests =
@@ -78,20 +78,49 @@ localStorage.getItem(
 UPDATE STATS
 ========================= */
 
+const visitCount =
 document.getElementById(
 "visitCount"
-).innerText = visits;
+);
 
+const requestCount =
 document.getElementById(
 "requestCount"
-).innerText = requests.length;
+);
 
+const feedbackCount =
 document.getElementById(
 "feedbackCount"
-).innerText = feedback.length;
+);
+
+const revenueCount =
+document.getElementById(
+"revenueCount"
+);
+
+if(visitCount){
+
+visitCount.innerText =
+visits;
+
+}
+
+if(requestCount){
+
+requestCount.innerText =
+requests.length;
+
+}
+
+if(feedbackCount){
+
+feedbackCount.innerText =
+feedback.length;
+
+}
 
 /* =========================
-REVENUE TOTAL
+REVENUE
 ========================= */
 
 let totalRevenue = 0;
@@ -100,20 +129,23 @@ requests.forEach(req=>{
 
 const price =
 Number(
-req.price.replace(/\D/g,"")
+String(req.price)
+.replace(/\D/g,"")
 );
 
 totalRevenue += price;
 
 });
 
-document.getElementById(
-"revenueCount"
-).innerText =
+if(revenueCount){
+
+revenueCount.innerText =
 "$" + totalRevenue;
 
+}
+
 /* =========================
-REAL REQUESTS
+REQUESTS
 ========================= */
 
 const requestContainer =
@@ -123,19 +155,21 @@ document.getElementById(
 
 if(requestContainer){
 
+requestContainer.innerHTML = "";
+
 if(requests.length === 0){
 
 requestContainer.innerHTML = `
 
-<div class="request-box">
+<div class="request-box empty-box">
 
 <h3>
-No requests yet
+No Requests Yet
 </h3>
 
 <p>
-Requests sent from the site
-will appear here.
+When customers send requests,
+they will appear here.
 </p>
 
 </div>
@@ -150,41 +184,65 @@ requestContainer.innerHTML += `
 
 <div class="request-box">
 
+<div class="request-top">
+
 <h3>
-${req.price}
+${req.price || "$0"}
 </h3>
 
+<span class="request-date">
+${req.date || ""}
+</span>
+
+</div>
+
+<div class="request-grid">
+
+<div>
+
 <p>
-<b>Name:</b> ${req.name}
+<b>Name:</b>
+${req.name || "Unknown"}
 </p>
 
 <p>
-<b>Area:</b> ${req.area}
+<b>Area:</b>
+${req.area || "Unknown"}
 </p>
 
 <p>
-<b>Phone:</b> ${req.phone}
+<b>Phone:</b>
+${req.phone || "Unknown"}
+</p>
+
+</div>
+
+<div>
+
+<p>
+<b>Mowing:</b>
+${req.mowing || "No"}
 </p>
 
 <p>
-<b>Mowing:</b> ${req.mowing}
+<b>Power Washing:</b>
+${req.washing || "No"}
 </p>
 
 <p>
-<b>Power Washing:</b> ${req.washing}
+<b>Weeding:</b>
+${req.weeding || "No"}
 </p>
 
-<p>
-<b>Weeding:</b> ${req.weeding}
-</p>
+</div>
 
-<p>
-<b>Message:</b> ${req.message}
-</p>
+</div>
 
-<p>
-<b>Date:</b> ${req.date}
-</p>
+<div class="request-message">
+
+${req.message || ""}
+
+</div>
 
 <div class="request-buttons">
 
@@ -209,7 +267,7 @@ Reject
 }
 
 /* =========================
-REAL FEEDBACK
+FEEDBACK
 ========================= */
 
 const feedbackContainer =
@@ -219,14 +277,16 @@ document.getElementById(
 
 if(feedbackContainer){
 
+feedbackContainer.innerHTML = "";
+
 if(feedback.length === 0){
 
 feedbackContainer.innerHTML = `
 
-<div class="feedback-admin-box">
+<div class="feedback-admin-box empty-box">
 
 <p>
-No feedback yet.
+No feedback submitted yet.
 </p>
 
 </div>
@@ -241,17 +301,21 @@ feedbackContainer.innerHTML += `
 
 <div class="feedback-admin-box">
 
+<div class="feedback-head">
+
 <div class="admin-stars">
-${item.stars}
+${item.stars || "5 Stars"}
+</div>
+
+<div class="feedback-name">
+${item.name || "Anonymous"}
+</div>
+
 </div>
 
 <p>
-${item.message}
+${item.message || ""}
 </p>
-
-<span>
-— ${item.name}
-</span>
 
 </div>
 
@@ -264,7 +328,7 @@ ${item.message}
 }
 
 /* =========================
-ACCEPT / REJECT BUTTONS
+ACCEPT / REJECT
 ========================= */
 
 document.addEventListener(
@@ -281,7 +345,10 @@ e.target.innerText =
 "Accepted";
 
 e.target.style.opacity =
-".7";
+".75";
+
+e.target.style.pointerEvents =
+"none";
 
 }
 
@@ -295,7 +362,10 @@ e.target.innerText =
 "Rejected";
 
 e.target.style.opacity =
-".7";
+".75";
+
+e.target.style.pointerEvents =
+"none";
 
 }
 
