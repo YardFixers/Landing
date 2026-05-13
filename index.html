@@ -31,8 +31,6 @@ rel="stylesheet">
 
 <body>
 
-<!-- NAVBAR -->
-
 <nav class="navbar">
 
 <div class="logo">
@@ -41,41 +39,12 @@ YardFixers
 
 <ul class="nav-links">
 
-<li>
-<a href="#services">
-Services
-</a>
-</li>
-
-<li>
-<a href="#about">
-About
-</a>
-</li>
-
-<li>
-<a href="#request">
-Request
-</a>
-</li>
-
-<li>
-<a href="#feedback">
-Feedback
-</a>
-</li>
-
-<li>
-<a href="#reviews">
-Reviews
-</a>
-</li>
-
-<li>
-<a href="dashboard.html">
-Owner
-</a>
-</li>
+<li><a href="#services">Services</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#request">Request</a></li>
+<li><a href="#feedback">Feedback</a></li>
+<li><a href="#reviews">Reviews</a></li>
+<li><a href="dashboard.html">Owner</a></li>
 
 </ul>
 
@@ -291,52 +260,6 @@ Request Service
 
 </div>
 
-<!-- ACCOUNT -->
-
-<div class="account-box">
-
-<h3>
-Create Account / Login
-</h3>
-
-<input
-type="email"
-id="accountEmail"
-placeholder="Email">
-
-<input
-type="password"
-id="accountPassword"
-placeholder="Password">
-
-<div class="account-buttons">
-
-<button onclick="signup()">
-Sign Up
-</button>
-
-<button onclick="login()">
-Login
-</button>
-
-<button
-id="logoutBtn"
-onclick="logout()">
-
-Logout
-
-</button>
-
-</div>
-
-<p id="accountStatus">
-Not Logged In
-</p>
-
-</div>
-
-<!-- ORDER FORM -->
-
 <form id="orderForm">
 
 <input
@@ -362,7 +285,7 @@ required>
 <input
 type="text"
 name="area"
-placeholder="Neighborhood / Area (Example: Daniel Island, Wando, Rivershore)"
+placeholder="Neighborhood / Area"
 required>
 
 <label class="label-title">
@@ -445,18 +368,26 @@ $0
 
 </div>
 
+<div class="promo-box">
+
+🔥 Bundle Deal:
+Get 15% OFF when you select
+all 3 services together.
+
+</div>
+
 <select name="yardSize">
 
 <option>
-Small Yard • +$10
+Small Yard • Standard Price
 </option>
 
 <option>
-Medium Yard • +$20
+Medium Yard • 1.6x Price
 </option>
 
 <option>
-Large Yard • +$35
+Large Yard • 2.3x Price
 </option>
 
 </select>
@@ -526,7 +457,7 @@ Send Feedback
 
 </section>
 
-<!-- TESTIMONIALS -->
+<!-- REVIEWS -->
 
 <section class="testimonials"
 id="reviews">
@@ -555,66 +486,7 @@ Average Rating From Local Customers
 
 </div>
 
-<div class="testimonial-slider">
-
-<div class="testimonial-track">
-
-<div class="testimonial-card">
-<div class="stars">★★★★★</div>
-<h3>Sarah M.</h3>
-<p>
-“They cleaned up our yard way better
-than expected.”
-</p>
-</div>
-
-<div class="testimonial-card">
-<div class="stars">★★★★☆</div>
-<h3>Chris T.</h3>
-<p>
-“Good prices and solid work.”
-</p>
-</div>
-
-<div class="testimonial-card">
-<div class="stars">★★★★★</div>
-<h3>Jennifer L.</h3>
-<p>
-“Our driveway looked brand new.”
-</p>
-</div>
-
-<div class="testimonial-card">
-<div class="stars">★★★★☆</div>
-<h3>Marcus D.</h3>
-<p>
-“Fast workers and polite.”
-</p>
-</div>
-
-<div class="testimonial-card">
-<div class="stars">★★★★★</div>
-<h3>Olivia B.</h3>
-<p>
-“Best lawn service around Charleston.”
-</p>
-</div>
-
-<div class="testimonial-card">
-<div class="stars">★★★☆☆</div>
-<h3>Robert K.</h3>
-<p>
-“They did decent work but arrived late.”
-</p>
-</div>
-
-</div>
-
-</div>
-
 </section>
-
-<!-- FOOTER -->
 
 <footer>
 
@@ -628,7 +500,7 @@ Wando, and nearby areas.
 </span>
 
 <span>
-Made by, Eli Vaughan
+Site made by, Eli Vaughan
 </span>
 
 </footer>
