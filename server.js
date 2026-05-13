@@ -11,30 +11,26 @@ app.use(express.static(__dirname));
 
 const DB = "./database.json";
 
-/* =========================
-DATABASE
-========================= */
+/* DATABASE */
 
 function readDB(){
 
-  return JSON.parse(
-    fs.readFileSync(DB)
-  );
+return JSON.parse(
+fs.readFileSync(DB)
+);
 
 }
 
 function writeDB(data){
 
-  fs.writeFileSync(
-    DB,
-    JSON.stringify(data, null, 2)
-  );
+fs.writeFileSync(
+DB,
+JSON.stringify(data,null,2)
+);
 
 }
 
-/* =========================
-EMAIL
-========================= */
+/* EMAIL */
 
 const transporter =
 nodemailer.createTransport({
@@ -51,9 +47,7 @@ pass:"PUT_YOUR_GOOGLE_APP_PASSWORD_HERE"
 
 });
 
-/* =========================
-TRACK VISITS
-========================= */
+/* TRACK USERS */
 
 app.post("/track",(req,res)=>{
 
@@ -83,9 +77,7 @@ success:true
 
 });
 
-/* =========================
-SIGNUP
-========================= */
+/* SIGNUP */
 
 app.post("/signup",(req,res)=>{
 
@@ -101,7 +93,6 @@ if(exists){
 return res.json({
 
 success:false,
-
 message:"Account Already Exists"
 
 });
@@ -111,9 +102,7 @@ message:"Account Already Exists"
 const newUser = {
 
 email:req.body.email,
-
 password:req.body.password,
-
 points:0
 
 };
@@ -125,16 +114,13 @@ writeDB(db);
 res.json({
 
 success:true,
-
 user:newUser
 
 });
 
 });
 
-/* =========================
-LOGIN
-========================= */
+/* LOGIN */
 
 app.post("/login",(req,res)=>{
 
@@ -156,7 +142,6 @@ if(user){
 res.json({
 
 success:true,
-
 user
 
 });
@@ -164,96 +149,64 @@ user
 }else{
 
 res.json({
-
 success:false
-
 });
 
 }
 
 });
 
-/* =========================
-ORDER
-========================= */
+/* REQUEST */
 
-app.post("/order",async(req,res)=>{
+app.post("/request",async(req,res)=>{
 
 const db = readDB();
 
-let user =
-db.users.find(
-u=>u.email===req.body.customer
-);
-
-/* POINTS SYSTEM */
-
-if(user){
-
-user.points += 10;
-
-}
-
-/* ORDER */
-
-const order = {
-
-...req.body,
-
-status:"Pending Confirmation",
-
-ip:
-req.headers["x-forwarded-for"] ||
-req.socket.remoteAddress,
-
-time:new Date()
-
-};
-
-db.orders.push(order);
+db.orders.push(req.body);
 
 writeDB(db);
 
-/* EMAIL */
-
 const html = `
 
-<h2>
-New YardFixers Order
-</h2>
+<h2>REQUEST</h2>
 
 <p>
-<strong>Name:</strong>
+<b>Name:</b>
 ${req.body.name}
 </p>
 
 <p>
-<strong>Email:</strong>
+<b>Gmail:</b>
 ${req.body.email}
 </p>
 
 <p>
-<strong>Phone:</strong>
+<b>Phone:</b>
 ${req.body.phone}
 </p>
 
 <p>
-<strong>Area:</strong>
+<b>Area:</b>
 ${req.body.area}
 </p>
 
 <p>
-<strong>Services:</strong>
+<b>Services:</b>
 ${req.body.services}
 </p>
 
 <p>
-<strong>Yard Size:</strong>
+<b>Yard Size:</b>
 ${req.body.yardSize}
 </p>
 
 <p>
-<strong>Message:</strong>
+<b>Estimated Price:</b>
+${req.body.price}
+</p>
+
+<p>
+<b>Message:</b>
 ${req.body.message}
 </p>
 
@@ -267,7 +220,7 @@ from:"yardfixers00@gmail.com",
 
 to:"yardfixers00@gmail.com",
 
-subject:"New YardFixers Order",
+subject:"REQUEST",
 
 html
 
@@ -280,23 +233,71 @@ console.log(err);
 }
 
 res.json({
-
-success:true,
-
-points:
-user
-? user.points
-:0
-
+success:true
 });
 
 });
 
-/* =========================
-DASHBOARD
-========================= */
+/* FEEDBACK */
 
-app.get("/dashboard",(req,res)=>{
+app.post("/feedback",async(req,res)=>{
+
+const db = readDB();
+
+db.feedback.push(req.body);
+
+writeDB(db);
+
+const html = `
+
+<h2>FEEDBACK</h2>
+
+<p>
+<b>Name:</b>
+${req.body.name}
+</p>
+
+<p>
+<b>Gmail:</b>
+${req.body.email}
+</p>
+
+<p>
+<b>Feedback:</b>
+${req.body.message}
+</p>
+
+`;
+
+try{
+
+await transporter.sendMail({
+
+from:"yardfixers00@gmail.com",
+
+to:"yardfixers00@gmail.com",
+
+subject:"FEEDBACK",
+
+html
+
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+res.json({
+success:true
+});
+
+});
+
+/* DASHBOARD */
+
+app.get("/dashboard-data",(req,res)=>{
 
 const db = readDB();
 
@@ -304,12 +305,10 @@ res.json(db);
 
 });
 
-/* =========================
-START SERVER
-========================= */
+/* START */
 
-app.listen(3000, ()=>{
+app.listen(3000,()=>{
 
-console.log("Running");
+console.log("Running On 3000");
 
 });
