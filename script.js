@@ -1,8 +1,6 @@
 // FILE NAME: script.js
 
-/* =========================
-   PRICE CALCULATOR
-========================= */
+/* PRICE CALCULATOR */
 
 const serviceCheckboxes =
 document.querySelectorAll(
@@ -25,8 +23,6 @@ let basePrice = 0;
 
 let selectedServices = [];
 
-/* SERVICES */
-
 serviceCheckboxes.forEach(box=>{
 
 if(box.checked){
@@ -43,35 +39,21 @@ box.value
 
 });
 
-/* SIZE MULTIPLIER */
-
 let multiplier = 1;
 
 const yardSize =
 yardSizeSelect.value;
 
-if(
-yardSize.includes("Medium")
-){
-
-multiplier = 1.6;
-
+if(yardSize.includes("Medium")){
+multiplier = 2;
 }
 
-if(
-yardSize.includes("Large")
-){
-
-multiplier = 2.3;
-
+if(yardSize.includes("Large")){
+multiplier = 3;
 }
-
-/* TOTAL */
 
 let finalPrice =
 basePrice * multiplier;
-
-/* DISCOUNT */
 
 let discountText = "";
 
@@ -88,22 +70,16 @@ discountText =
 finalPrice =
 Math.round(finalPrice);
 
-/* DISPLAY */
-
 totalPrice.innerText =
 `$${finalPrice}${discountText}`;
 
 }
 
-/* EVENTS */
-
 serviceCheckboxes.forEach(box=>{
-
 box.addEventListener(
 "change",
 updatePrice
 );
-
 });
 
 yardSizeSelect.addEventListener(
@@ -111,13 +87,9 @@ yardSizeSelect.addEventListener(
 updatePrice
 );
 
-/* INITIAL */
-
 updatePrice();
 
-/* =========================
-   PHONE FORMAT
-========================= */
+/* PHONE FORMAT */
 
 const phone =
 document.getElementById(
@@ -134,50 +106,38 @@ let input =
 e.target.value.replace(/\D/g,'');
 
 if(input.length > 11){
-
-input =
-input.slice(0,11);
-
+input = input.slice(0,11);
 }
 
 let formatted = "";
 
 if(input.length > 0){
-
 formatted += "1+ ";
-
 }
 
 if(input.length > 1){
-
 formatted += "(" +
 input.substring(1,4);
-
 }
 
 if(input.length >= 4){
-
 formatted += ") " +
 input.substring(4,7);
-
 }
 
 if(input.length >= 7){
-
 formatted += "-" +
 input.substring(7,11);
-
 }
 
 e.target.value =
 formatted;
 
 });
+
 }
 
-/* =========================
-   NAVBAR HIDE ON SCROLL
-========================= */
+/* NAVBAR HIDE */
 
 const navbar =
 document.getElementById(
@@ -215,9 +175,62 @@ currentScroll;
 
 });
 
-/* =========================
-   FORM SUCCESS
-========================= */
+/* FORM SUBMIT */
+
+async function sendForm(
+form,
+button
+){
+
+const originalText =
+button.innerText;
+
+const formData =
+new FormData(form);
+
+try{
+
+await fetch(
+form.action,
+{
+method:"POST",
+body:formData
+}
+);
+
+button.innerText =
+"Sent!";
+
+button.disabled = true;
+
+setTimeout(()=>{
+
+button.innerText =
+originalText;
+
+button.disabled = false;
+
+},1500);
+
+form.reset();
+
+updatePrice();
+
+}catch(err){
+
+button.innerText =
+"Error";
+
+setTimeout(()=>{
+
+button.innerText =
+originalText;
+
+},1500);
+
+}
+
+}
 
 const orderForm =
 document.getElementById(
@@ -228,17 +241,22 @@ if(orderForm){
 
 orderForm.addEventListener(
 "submit",
-()=>{
+async e=>{
 
-setTimeout(()=>{
+e.preventDefault();
 
-alert(
-"Request Sent!"
+const button =
+orderForm.querySelector(
+"button"
 );
 
-},500);
+await sendForm(
+orderForm,
+button
+);
 
 });
+
 }
 
 const feedbackForm =
@@ -250,22 +268,82 @@ if(feedbackForm){
 
 feedbackForm.addEventListener(
 "submit",
-()=>{
+async e=>{
 
-setTimeout(()=>{
+e.preventDefault();
 
-alert(
-"Feedback Sent!"
+const button =
+feedbackForm.querySelector(
+"button"
 );
 
-},500);
+await sendForm(
+feedbackForm,
+button
+);
 
 });
+
 }
 
-/* =========================
-   TESTIMONIAL AUTO SCROLL
-========================= */
+/* STARS */
+
+const stars =
+document.querySelectorAll(
+".rating-star"
+);
+
+const ratingValue =
+document.getElementById(
+"ratingValue"
+);
+
+let currentRating = 0;
+
+stars.forEach(star=>{
+
+star.addEventListener(
+"click",
+()=>{
+
+currentRating =
+star.dataset.value;
+
+ratingValue.value =
+currentRating;
+
+updateStars();
+
+});
+
+});
+
+function updateStars(){
+
+stars.forEach(star=>{
+
+const value =
+Number(star.dataset.value);
+
+if(value <= currentRating){
+
+star.classList.add(
+"active-star"
+);
+
+}else{
+
+star.classList.remove(
+"active-star"
+);
+
+}
+
+});
+
+}
+
+/* AUTO REVIEWS */
 
 const track =
 document.querySelector(
@@ -278,15 +356,13 @@ let scrollAmount = 0;
 
 function autoScroll(){
 
-scrollAmount += 1;
+scrollAmount += .4;
 
 if(
 scrollAmount >=
 track.scrollWidth / 2
 ){
-
 scrollAmount = 0;
-
 }
 
 track.style.transform =
@@ -301,49 +377,3 @@ autoScroll
 autoScroll();
 
 }
-
-/* =========================
-   VISITOR TRACKING
-========================= */
-
-async function trackVisit(){
-
-try{
-
-await fetch(
-"/track-visit",
-{
-
-method:"POST",
-
-headers:{
-"Content-Type":
-"application/json"
-},
-
-body:JSON.stringify({
-
-width:
-window.innerWidth,
-
-height:
-window.innerHeight,
-
-time:
-new Date()
-
-})
-
-}
-
-);
-
-}catch(err){
-
-console.log(err);
-
-}
-
-}
-
-trackVisit();
