@@ -1,6 +1,8 @@
 // FILE NAME: script.js
 
-/* PRICE CALCULATOR */
+/* =========================
+   PRICE CALCULATOR
+========================= */
 
 const serviceCheckboxes =
 document.querySelectorAll(
@@ -9,7 +11,7 @@ document.querySelectorAll(
 
 const yardSizeSelect =
 document.querySelector(
-'select[name="yardSize"]'
+'select[name="Yard Size"]'
 );
 
 const totalPrice =
@@ -41,20 +43,12 @@ box.value
 
 });
 
-/* MULTIPLIER */
+/* SIZE MULTIPLIER */
 
 let multiplier = 1;
 
 const yardSize =
 yardSizeSelect.value;
-
-if(
-yardSize.includes("Small")
-){
-
-multiplier = 1;
-
-}
 
 if(
 yardSize.includes("Medium")
@@ -72,7 +66,7 @@ multiplier = 2.3;
 
 }
 
-/* FINAL PRICE */
+/* TOTAL */
 
 let finalPrice =
 basePrice * multiplier;
@@ -93,6 +87,8 @@ discountText =
 
 finalPrice =
 Math.round(finalPrice);
+
+/* DISPLAY */
 
 totalPrice.innerText =
 `$${finalPrice}${discountText}`;
@@ -119,12 +115,16 @@ updatePrice
 
 updatePrice();
 
-/* PHONE FORMAT */
+/* =========================
+   PHONE FORMAT
+========================= */
 
 const phone =
 document.getElementById(
 "phone"
 );
+
+if(phone){
 
 phone.addEventListener(
 "input",
@@ -140,8 +140,7 @@ input.slice(0,11);
 
 }
 
-let formatted =
-"";
+let formatted = "";
 
 if(input.length > 0){
 
@@ -174,47 +173,177 @@ e.target.value =
 formatted;
 
 });
+}
 
-/* FORM */
+/* =========================
+   NAVBAR HIDE ON SCROLL
+========================= */
+
+const navbar =
+document.getElementById(
+"navbar"
+);
+
+let lastScroll = 0;
+
+window.addEventListener(
+"scroll",
+()=>{
+
+const currentScroll =
+window.pageYOffset;
+
+if(
+currentScroll > lastScroll &&
+currentScroll > 100
+){
+
+navbar.classList.add(
+"nav-hidden"
+);
+
+}else{
+
+navbar.classList.remove(
+"nav-hidden"
+);
+
+}
+
+lastScroll =
+currentScroll;
+
+});
+
+/* =========================
+   FORM SUCCESS
+========================= */
 
 const orderForm =
 document.getElementById(
 "orderForm"
 );
 
+if(orderForm){
+
 orderForm.addEventListener(
 "submit",
-async e=>{
+()=>{
 
-e.preventDefault();
+setTimeout(()=>{
 
 alert(
 "Request Sent!"
 );
 
-orderForm.reset();
-
-updatePrice();
+},500);
 
 });
-
-/* FEEDBACK */
+}
 
 const feedbackForm =
 document.getElementById(
 "feedbackForm"
 );
 
+if(feedbackForm){
+
 feedbackForm.addEventListener(
 "submit",
-async e=>{
+()=>{
 
-e.preventDefault();
+setTimeout(()=>{
 
 alert(
 "Feedback Sent!"
 );
 
-feedbackForm.reset();
+},500);
 
 });
+}
+
+/* =========================
+   TESTIMONIAL AUTO SCROLL
+========================= */
+
+const track =
+document.querySelector(
+".testimonial-track"
+);
+
+if(track){
+
+let scrollAmount = 0;
+
+function autoScroll(){
+
+scrollAmount += 1;
+
+if(
+scrollAmount >=
+track.scrollWidth / 2
+){
+
+scrollAmount = 0;
+
+}
+
+track.style.transform =
+`translateX(-${scrollAmount}px)`;
+
+requestAnimationFrame(
+autoScroll
+);
+
+}
+
+autoScroll();
+
+}
+
+/* =========================
+   VISITOR TRACKING
+========================= */
+
+async function trackVisit(){
+
+try{
+
+await fetch(
+"/track-visit",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+width:
+window.innerWidth,
+
+height:
+window.innerHeight,
+
+time:
+new Date()
+
+})
+
+}
+
+);
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+trackVisit();
