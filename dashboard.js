@@ -1,7 +1,8 @@
 // FILE NAME: dashboard.js
+// REPLACE YOUR CURRENT dashboard.js WITH THIS FULL FILE
 
 /* =========================
-   FORCE LOGOUT ON REFRESH
+   AUTO LOGOUT ON REFRESH
 ========================= */
 
 sessionStorage.removeItem(
@@ -115,12 +116,12 @@ e=>{
 
 e.preventDefault();
 
-const confirmLeave =
+const leave =
 confirm(
-"Leaving the dashboard will log you out. Continue?"
+"Leaving the dashboard will log you out."
 );
 
-if(confirmLeave){
+if(leave){
 
 sessionStorage.removeItem(
 "ownerLoggedIn"
@@ -134,7 +135,7 @@ window.location.href =
 });
 
 /* =========================
-   STORAGE DATA
+   STORAGE
 ========================= */
 
 function getStorage(name){
@@ -194,19 +195,10 @@ document.getElementById(
 
 requestList.innerHTML = "";
 
-if(requests.length === 0){
-
-requestList.innerHTML =
-`
-<div class="item">
-No requests yet.
-</div>
-`;
-
-}else{
-
-requests.reverse().forEach(
-req=>{
+requests
+.slice()
+.reverse()
+.forEach(req=>{
 
 requestList.innerHTML +=
 `
@@ -236,15 +228,16 @@ ${req.weeding}<br>
 <strong>Total:</strong>
 ${req.total}<br>
 
-<strong>Message:</strong>
+<strong>Time:</strong>
+${req.time}<br><br>
+
+<strong>Message:</strong><br>
 ${req.message}
 
 </div>
 `;
 
 });
-
-}
 
 /* FEEDBACK */
 
@@ -255,19 +248,10 @@ document.getElementById(
 
 feedbackList.innerHTML = "";
 
-if(feedback.length === 0){
-
-feedbackList.innerHTML =
-`
-<div class="item">
-No feedback yet.
-</div>
-`;
-
-}else{
-
-feedback.reverse().forEach(
-feed=>{
+feedback
+.slice()
+.reverse()
+.forEach(feed=>{
 
 feedbackList.innerHTML +=
 `
@@ -282,15 +266,16 @@ ${feed.email}<br>
 <strong>Stars:</strong>
 ${feed.stars}<br>
 
-<strong>Message:</strong>
+<strong>Time:</strong>
+${feed.time}<br><br>
+
+<strong>Message:</strong><br>
 ${feed.message}
 
 </div>
 `;
 
 });
-
-}
 
 /* VISITORS */
 
@@ -301,38 +286,27 @@ document.getElementById(
 
 visitorList.innerHTML = "";
 
-if(visitors.length === 0){
-
-visitorList.innerHTML =
-`
-<div class="item">
-No visitors yet.
-</div>
-`;
-
-}else{
-
-visitors.reverse().forEach(
-visitor=>{
+visitors
+.slice()
+.reverse()
+.forEach(visitor=>{
 
 visitorList.innerHTML +=
 `
 <div class="item">
 
-<strong>Time:</strong>
-${visitor.time}<br>
+<strong>Visited:</strong>
+${visitor.time}<br><br>
 
-<strong>Device:</strong>
-${visitor.device}<br>
+<strong>Page:</strong><br>
+${visitor.page}<br><br>
 
-<strong>Page:</strong>
-${visitor.page}
+<strong>Device:</strong><br>
+${visitor.device}
 
 </div>
 `;
 
 });
-
-}
 
 }
