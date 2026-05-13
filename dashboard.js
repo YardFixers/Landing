@@ -1,5 +1,7 @@
 async function loadDashboard(){
 
+try{
+
 const response =
 await fetch("/dashboard-data");
 
@@ -11,22 +13,22 @@ await response.json();
 document.getElementById(
 "visitorCount"
 ).innerText =
-data.visitors.length;
+data.visitors?.length || 0;
 
 document.getElementById(
 "requestCount"
 ).innerText =
-data.orders.length;
+data.orders?.length || 0;
 
 document.getElementById(
 "feedbackCount"
 ).innerText =
-data.feedback.length;
+data.feedback?.length || 0;
 
 document.getElementById(
 "userCount"
 ).innerText =
-data.users.length;
+data.users?.length || 0;
 
 /* REQUESTS */
 
@@ -35,76 +37,39 @@ document.getElementById(
 "requestsContainer"
 );
 
-data.orders.reverse().forEach(order=>{
+requests.innerHTML = "";
+
+(data.orders || [])
+.slice()
+.reverse()
+.forEach(order=>{
 
 requests.innerHTML += `
 
 <div class="dash-item">
 
 <h3>
-${order.name}
+${order.name || "Unknown"}
 </h3>
 
 <p>
 <b>Email:</b>
-${order.email}
+${order.email || ""}
 </p>
 
 <p>
 <b>Phone:</b>
-${order.phone}
+${order.phone || ""}
 </p>
 
 <p>
 <b>Area:</b>
-${order.area}
-</p>
-
-<p>
-<b>Services:</b>
-${order.services}
-</p>
-
-<p>
-<b>Price:</b>
-${order.price}
+${order.area || ""}
 </p>
 
 <p>
 <b>Message:</b>
-${order.message}
-</p>
-
-</div>
-
-`;
-
-});
-
-/* FEEDBACK */
-
-const feedback =
-document.getElementById(
-"feedbackContainer"
-);
-
-data.feedback.reverse().forEach(item=>{
-
-feedback.innerHTML += `
-
-<div class="dash-item">
-
-<h3>
-${item.name}
-</h3>
-
-<p>
-<b>Email:</b>
-${item.email}
-</p>
-
-<p>
-${item.message}
+${order.message || ""}
 </p>
 
 </div>
@@ -120,7 +85,12 @@ document.getElementById(
 "visitorContainer"
 );
 
-data.visitors.reverse().forEach(visitor=>{
+visitors.innerHTML = "";
+
+(data.visitors || [])
+.slice()
+.reverse()
+.forEach(visitor=>{
 
 visitors.innerHTML += `
 
@@ -128,17 +98,12 @@ visitors.innerHTML += `
 
 <p>
 <b>IP:</b>
-${visitor.ip}
+${visitor.ip || "Unknown"}
 </p>
 
 <p>
 <b>Screen:</b>
-${visitor.width}x${visitor.height}
-</p>
-
-<p>
-<b>Time On Site:</b>
-${visitor.timeSpent} seconds
+${visitor.width || 0}x${visitor.height || 0}
 </p>
 
 </div>
@@ -146,6 +111,12 @@ ${visitor.timeSpent} seconds
 `;
 
 });
+
+}catch(error){
+
+console.log(error);
+
+}
 
 }
 
