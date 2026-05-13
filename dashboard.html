@@ -1,3 +1,5 @@
+<!-- FILE NAME: dashboard.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,34 +7,64 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
+<meta
+name="viewport"
 content="width=device-width, initial-scale=1.0">
 
 <title>
 YardFixers Owner Dashboard
 </title>
 
-<link rel="stylesheet"
-href="style.css">
-
 <link
-href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap"
-rel="stylesheet">
+rel="stylesheet"
+href="style.css">
 
 </head>
 
-<body>
+<body class="dashboard-body">
 
-<section class="dashboard">
+<!-- LOGIN SCREEN -->
 
-<div class="dashboard-top">
+<div
+class="owner-login"
+id="loginScreen">
+
+<div class="owner-box">
 
 <h1>
-YardFixers Dashboard
+Owner Login
 </h1>
 
-<a href="index.html"
-class="back-btn">
+<p>
+Authorized Access Only
+</p>
+
+<input
+type="text"
+id="ownerUser"
+placeholder="Username">
+
+<input
+type="password"
+id="ownerPass"
+placeholder="Password">
+
+<button
+onclick="loginOwner()">
+
+Login
+
+</button>
+
+<p
+id="loginError"
+class="login-error">
+
+</p>
+
+<a
+href="index.html"
+class="back-site">
 
 ← Back To Site
 
@@ -40,7 +72,29 @@ class="back-btn">
 
 </div>
 
-<!-- STATS -->
+</div>
+
+<!-- DASHBOARD -->
+
+<div
+class="dashboard-container"
+id="dashboardContainer">
+
+<div class="dashboard-top">
+
+<h1>
+YardFixers Dashboard
+</h1>
+
+<button
+class="logout-btn"
+onclick="logoutOwner()">
+
+Logout
+
+</button>
+
+</div>
 
 <div class="stats-grid">
 
@@ -87,58 +141,51 @@ Feedback
 </h2>
 
 <p>
-Accounts
+Users
 </p>
 
 </div>
 
 </div>
 
-<!-- REQUESTS -->
-
-<div class="dashboard-box">
+<div class="dashboard-section">
 
 <h2>
 Recent Requests
 </h2>
 
-<div id="requestsContainer">
+<div
+id="requestsContainer">
 
 </div>
 
 </div>
 
-<!-- FEEDBACK -->
-
-<div class="dashboard-box">
+<div class="dashboard-section">
 
 <h2>
-Recent Feedback
+Visitors
 </h2>
 
-<div id="feedbackContainer">
+<div
+id="visitorContainer">
 
 </div>
 
 </div>
 
-<!-- VISITORS -->
+<button
+class="return-site"
+onclick="backToSite()">
 
-<div class="dashboard-box">
+Back To Main Site
 
-<h2>
-Recent Visitors
-</h2>
-
-<div id="visitorContainer">
+</button>
 
 </div>
-
-</div>
-
-</section>
 
 <script src="dashboard.js"></script>
 
 </body>
+
 </html>
