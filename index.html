@@ -1,5 +1,3 @@
-<!-- FILE NAME: index.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,8 +46,14 @@ About
 </li>
 
 <li>
-<a href="#contact">
-Contact
+<a href="#request">
+Request
+</a>
+</li>
+
+<li>
+<a href="#feedback">
+Feedback
 </a>
 </li>
 
@@ -66,8 +70,6 @@ Owner
 <!-- HERO -->
 
 <section class="hero">
-
-<div class="hero-overlay"></div>
 
 <div class="hero-content">
 
@@ -87,7 +89,7 @@ pull weeds, and help homes look cleaner
 around Rivershore, South Carolina.
 </p>
 
-<a href="#contact"
+<a href="#request"
 class="main-btn">
 
 Get A Quote
@@ -132,6 +134,10 @@ Fresh cuts, clean edges,
 and better looking yards.
 </p>
 
+<div class="price">
+Starting at $30
+</div>
+
 </div>
 
 <div class="card">
@@ -150,6 +156,10 @@ sidewalks, fences,
 and outdoor cleaning.
 </p>
 
+<div class="price">
+Starting at $40
+</div>
+
 </div>
 
 <div class="card">
@@ -166,6 +176,10 @@ Weed Pulling
 Flower bed cleanup
 and removing messy weeds.
 </p>
+
+<div class="price">
+Starting at $20
+</div>
 
 </div>
 
@@ -234,15 +248,15 @@ everything look nice and fresh.”
 
 </section>
 
-<!-- CONTACT -->
+<!-- REQUEST -->
 
 <section class="contact"
-id="contact">
+id="request">
 
 <div class="section-title">
 
 <span>
-CONTACT
+REQUEST
 </span>
 
 <h2>
@@ -251,7 +265,7 @@ Request Service
 
 </div>
 
-<!-- ACCOUNT BOX -->
+<!-- ACCOUNT -->
 
 <div class="account-box">
 
@@ -305,6 +319,7 @@ required>
 
 <input
 type="email"
+id="emailInput"
 name="email"
 placeholder="Your Email"
 required>
@@ -328,50 +343,92 @@ Select Services
 
 <div class="multi-services">
 
-<label>
+<label class="service-option">
+
+<div class="service-left">
 
 <input
 type="checkbox"
-value="Lawn Mowing">
+value="Lawn Mowing"
+data-price="30">
 
+<span>
 Lawn Mowing
+</span>
+
+</div>
+
+<div class="service-price">
+$30
+</div>
 
 </label>
 
-<label>
+<label class="service-option">
+
+<div class="service-left">
 
 <input
 type="checkbox"
-value="Power Washing">
+value="Power Washing"
+data-price="40">
 
+<span>
 Power Washing
+</span>
+
+</div>
+
+<div class="service-price">
+$40
+</div>
 
 </label>
 
-<label>
+<label class="service-option">
+
+<div class="service-left">
 
 <input
 type="checkbox"
-value="Weed Pulling">
+value="Weed Pulling"
+data-price="20">
 
+<span>
 Weed Pulling
+</span>
+
+</div>
+
+<div class="service-price">
+$20
+</div>
 
 </label>
+
+</div>
+
+<div class="price-total">
+
+Estimated Total:
+<span id="totalPrice">
+$0
+</span>
 
 </div>
 
 <select name="yardSize">
 
 <option>
-Small Yard • $30-$50
+Small Yard • +$20
 </option>
 
 <option>
-Medium Yard • $60-$110
+Medium Yard • +$50
 </option>
 
 <option>
-Large Yard • $120-$210
+Large Yard • +$90
 </option>
 
 </select>
@@ -385,7 +442,55 @@ required></textarea>
 class="submit-btn"
 type="submit">
 
-Submit Request
+Send Request
+
+</button>
+
+</form>
+
+</section>
+
+<!-- FEEDBACK -->
+
+<section class="feedback-section"
+id="feedback">
+
+<div class="section-title">
+
+<span>
+FEEDBACK
+</span>
+
+<h2>
+Leave Feedback
+</h2>
+
+</div>
+
+<form id="feedbackForm">
+
+<input
+type="text"
+name="feedbackName"
+placeholder="Your Name"
+required>
+
+<input
+type="email"
+name="feedbackEmail"
+placeholder="Your Email"
+required>
+
+<textarea
+name="feedbackMessage"
+placeholder="Tell us how we did..."
+required></textarea>
+
+<button
+class="submit-btn"
+type="submit">
+
+Send Feedback
 
 </button>
 
