@@ -1,4 +1,6 @@
-/* NAVBAR */
+/* =========================
+NAVBAR HIDE
+========================= */
 
 const navbar =
 document.getElementById(
@@ -36,7 +38,9 @@ currentScroll;
 
 });
 
-/* ACCOUNTS */
+/* =========================
+ACCOUNT SYSTEM
+========================= */
 
 function getAccounts(){
 
@@ -94,36 +98,66 @@ function signupUser(){
 const name =
 document.getElementById(
 "signupName"
-).value;
+).value.trim();
 
 const email =
 document.getElementById(
 "signupEmail"
-).value;
+).value.trim();
 
 const password =
 document.getElementById(
 "signupPassword"
-).value;
+).value.trim();
+
+if(
+!name ||
+!email ||
+!password
+){
+
+alert(
+"Fill out all fields."
+);
+
+return;
+
+}
 
 let accounts =
 getAccounts();
 
-accounts.push({
+const exists =
+accounts.find(
+a=>a.email===email
+);
+
+if(exists){
+
+alert(
+"Account already exists."
+);
+
+return;
+
+}
+
+const newUser = {
+
 name,
 email,
 password,
 points:0
-});
+
+};
+
+accounts.push(newUser);
 
 saveAccounts(accounts);
 
 localStorage.setItem(
 "yardCurrentUser",
-JSON.stringify({
-name,
-email
-})
+JSON.stringify(newUser)
 );
 
 updateAccountUI();
@@ -135,12 +169,12 @@ function loginUser(){
 const email =
 document.getElementById(
 "loginEmail"
-).value;
+).value.trim();
 
 const password =
 document.getElementById(
 "loginPassword"
-).value;
+).value.trim();
 
 let accounts =
 getAccounts();
@@ -164,7 +198,7 @@ updateAccountUI();
 }else{
 
 alert(
-"Wrong login info."
+"Wrong email or password."
 );
 
 }
@@ -207,6 +241,16 @@ document.getElementById(
 ).innerText =
 `Welcome ${user.name}`;
 
+document.getElementById(
+"requestEmail"
+).value =
+user.email;
+
+document.getElementById(
+"feedbackEmail"
+).value =
+user.email;
+
 }else{
 
 document.getElementById(
@@ -225,7 +269,186 @@ document.getElementById(
 
 updateAccountUI();
 
-/* REVIEW SCROLL */
+/* =========================
+PRICE SYSTEM
+========================= */
+
+const checks =
+document.querySelectorAll(
+".service-check"
+);
+
+const yardSize =
+document.getElementById(
+"yardSize"
+);
+
+const totalPrice =
+document.getElementById(
+"totalPrice"
+);
+
+function calculatePrice(){
+
+let total = 0;
+
+let selected = 0;
+
+checks.forEach(check=>{
+
+if(check.checked){
+
+selected++;
+
+total += Number(
+check.value
+);
+
+}
+
+});
+
+const multiplier =
+Number(
+yardSize.value
+);
+
+total =
+total * multiplier;
+
+if(selected === 3){
+
+total =
+Math.round(
+total * 0.85
+);
+
+}
+
+totalPrice.innerText =
+`$${total}`;
+
+}
+
+checks.forEach(check=>{
+
+check.addEventListener(
+"change",
+calculatePrice
+);
+
+});
+
+yardSize.addEventListener(
+"change",
+calculatePrice
+);
+
+calculatePrice();
+
+/* =========================
+PHONE FORMAT
+========================= */
+
+const phone =
+document.getElementById(
+"phone"
+);
+
+phone.addEventListener(
+"input",
+e=>{
+
+let x =
+e.target.value
+.replace(/\D/g,'');
+
+x =
+x.substring(0,11);
+
+let formatted = "";
+
+if(x.length > 0){
+
+formatted = "1+ ";
+
+}
+
+if(x.length > 1){
+
+formatted += "(" +
+x.substring(1,4);
+
+}
+
+if(x.length >= 4){
+
+formatted += ") " +
+x.substring(4,7);
+
+}
+
+if(x.length >= 7){
+
+formatted += "-" +
+x.substring(7,11);
+
+}
+
+e.target.value =
+formatted;
+
+});
+
+/* =========================
+FORM SUCCESS
+========================= */
+
+const forms =
+document.querySelectorAll(
+"form"
+);
+
+forms.forEach(form=>{
+
+form.addEventListener(
+"submit",
+()=>{
+
+const btn =
+form.querySelector(
+"button"
+);
+
+btn.innerText =
+"Sent!";
+
+setTimeout(()=>{
+
+btn.innerText =
+form.id === "feedbackForm"
+?
+"Send Feedback"
+:
+"Send Request";
+
+},2000);
+
+setTimeout(()=>{
+
+form.reset();
+
+calculatePrice();
+
+},2100);
+
+});
+
+});
+
+/* =========================
+TESTIMONIAL AUTO SCROLL
+========================= */
 
 const track =
 document.querySelector(
@@ -238,7 +461,7 @@ let scrollAmount = 0;
 
 function autoScroll(){
 
-scrollAmount += .4;
+scrollAmount += 0.4;
 
 if(
 scrollAmount >=
@@ -261,3 +484,32 @@ autoScroll
 autoScroll();
 
 }
+
+/* =========================
+VISITOR TRACKING
+========================= */
+
+let visitors =
+JSON.parse(
+localStorage.getItem(
+"yardVisitors"
+)
+) || [];
+
+visitors.push({
+
+time:
+new Date().toLocaleString(),
+
+page:
+window.location.pathname,
+
+device:
+navigator.userAgent
+
+});
+
+localStorage.setItem(
+"yardVisitors",
+JSON.stringify(visitors)
+);
