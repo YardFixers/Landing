@@ -1,7 +1,7 @@
 // FILE NAME: script.js
 
 /* =========================
-   NAVBAR HIDE ON SCROLL
+   NAVBAR HIDE
 ========================= */
 
 const navbar =
@@ -39,6 +39,41 @@ lastScroll =
 currentScroll;
 
 });
+
+/* =========================
+   SAVE VISITOR
+========================= */
+
+function saveVisitor(){
+
+let visitors =
+JSON.parse(
+localStorage.getItem(
+"yardVisitors"
+)
+) || [];
+
+visitors.push({
+
+time:
+new Date().toLocaleString(),
+
+device:
+navigator.userAgent,
+
+page:
+window.location.pathname
+
+});
+
+localStorage.setItem(
+"yardVisitors",
+JSON.stringify(visitors)
+);
+
+}
+
+saveVisitor();
 
 /* =========================
    SERVICE CHECKBOXES
@@ -94,8 +129,6 @@ let basePrice = 0;
 
 let selected = 0;
 
-/* MOWING */
-
 if(mowingCheck.checked){
 
 basePrice += 18;
@@ -110,8 +143,6 @@ mowingInput.value =
 "No";
 
 }
-
-/* POWER WASHING */
 
 if(washingCheck.checked){
 
@@ -128,8 +159,6 @@ washingInput.value =
 
 }
 
-/* WEEDING */
-
 if(weedingCheck.checked){
 
 basePrice += 14;
@@ -145,8 +174,6 @@ weedingInput.value =
 
 }
 
-/* MULTIPLIER */
-
 let multiplier = 1;
 
 const yard =
@@ -160,12 +187,8 @@ if(yard.includes("Large")){
 multiplier = 3;
 }
 
-/* TOTAL */
-
 let finalPrice =
 basePrice * multiplier;
-
-/* DISCOUNT */
 
 let discountText = "";
 
@@ -186,8 +209,6 @@ totalPrice.innerText =
 `$${finalPrice}${discountText}`;
 
 }
-
-/* EVENTS */
 
 [
 mowingCheck,
@@ -271,6 +292,115 @@ formatted;
 }
 
 /* =========================
+   SAVE REQUEST
+========================= */
+
+function saveRequest(){
+
+let requests =
+JSON.parse(
+localStorage.getItem(
+"yardRequests"
+)
+) || [];
+
+requests.push({
+
+name:
+document.querySelector(
+'#orderForm input[name="Name"]'
+).value,
+
+email:
+document.querySelector(
+'#orderForm input[name="Email"]'
+).value,
+
+phone:
+document.querySelector(
+'#orderForm input[name="Phone"]'
+).value,
+
+area:
+document.querySelector(
+'#orderForm input[name="Area"]'
+).value,
+
+mowing:
+mowingInput.value,
+
+washing:
+washingInput.value,
+
+weeding:
+weedingInput.value,
+
+total:
+totalPrice.innerText,
+
+message:
+document.querySelector(
+'#orderForm textarea'
+).value,
+
+time:
+new Date().toLocaleString()
+
+});
+
+localStorage.setItem(
+"yardRequests",
+JSON.stringify(requests)
+);
+
+}
+
+/* =========================
+   SAVE FEEDBACK
+========================= */
+
+function saveFeedback(){
+
+let feedback =
+JSON.parse(
+localStorage.getItem(
+"yardFeedback"
+)
+) || [];
+
+feedback.push({
+
+name:
+document.querySelector(
+'#feedbackForm input[name="Name"]'
+).value,
+
+email:
+document.querySelector(
+'#feedbackForm input[name="Email"]'
+).value,
+
+stars:
+ratingValue.value,
+
+message:
+document.querySelector(
+'#feedbackForm textarea'
+).value,
+
+time:
+new Date().toLocaleString()
+
+});
+
+localStorage.setItem(
+"yardFeedback",
+JSON.stringify(feedback)
+);
+
+}
+
+/* =========================
    FORM SUBMIT
 ========================= */
 
@@ -331,7 +461,9 @@ original;
 
 }
 
-/* REQUEST FORM */
+/* =========================
+   REQUEST FORM
+========================= */
 
 const orderForm =
 document.getElementById(
@@ -346,6 +478,8 @@ async e=>{
 
 e.preventDefault();
 
+saveRequest();
+
 await sendForm(
 orderForm,
 orderForm.querySelector(
@@ -357,7 +491,9 @@ orderForm.querySelector(
 
 }
 
-/* FEEDBACK FORM */
+/* =========================
+   FEEDBACK FORM
+========================= */
 
 const feedbackForm =
 document.getElementById(
@@ -371,6 +507,8 @@ feedbackForm.addEventListener(
 async e=>{
 
 e.preventDefault();
+
+saveFeedback();
 
 await sendForm(
 feedbackForm,
@@ -464,7 +602,7 @@ star.classList.remove(
 }
 
 /* =========================
-   AUTO REVIEWS
+   TESTIMONIAL AUTO SCROLL
 ========================= */
 
 const track =
