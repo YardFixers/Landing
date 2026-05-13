@@ -17,26 +17,30 @@ YardFixers Owner Dashboard
 
 <link
 rel="stylesheet"
-href="style.css">
+href="dashboard.css">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&display=swap"
+rel="stylesheet">
 
 </head>
 
-<body class="dashboard-body">
+<body>
 
 <!-- LOGIN SCREEN -->
 
 <div
-class="owner-login"
+class="login-screen"
 id="loginScreen">
 
-<div class="owner-box">
+<div class="login-box">
 
 <h1>
-Owner Login
+YardFixers
 </h1>
 
 <p>
-Authorized Access Only
+Owner Dashboard Access
 </p>
 
 <input
@@ -49,24 +53,23 @@ type="password"
 id="ownerPass"
 placeholder="Password">
 
-<button
-onclick="loginOwner()">
-
+<button id="loginBtn">
 Login
-
 </button>
 
-<p
-id="loginError"
-class="login-error">
+<div
+class="login-error"
+id="loginError">
 
-</p>
+Wrong username or password.
+
+</div>
 
 <a
 href="index.html"
 class="back-site">
 
-← Back To Site
+Back To Site
 
 </a>
 
@@ -77,26 +80,36 @@ class="back-site">
 <!-- DASHBOARD -->
 
 <div
-class="dashboard-container"
-id="dashboardContainer">
+class="dashboard hidden"
+id="dashboard">
 
-<div class="dashboard-top">
+<nav class="dash-nav">
 
-<h1>
-YardFixers Dashboard
-</h1>
+<div class="dash-logo">
+YardFixers Owner
+</div>
 
-<button
-class="logout-btn"
-onclick="logoutOwner()">
+<div class="dash-buttons">
 
+<button id="logoutBtn">
 Logout
-
 </button>
+
+<a
+href="index.html"
+id="backBtn">
+
+Back To Site
+
+</a>
 
 </div>
 
-<div class="stats-grid">
+</nav>
+
+<!-- STATS -->
+
+<section class="stats-grid">
 
 <div class="stat-card">
 
@@ -136,51 +149,77 @@ Feedback
 
 <div class="stat-card">
 
-<h2 id="userCount">
+<h2 id="accountCount">
 0
 </h2>
 
 <p>
-Users
+Accounts
 </p>
 
 </div>
 
-</div>
+</section>
 
-<div class="dashboard-section">
+<!-- RECENT REQUESTS -->
+
+<section class="panel">
+
+<div class="panel-top">
 
 <h2>
 Recent Requests
 </h2>
 
+</div>
+
 <div
-id="requestsContainer">
+class="panel-list"
+id="requestList">
 
 </div>
 
-</div>
+</section>
 
-<div class="dashboard-section">
+<!-- FEEDBACK -->
+
+<section class="panel">
+
+<div class="panel-top">
 
 <h2>
-Visitors
+Recent Feedback
 </h2>
 
+</div>
+
 <div
-id="visitorContainer">
+class="panel-list"
+id="feedbackList">
 
 </div>
 
+</section>
+
+<!-- VISITORS -->
+
+<section class="panel">
+
+<div class="panel-top">
+
+<h2>
+Recent Visitors
+</h2>
+
 </div>
 
-<button
-class="return-site"
-onclick="backToSite()">
+<div
+class="panel-list"
+id="visitorList">
 
-Back To Main Site
+</div>
 
-</button>
+</section>
 
 </div>
 
