@@ -1,31 +1,15 @@
 // FILE NAME: dashboard.js
 
 /* =========================
-   DEV ACCOUNT
-========================= */
-
-const OWNER_USERNAME =
-"YardFixers";
-
-const OWNER_PASSWORD =
-"+zr4bf+=ef#4";
-
-/* =========================
    FORCE LOGOUT ON REFRESH
 ========================= */
-
-window.addEventListener(
-"beforeunload",
-()=>{
 
 sessionStorage.removeItem(
 "ownerLoggedIn"
 );
 
-});
-
 /* =========================
-   LOGIN
+   ELEMENTS
 ========================= */
 
 const loginScreen =
@@ -33,15 +17,38 @@ document.getElementById(
 "loginScreen"
 );
 
-const dashboardContainer =
+const dashboard =
 document.getElementById(
-"dashboardContainer"
+"dashboard"
 );
 
-dashboardContainer.style.display =
-"none";
+const loginBtn =
+document.getElementById(
+"loginBtn"
+);
 
-function loginOwner(){
+const logoutBtn =
+document.getElementById(
+"logoutBtn"
+);
+
+const backBtn =
+document.getElementById(
+"backBtn"
+);
+
+const loginError =
+document.getElementById(
+"loginError"
+);
+
+/* =========================
+   LOGIN
+========================= */
+
+loginBtn.addEventListener(
+"click",
+()=>{
 
 const username =
 document.getElementById(
@@ -53,14 +60,9 @@ document.getElementById(
 "ownerPass"
 ).value;
 
-const error =
-document.getElementById(
-"loginError"
-);
-
 if(
-username === OWNER_USERNAME &&
-password === OWNER_PASSWORD
+username === "YardFixers" &&
+password === "+zr4bf+=ef#4"
 ){
 
 sessionStorage.setItem(
@@ -68,28 +70,32 @@ sessionStorage.setItem(
 "true"
 );
 
-loginScreen.style.display =
-"none";
+loginScreen.classList.add(
+"hidden"
+);
 
-dashboardContainer.style.display =
-"block";
+dashboard.classList.remove(
+"hidden"
+);
 
 loadDashboard();
 
 }else{
 
-error.innerText =
-"Incorrect Login";
+loginError.style.display =
+"block";
 
 }
 
-}
+});
 
 /* =========================
    LOGOUT
 ========================= */
 
-function logoutOwner(){
+logoutBtn.addEventListener(
+"click",
+()=>{
 
 sessionStorage.removeItem(
 "ownerLoggedIn"
@@ -97,17 +103,21 @@ sessionStorage.removeItem(
 
 location.reload();
 
-}
+});
 
 /* =========================
-   BACK TO SITE
+   BACK BUTTON
 ========================= */
 
-function backToSite(){
+backBtn.addEventListener(
+"click",
+e=>{
+
+e.preventDefault();
 
 const confirmLeave =
 confirm(
-"Leaving the owner page will log you out. Continue?"
+"Leaving the dashboard will log you out. Continue?"
 );
 
 if(confirmLeave){
@@ -121,132 +131,207 @@ window.location.href =
 
 }
 
+});
+
+/* =========================
+   STORAGE DATA
+========================= */
+
+function getStorage(name){
+
+return JSON.parse(
+localStorage.getItem(name)
+) || [];
+
 }
 
 /* =========================
    LOAD DASHBOARD
 ========================= */
 
-async function loadDashboard(){
+function loadDashboard(){
 
-try{
+const visitors =
+getStorage("yardVisitors");
 
-const response =
-await fetch(
-"/dashboard-data"
-);
+const requests =
+getStorage("yardRequests");
 
-const data =
-await response.json();
+const feedback =
+getStorage("yardFeedback");
+
+const accounts =
+getStorage("yardAccounts");
 
 /* COUNTS */
 
 document.getElementById(
 "visitorCount"
 ).innerText =
-data.visitors?.length || 0;
+visitors.length;
 
 document.getElementById(
 "requestCount"
 ).innerText =
-data.orders?.length || 0;
+requests.length;
 
 document.getElementById(
 "feedbackCount"
 ).innerText =
-data.feedback?.length || 0;
+feedback.length;
 
 document.getElementById(
-"userCount"
+"accountCount"
 ).innerText =
-data.users?.length || 0;
+accounts.length;
 
 /* REQUESTS */
 
-const requests =
+const requestList =
 document.getElementById(
-"requestsContainer"
+"requestList"
 );
 
-requests.innerHTML = "";
+requestList.innerHTML = "";
 
-(data.orders || [])
-.slice()
-.reverse()
-.forEach(order=>{
+if(requests.length === 0){
 
-requests.innerHTML += `
+requestList.innerHTML =
+`
+<div class="item">
+No requests yet.
+</div>
+`;
 
-<div class="dash-item">
+}else{
 
-<h3>
-${order.Name || "Unknown"}
-</h3>
+requests.reverse().forEach(
+req=>{
 
-<p>
-<b>Email:</b>
-${order.Email || ""}
-</p>
+requestList.innerHTML +=
+`
+<div class="item">
 
-<p>
-<b>Phone:</b>
-${order.Phone || ""}
-</p>
+<strong>Name:</strong>
+${req.name}<br>
 
-<p>
-<b>Area:</b>
-${order.Area || ""}
-</p>
+<strong>Email:</strong>
+${req.email}<br>
 
-<p>
-<b>Message:</b>
-${order.Message || ""}
-</p>
+<strong>Phone:</strong>
+${req.phone}<br>
+
+<strong>Area:</strong>
+${req.area}<br>
+
+<strong>Mowing:</strong>
+${req.mowing}<br>
+
+<strong>Power Washing:</strong>
+${req.washing}<br>
+
+<strong>Weeding:</strong>
+${req.weeding}<br>
+
+<strong>Total:</strong>
+${req.total}<br>
+
+<strong>Message:</strong>
+${req.message}
 
 </div>
-
 `;
 
 });
+
+}
+
+/* FEEDBACK */
+
+const feedbackList =
+document.getElementById(
+"feedbackList"
+);
+
+feedbackList.innerHTML = "";
+
+if(feedback.length === 0){
+
+feedbackList.innerHTML =
+`
+<div class="item">
+No feedback yet.
+</div>
+`;
+
+}else{
+
+feedback.reverse().forEach(
+feed=>{
+
+feedbackList.innerHTML +=
+`
+<div class="item">
+
+<strong>Name:</strong>
+${feed.name}<br>
+
+<strong>Email:</strong>
+${feed.email}<br>
+
+<strong>Stars:</strong>
+${feed.stars}<br>
+
+<strong>Message:</strong>
+${feed.message}
+
+</div>
+`;
+
+});
+
+}
 
 /* VISITORS */
 
-const visitors =
+const visitorList =
 document.getElementById(
-"visitorContainer"
+"visitorList"
 );
 
-visitors.innerHTML = "";
+visitorList.innerHTML = "";
 
-(data.visitors || [])
-.slice()
-.reverse()
-.forEach(visitor=>{
+if(visitors.length === 0){
 
-visitors.innerHTML += `
+visitorList.innerHTML =
+`
+<div class="item">
+No visitors yet.
+</div>
+`;
 
-<div class="dash-item">
+}else{
 
-<p>
-<b>Screen:</b>
-${visitor.width || 0} x
-${visitor.height || 0}
-</p>
+visitors.reverse().forEach(
+visitor=>{
 
-<p>
-<b>Visited:</b>
-${visitor.time || ""}
-</p>
+visitorList.innerHTML +=
+`
+<div class="item">
+
+<strong>Time:</strong>
+${visitor.time}<br>
+
+<strong>Device:</strong>
+${visitor.device}<br>
+
+<strong>Page:</strong>
+${visitor.page}
 
 </div>
-
 `;
 
 });
-
-}catch(error){
-
-console.log(error);
 
 }
 
