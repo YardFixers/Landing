@@ -1,6 +1,3 @@
-// FILE NAME: dashboard.js
-// REPLACE YOUR CURRENT dashboard.js WITH THIS FULL FILE
-
 /* =========================
    AUTO LOGOUT ON REFRESH
 ========================= */
@@ -147,6 +144,102 @@ localStorage.getItem(name)
 }
 
 /* =========================
+   ACCEPT REQUEST
+========================= */
+
+async function acceptRequest(
+email,
+name,
+date,
+time,
+button
+){
+
+button.innerText =
+"Sending...";
+
+try{
+
+await fetch(
+"https://YOUR-RENDER-URL.onrender.com/accept",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+
+email,
+name,
+date,
+time
+
+})
+}
+);
+
+button.innerText =
+"Accepted ✓";
+
+button.style.background =
+"#79d64d";
+
+}catch{
+
+button.innerText =
+"Error";
+
+}
+
+}
+
+/* =========================
+   REJECT REQUEST
+========================= */
+
+async function rejectRequest(
+email,
+name,
+button
+){
+
+button.innerText =
+"Sending...";
+
+try{
+
+await fetch(
+"https://YOUR-RENDER-URL.onrender.com/reject",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+
+email,
+name
+
+})
+}
+);
+
+button.innerText =
+"Rejected";
+
+button.style.background =
+"#ff6b6b";
+
+}catch{
+
+button.innerText =
+"Error";
+
+}
+
+}
+
+/* =========================
    LOAD DASHBOARD
 ========================= */
 
@@ -186,7 +279,9 @@ document.getElementById(
 ).innerText =
 accounts.length;
 
-/* REQUESTS */
+/* =========================
+   REQUESTS
+========================= */
 
 const requestList =
 document.getElementById(
@@ -198,7 +293,7 @@ requestList.innerHTML = "";
 requests
 .slice()
 .reverse()
-.forEach(req=>{
+.forEach((req,index)=>{
 
 requestList.innerHTML +=
 `
@@ -234,12 +329,60 @@ ${req.time}<br><br>
 <strong>Message:</strong><br>
 ${req.message}
 
+<div class="action-box">
+
+<input
+type="date"
+id="date-${index}">
+
+<input
+type="time"
+id="time-${index}">
+
+<div class="action-buttons">
+
+<button
+class="accept-btn"
+onclick="
+acceptRequest(
+'${req.email}',
+'${req.name}',
+document.getElementById('date-${index}').value,
+document.getElementById('time-${index}').value,
+this
+)
+">
+
+Accept
+
+</button>
+
+<button
+class="reject-btn"
+onclick="
+rejectRequest(
+'${req.email}',
+'${req.name}',
+this
+)
+">
+
+Reject
+
+</button>
+
+</div>
+
+</div>
+
 </div>
 `;
 
 });
 
-/* FEEDBACK */
+/* =========================
+   FEEDBACK
+========================= */
 
 const feedbackList =
 document.getElementById(
@@ -277,7 +420,9 @@ ${feed.message}
 
 });
 
-/* VISITORS */
+/* =========================
+   VISITORS
+========================= */
 
 const visitorList =
 document.getElementById(
@@ -308,5 +453,43 @@ ${visitor.device}
 `;
 
 });
+
+/* =========================
+   ACCOUNTS
+========================= */
+
+const accountList =
+document.getElementById(
+"accountList"
+);
+
+if(accountList){
+
+accountList.innerHTML = "";
+
+accounts
+.slice()
+.reverse()
+.forEach(acc=>{
+
+accountList.innerHTML +=
+`
+<div class="item">
+
+<strong>Name:</strong>
+${acc.name}<br>
+
+<strong>Email:</strong>
+${acc.email}<br>
+
+<strong>Points:</strong>
+${acc.points || 0}
+
+</div>
+`;
+
+});
+
+}
 
 }
