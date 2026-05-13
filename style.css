@@ -1,5 +1,3 @@
-/* FILE NAME: style.css */
-
 *{
 margin:0;
 padding:0;
@@ -81,14 +79,11 @@ align-items:center;
 text-align:center;
 
 padding:20px;
-
-position:relative;
 }
 
 .hero-content{
 max-width:850px;
 color:white;
-z-index:2;
 }
 
 .badge{
@@ -220,6 +215,12 @@ line-height:1.8;
 color:#444;
 }
 
+.price{
+margin-top:18px;
+font-weight:800;
+color:#5d9d35;
+}
+
 /* ABOUT */
 
 .about{
@@ -243,9 +244,6 @@ border-radius:26px;
 overflow:hidden;
 
 color:white;
-
-box-shadow:
-0 10px 30px rgba(0,0,0,.3);
 }
 
 .team-card img{
@@ -258,18 +256,10 @@ object-fit:cover;
 padding:24px;
 }
 
-.team-info h3{
-margin-bottom:12px;
-}
+/* FORMS */
 
-.team-info p{
-line-height:1.8;
-opacity:.92;
-}
-
-/* CONTACT */
-
-.contact form{
+form,
+.account-box{
 background:white;
 
 padding:35px;
@@ -284,9 +274,13 @@ box-shadow:
 0 10px 30px rgba(0,0,0,.08);
 }
 
-.contact input,
-.contact select,
-.contact textarea{
+.account-box{
+margin-bottom:35px;
+}
+
+input,
+select,
+textarea{
 width:100%;
 
 padding:18px;
@@ -302,7 +296,7 @@ border-radius:14px;
 font-size:1rem;
 }
 
-.contact textarea{
+textarea{
 height:170px;
 resize:none;
 }
@@ -313,7 +307,7 @@ margin-bottom:12px;
 font-weight:700;
 }
 
-/* MULTI SERVICES */
+/* SERVICES ALIGNMENT FIX */
 
 .multi-services{
 display:flex;
@@ -324,55 +318,44 @@ padding:20px;
 
 background:#eef2ea;
 
-border-radius:14px;
+border-radius:16px;
 
 margin-bottom:20px;
 }
 
-.multi-services label{
+.service-option{
+display:flex;
+justify-content:space-between;
+align-items:center;
+width:100%;
+}
+
+.service-left{
 display:flex;
 align-items:center;
-gap:10px;
-font-weight:600;
+gap:14px;
 }
 
-/* ACCOUNT BOX */
-
-.account-box{
-background:white;
-
-padding:35px;
-
-border-radius:26px;
-
-max-width:750px;
-
-margin:auto auto 35px auto;
-
-box-shadow:
-0 10px 30px rgba(0,0,0,.08);
+.service-left input{
+width:auto;
+margin:0;
 }
 
-.account-box h3{
+.service-price{
+font-weight:800;
+color:#5d9d35;
+}
+
+/* PRICE TOTAL */
+
+.price-total{
+font-size:1.2rem;
+font-weight:800;
 margin-bottom:20px;
-font-size:1.5rem;
+text-align:center;
 }
 
-.account-box input{
-width:100%;
-
-padding:18px;
-
-margin-bottom:18px;
-
-border:none;
-
-background:#eef2ea;
-
-border-radius:14px;
-
-font-size:1rem;
-}
+/* BUTTONS */
 
 .account-buttons{
 display:flex;
@@ -380,37 +363,27 @@ gap:12px;
 flex-wrap:wrap;
 }
 
-.account-buttons button{
-flex:1;
-}
-
-/* BUTTONS */
-
-button,
-.submit-btn{
+button{
 padding:18px;
-
 border:none;
-
 border-radius:14px;
-
 background:#101612;
-
 color:white;
-
 font-size:1rem;
-
 font-weight:700;
-
 cursor:pointer;
-
 transition:.3s;
 }
 
-button:hover,
-.submit-btn:hover{
+button:hover{
 transform:translateY(-4px);
 opacity:.92;
+}
+
+.submit-btn{
+width:100%;
+background:#5d9d35;
+color:white;
 }
 
 #logoutBtn{
@@ -436,7 +409,6 @@ footer span{
 display:block;
 margin-top:10px;
 opacity:.7;
-font-size:.95rem;
 }
 
 /* MOBILE */
@@ -467,6 +439,12 @@ height:340px;
 
 .account-buttons{
 flex-direction:column;
+}
+
+.service-option{
+flex-direction:column;
+align-items:flex-start;
+gap:10px;
 }
 
 }
